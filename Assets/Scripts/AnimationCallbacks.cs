@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimationCallbacks : MonoBehaviour {
-    Player player;
-    void Start() {
-        player = GetComponentInParent<Player>();
+    public Player player;
+
+    public void OnStartRoll_AnimationEvent() {
+        player.OnStartRoll_AnimationEvent();
     }
 
-    public void StartRoll() {
-        player.StartRoll();
-    }
-
-    public void FinishRoll() {
-        player.FinishRoll();
+    public void OnFinishRoll_AnimationEvent() {
+        player.OnFinishRoll_AnimationEvent();
     }
 }

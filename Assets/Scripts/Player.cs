@@ -99,11 +99,11 @@ public class Player : MonoBehaviour {
         animator.SetBool("isRolling", movementState == MovementState.Rolling);
     }
 
-    public void StartRoll() {
+    public void OnStartRoll_AnimaitonEvent() {
         //  TODO: [Rock]: Do we actually need this?
     }
 
-    public void FinishRoll() {
+    public void OnFinishRoll_AnimationEvent() {
         //  We finished our roll animation so transition back to our move state
         movementState = MovementState.Moving;
     }
