@@ -128,6 +128,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 142570213}
     m_Modifications:
+    - target: {fileID: -7460157125078794392, guid: 7168b53db6c8d5e419c6b23a4f43c0eb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.08771024
+      objectReference: {fileID: 0}
+    - target: {fileID: -7460157125078794392, guid: 7168b53db6c8d5e419c6b23a4f43c0eb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.004058199
+      objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 7168b53db6c8d5e419c6b23a4f43c0eb,
         type: 3}
       propertyPath: m_Controller
@@ -207,6 +217,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 7329138785620812136, guid: 7168b53db6c8d5e419c6b23a4f43c0eb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.033328295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7329138785620812136, guid: 7168b53db6c8d5e419c6b23a4f43c0eb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.021344353
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7168b53db6c8d5e419c6b23a4f43c0eb, type: 3}
@@ -310,64 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2eff5d9c1a96274e83b0a288b810cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 25
-  moveSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.20000076
-      value: 0.0023498535
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rollSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: Infinity
-      outSlope: Infinity
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.6340959
-      value: 1
-      inSlope: -2.987626
-      outSlope: -2.987626
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.8010544
-      value: 0.0023807865
-      inSlope: -5.975252
-      outSlope: -5.975252
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!4 &571048823
 Transform:
   m_ObjectHideFlags: 0
@@ -574,7 +536,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 45
+  field of view: 55
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
