@@ -90,17 +90,6 @@ public class Player : MonoBehaviour {
     }
 
     void CheckInput() {
-        if (movementState == MovementState.Moving) {
-            //  TODO: [Rock]: Reimplement a roll mechanic, but as it's own movement ability
-            //  Rolling
-            if (false && input.isDown(InputManager.Buttons.A)) {
-                movementState = MovementState.Rolling;
-
-                //  Because we're going to do a roll, just snap the players rotation instead of doing the lerp like normal
-                transform.rotation = Quaternion.LookRotation(movingDir);
-            }
-        }
-
         //  TODO: [Rock]: Something better? Not sure...
         if (Input.GetMouseButtonUp(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
