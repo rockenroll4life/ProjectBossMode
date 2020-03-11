@@ -1,24 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour {
     enum MovementState {
-        Moving,   //  For now this encapsulates Idle / Walking / Running (Walking is just moving with a speed of 0!)
-        Rolling,
+        Moving,   //  For now this encapsulates Idle / Running
     }
 
+    //  This values is how fast the player moves per second 6.6 m/s, this value should be tied in with the
+    //  animation so we speed up the animation when we're moving faster than normal or slow down when slowed.
+    //  TODO: [Rock]: We need a StateMachineBehavior for our locomotion that adjust the animaiton speed based
+    //  this value and the current movement speed
+    static readonly int LAYER_GROUND = 10;
+    static readonly float FIXED_MOVEMENT_SPEED = 6.6f;
+
+    //  Public Variables
+    public GameObject handAttachRight;
+    public GameObject handAttachLeft;
+
+    public GameObject testSwordForAttaching;
+
+    //  The rest of the mess...
+
     //  TODO: [Rock]: Cleanup the order of our variables...too lazy and will mess it up while I'm starting to dev this
-    readonly float movementSpeed = 25f;
     readonly float rollSpeed = 40f;
     readonly float rotationSpeed = 720f;
+
+    bool hasWeaponLeft = false;
+    bool hasWeaponRight = false;
 
     Camera cam;
     Animator animator;
     Rigidbody physicsbody;
+    NavMeshAgent agent;
     InputManager input;
 
     MovementState movementState;
+    //  TODO: [Rock]: Move to stats class that supports modifications of the base value
+    readonly float movementSpeed = 13.2f;
 
     Vector3 camOffset;
 
@@ -33,11 +53,28 @@ public class Player : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
         physicsbody = GetComponent<Rigidbody>();
 
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+
         input = new InputManager(0);
+
+        //  TODO: [Rock]: We should have an equipment class that handles setting this when we change our equipment
+        animator.SetBool("hasWeapon_Right", false);
+        animator.SetBool("hasWeapon_Left", false);
+
+        /*GameObject rightWeapon = Instantiate(testSwordForAttaching, handAttachRight.transform, true);
+        rightWeapon.transform.localPosition = Vector3.zero;
+        //  TODO: [Rock]: Figure out the stupid attachment bone in the model so we don't need to rotate the model
+        //  For now just leave it as this so we can make some actual progress with gameplay :(
+        rightWeapon.transform.localRotation = Quaternion.Euler(0, 0, 90);
+
+        GameObject leftWeapon = Instantiate(testSwordForAttaching, handAttachLeft.transform, true);
+        leftWeapon.transform.localPosition = Vector3.zero;
+        leftWeapon.transform.localRotation = Quaternion.Euler(0, 0, 90);*/
     }
 
     void Update() {
-        //  Update our input manager to track inputs
+         //  Update our input manager to track inputs
         input.update();
 
         CheckInput();
@@ -48,18 +85,44 @@ public class Player : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        //  Update camera position
         cam.transform.position = transform.position + camOffset;
     }
 
     void CheckInput() {
         if (movementState == MovementState.Moving) {
+            //  TODO: [Rock]: Reimplement a roll mechanic, but as it's own movement ability
             //  Rolling
-            if (input.isDown(InputManager.Buttons.A)) {
+            if (false && input.isDown(InputManager.Buttons.A)) {
                 movementState = MovementState.Rolling;
 
                 //  Because we're going to do a roll, just snap the players rotation instead of doing the lerp like normal
                 transform.rotation = Quaternion.LookRotation(movingDir);
             }
+        }
+
+        //  TODO: [Rock]: Something better? Not sure...
+        if (Input.GetMouseButtonUp(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100)) {
+                agent.SetDestination(hit.point);
+
+                //  
+                //movingDir = hit.point - transform.position;
+            }
+        }
+
+        //  Debug, can be removed
+        if (input.wasPressed(InputManager.Buttons.Right_Bumper)) {
+            hasWeaponRight = !hasWeaponRight;
+            animator.SetBool("hasWeapon_Right", hasWeaponRight);
+        }
+
+        if (input.wasPressed(InputManager.Buttons.Left_Bumper)) {
+            hasWeaponLeft = !hasWeaponLeft;
+            animator.SetBool("hasWeapon_Left", hasWeaponLeft);
         }
     }
 
@@ -68,13 +131,15 @@ public class Player : MonoBehaviour {
             //  Check for movement Input
 
             //  Movement / Rotation
-            Vector3 moveVelocity = input.getStick(InputManager.Stick.Left);
+            Vector3 moveVelocity = agent.velocity;//input.getStick(InputManager.Stick.Left);
             if (moveVelocity.sqrMagnitude > 0.1 * 0.1) {
                 movingDir = moveVelocity.normalized;
                 moving = true;
 
                 //  Move the player
-                physicsbody.MovePosition(transform.position + (movingDir * movementSpeed * Time.deltaTime));
+                //  TODO: [Rock]: Investigate if we should be still be manually moving our player along a "path" instead of letting the agent
+                //  automatically move it itself
+                //physicsbody.MovePosition(transform.position + (movingDir * movementSpeed * Time.deltaTime));
             } else {
                 moving = false;
             }
@@ -82,29 +147,11 @@ public class Player : MonoBehaviour {
             //  Rotate the player
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(movingDir), rotationSpeed * Time.deltaTime);
         }
-
-        if (movementState == MovementState.Rolling) {
-            //  Since we're rolling we can't change directions, so just roll in the last direction we were looking
-            physicsbody.MovePosition(transform.position + (transform.forward * rollSpeed * Time.deltaTime));
-
-            //  TOOD: [Rock]: Decide if we want to allow for turning while we roll? Leaning towards no, but worth a thought
-        }
     }
 
     void UpdateAnimations() {
         //  Update the players movement animation
-        animator.SetFloat("speedPercent", moving ? 1 : 0 , 0.1f, Time.deltaTime);
-
-        //   Update animation controller rolling state
-        animator.SetBool("isRolling", movementState == MovementState.Rolling);
-    }
-
-    public void OnStartRoll_AnimaitonEvent() {
-        //  TODO: [Rock]: Do we actually need this?
-    }
-
-    public void OnFinishRoll_AnimationEvent() {
-        //  We finished our roll animation so transition back to our move state
-        movementState = MovementState.Moving;
+        animator.SetBool("isMoving", moving);
+        animator.SetFloat("moveSpeedMultiplier", (movementSpeed / FIXED_MOVEMENT_SPEED) , 0.1f, Time.deltaTime);
     }
 }
