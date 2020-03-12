@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
 
-//  TODO: [Rock]: Turn this into a Singleton Monobehavior so it doesn't need to be updated in the player (We won't always have one)
-public class InputManager {
+//  TODO: [Rock]: Current this only supports 1 player, but it would be nice to upgrade this to support multiple players for future projects
+public class InputManager : MonoBehaviour {
     public enum ControllerButtons {
-        A,
+        A = 0,
         B,
         X,
         Y,
@@ -24,7 +24,7 @@ public class InputManager {
     }
 
     public enum ControllerStick {
-        Left,
+        Left = 0,
         Right,
     }
 
@@ -36,49 +36,69 @@ public class InputManager {
         Total
     }
 
-    readonly PlayerIndex indexID;
+    static InputManager inputManager;
+    public static InputManager instance {
+        get {
+            if (!inputManager) {
+                inputManager = FindObjectOfType(typeof(InputManager)) as InputManager;
+
+                if (!inputManager) {
+                    Debug.LogError("Using this requires an EventManager on a GameObject within the scene");
+                } else {
+                    inputManager.Init();
+                }
+            }
+
+            return inputManager;
+        }
+    }
+
+    void Init() {
+        if (keyboardDictionary == null) {
+            keyboardDictionary = new Dictionary<KeyCode, int>();
+        }
+    }
+
     GamePadState prevState;
     GamePadState state;
 
     //  Keyboard
-    Dictionary<KeyCode, int> keyboardDictionary = new Dictionary<KeyCode, int>();
+    Dictionary<KeyCode, int> keyboardDictionary;
 
     //  Controller
     bool controllerEnabled = false;
-
-    public InputManager(PlayerIndex indexID) {
-        this.indexID = indexID;
-    }
 
     public void SetControllerEnable(bool enabled) {
         controllerEnabled = enabled;
     }
 
-    public void AddKeyboardListener(KeyCode key, Action listener) {
-        if (keyboardDictionary.TryGetValue(key, out int numListeners)) {
+    public static void AddKeyboardListener(KeyCode key, Action listener) {
+        if (instance.keyboardDictionary.TryGetValue(key, out int numListeners)) {
             numListeners++;
-            keyboardDictionary[key] = numListeners;
+            instance.keyboardDictionary[key] = numListeners;
         } else {
             numListeners++;
-            keyboardDictionary.Add(key, numListeners);
+            instance.keyboardDictionary.Add(key, numListeners);
         }
 
         EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
     }
 
-    public void RemoveKeyboardListener(KeyCode key, Action listener) {
-        if (keyboardDictionary.TryGetValue(key, out int numListeners)) {
+    public static void RemoveKeyboardListener(KeyCode key, Action listener) {
+        if (instance.keyboardDictionary.TryGetValue(key, out int numListeners)) {
             EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
 
             if (numListeners-- == 0) {
-                keyboardDictionary.Remove(key);
+                instance.keyboardDictionary.Remove(key);
             } else {
-                keyboardDictionary[key] = numListeners;
+                instance.keyboardDictionary[key] = numListeners;
             }
+
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
         }
     }
 
-    public void update() {
+    private void Update() {
         //  Mouse Input
         for (int i = 0; i < (int) MouseButtons.Total; i++) {
             if (Input.GetMouseButtonUp(i)) {
@@ -87,7 +107,7 @@ public class InputManager {
         }
 
         //  Keyboard Input
-        foreach (KeyValuePair<KeyCode, int> key in keyboardDictionary) {
+        foreach (KeyValuePair<KeyCode, int> key in instance.keyboardDictionary) {
             if (Input.GetKeyUp(key.Key)) {
                 EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key);
             }
@@ -96,145 +116,146 @@ public class InputManager {
         //  Controller support
         if (controllerEnabled) {
             prevState = state;
-            state = GamePad.GetState(indexID);
+            //  HACK: Because we only support 1 controller while we're a Singleton we need to hack this. FIX ME!
+            state = GamePad.GetState(PlayerIndex.One);
         }
     }
 
     //  Returns a Vector3 for ease of use
-    public Vector3 getStick(ControllerStick stick) {
-        if (!controllerEnabled) {
+    public static Vector3 getStick(ControllerStick stick) {
+        if (!instance.controllerEnabled) {
             return Vector3.zero;
         }
 
         if (stick == ControllerStick.Left) {
-            return new Vector3(state.ThumbSticks.Left.X, 0, state.ThumbSticks.Left.Y);
+            return new Vector3(instance.state.ThumbSticks.Left.X, 0, instance.state.ThumbSticks.Left.Y);
         } else {
-            return new Vector3(state.ThumbSticks.Right.X, 0, state.ThumbSticks.Right.Y);
+            return new Vector3(instance.state.ThumbSticks.Right.X, 0, instance.state.ThumbSticks.Right.Y);
         }
     }
 
-    public bool isUp(ControllerButtons button) {
-        if (!controllerEnabled) {
+    public static bool isUp(ControllerButtons button) {
+        if (!instance.controllerEnabled) {
             return false;
         }
 
-        if (state.IsConnected) {
+        if (instance.state.IsConnected) {
             switch (button) {
                 case ControllerButtons.A:
-                    return isReleased(state.Buttons.A);
+                    return isReleased(instance.state.Buttons.A);
                 case ControllerButtons.B:
-                    return isReleased(state.Buttons.B);
+                    return isReleased(instance.state.Buttons.B);
                 case ControllerButtons.X:
-                    return isReleased(state.Buttons.X);
+                    return isReleased(instance.state.Buttons.X);
                 case ControllerButtons.Y:
-                    return isReleased(state.Buttons.Y);
+                    return isReleased(instance.state.Buttons.Y);
 
                 case ControllerButtons.Left:
-                    return isReleased(state.DPad.Left);
+                    return isReleased(instance.state.DPad.Left);
                 case ControllerButtons.Right:
-                    return isReleased(state.DPad.Right);
+                    return isReleased(instance.state.DPad.Right);
                 case ControllerButtons.Up:
-                    return isReleased(state.DPad.Up);
+                    return isReleased(instance.state.DPad.Up);
                 case ControllerButtons.Down:
-                    return isReleased(state.DPad.Down);
+                    return isReleased(instance.state.DPad.Down);
 
                 case ControllerButtons.Left_Bumper:
-                    return isReleased(state.Buttons.LeftShoulder);
+                    return isReleased(instance.state.Buttons.LeftShoulder);
                 case ControllerButtons.Right_Bumper:
-                    return isReleased(state.Buttons.RightShoulder);
+                    return isReleased(instance.state.Buttons.RightShoulder);
 
                 case ControllerButtons.Reset:
-                    return isReleased(state.Buttons.Back);
+                    return isReleased(instance.state.Buttons.Back);
                 case ControllerButtons.Select:
-                    return isReleased(state.Buttons.Start);
+                    return isReleased(instance.state.Buttons.Start);
             }
         }
         return false;
     }
 
-    public bool isDown(ControllerButtons button) {
-        if (!controllerEnabled) {
+    public static bool isDown(ControllerButtons button) {
+        if (!instance.controllerEnabled) {
             return false;
         }
 
-        if (state.IsConnected) {
+        if (instance.state.IsConnected) {
             switch (button) {
                 case ControllerButtons.A:
-                    return isPressed(state.Buttons.A);
+                    return isPressed(instance.state.Buttons.A);
                 case ControllerButtons.B:
-                    return isPressed(state.Buttons.B);
+                    return isPressed(instance.state.Buttons.B);
                 case ControllerButtons.X:
-                    return isPressed(state.Buttons.X);
+                    return isPressed(instance.state.Buttons.X);
                 case ControllerButtons.Y:
-                    return isPressed(state.Buttons.Y);
+                    return isPressed(instance.state.Buttons.Y);
 
                 case ControllerButtons.Left:
-                    return isPressed(state.DPad.Left);
+                    return isPressed(instance.state.DPad.Left);
                 case ControllerButtons.Right:
-                    return isPressed(state.DPad.Right);
+                    return isPressed(instance.state.DPad.Right);
                 case ControllerButtons.Up:
-                    return isPressed(state.DPad.Up);
+                    return isPressed(instance.state.DPad.Up);
                 case ControllerButtons.Down:
-                    return isPressed(state.DPad.Down);
+                    return isPressed(instance.state.DPad.Down);
 
                 case ControllerButtons.Left_Bumper:
-                    return isPressed(state.Buttons.LeftShoulder);
+                    return isPressed(instance.state.Buttons.LeftShoulder);
                 case ControllerButtons.Right_Bumper:
-                    return isPressed(state.Buttons.RightShoulder);
+                    return isPressed(instance.state.Buttons.RightShoulder);
 
                 case ControllerButtons.Reset:
-                    return isPressed(state.Buttons.Back);
+                    return isPressed(instance.state.Buttons.Back);
                 case ControllerButtons.Select:
-                    return isPressed(state.Buttons.Start);
+                    return isPressed(instance.state.Buttons.Start);
             }
         }
         return false;
     }
 
-    public bool wasPressed(ControllerButtons button) {
-        if (!controllerEnabled) {
+    public static bool wasPressed(ControllerButtons button) {
+        if (!instance.controllerEnabled) {
             return false;
         }
 
-        if (state.IsConnected) {
+        if (instance.state.IsConnected) {
             switch (button) {
                 case ControllerButtons.A:
-                    return isReleased(prevState.Buttons.A) && isPressed(state.Buttons.A);
+                    return isReleased(instance.prevState.Buttons.A) && isPressed(instance.state.Buttons.A);
                 case ControllerButtons.B:
-                    return isReleased(prevState.Buttons.B) && isPressed(state.Buttons.B);
+                    return isReleased(instance.prevState.Buttons.B) && isPressed(instance.state.Buttons.B);
                 case ControllerButtons.X:
-                    return isReleased(prevState.Buttons.X) && isPressed(state.Buttons.X);
+                    return isReleased(instance.prevState.Buttons.X) && isPressed(instance.state.Buttons.X);
                 case ControllerButtons.Y:
-                    return isReleased(prevState.Buttons.Y) && isPressed(state.Buttons.Y);
+                    return isReleased(instance.prevState.Buttons.Y) && isPressed(instance.state.Buttons.Y);
 
                 case ControllerButtons.Left:
-                    return isReleased(prevState.DPad.Left) && isPressed(state.DPad.Left);
+                    return isReleased(instance.prevState.DPad.Left) && isPressed(instance.state.DPad.Left);
                 case ControllerButtons.Right:
-                    return isReleased(prevState.DPad.Right) && isPressed(state.DPad.Right);
+                    return isReleased(instance.prevState.DPad.Right) && isPressed(instance.state.DPad.Right);
                 case ControllerButtons.Up:
-                    return isReleased(prevState.DPad.Up) && isPressed(state.DPad.Up);
+                    return isReleased(instance.prevState.DPad.Up) && isPressed(instance.state.DPad.Up);
                 case ControllerButtons.Down:
-                    return isReleased(prevState.DPad.Down) && isPressed(state.DPad.Down);
+                    return isReleased(instance.prevState.DPad.Down) && isPressed(instance.state.DPad.Down);
 
                 case ControllerButtons.Left_Bumper:
-                    return isReleased(prevState.Buttons.LeftShoulder) && isPressed(state.Buttons.LeftShoulder);
+                    return isReleased(instance.prevState.Buttons.LeftShoulder) && isPressed(instance.state.Buttons.LeftShoulder);
                 case ControllerButtons.Right_Bumper:
-                    return isReleased(prevState.Buttons.RightShoulder) && isPressed(state.Buttons.RightShoulder);
+                    return isReleased(instance.prevState.Buttons.RightShoulder) && isPressed(instance.state.Buttons.RightShoulder);
 
                 case ControllerButtons.Reset:
-                    return isReleased(prevState.Buttons.Back) && isPressed(state.Buttons.Back);
+                    return isReleased(instance.prevState.Buttons.Back) && isPressed(instance.state.Buttons.Back);
                 case ControllerButtons.Select:
-                    return isReleased(prevState.Buttons.Start) && isPressed(state.Buttons.Start);
+                    return isReleased(instance.prevState.Buttons.Start) && isPressed(instance.state.Buttons.Start);
             }
         }
         return false;
     }
 
-    private bool isPressed(ButtonState state) {
-        return controllerEnabled &&  state == ButtonState.Pressed;
+    private static bool isPressed(ButtonState state) {
+        return instance.controllerEnabled && state == ButtonState.Pressed;
     }
 
-    private bool isReleased(ButtonState state) {
-        return controllerEnabled && state == ButtonState.Released;
+    private static bool isReleased(ButtonState state) {
+        return instance.controllerEnabled && state == ButtonState.Released;
     }
 }

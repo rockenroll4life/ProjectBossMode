@@ -32,7 +32,6 @@ public class Player : MonoBehaviour {
     Animator animator;
     Rigidbody physicsbody;
     NavMeshAgent agent;
-    InputManager input;
 
     MovementState movementState;
     //  TODO: [Rock]: Move to stats class that supports modifications of the base value
@@ -49,8 +48,6 @@ public class Player : MonoBehaviour {
 
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
-
-        input = new InputManager(0);
 
         EventManager.StartListening((int) GameEvents.Mouse_LeftClick, MouseLeftClick);
 
@@ -75,43 +72,21 @@ public class Player : MonoBehaviour {
 
 
     void Update() {
-         //  Update our input manager to track inputs
-        input.update();
-
-        CheckInput();
-
         UpdateState();
 
         UpdateAnimations();
     }
 
     void MouseLeftClick() {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 100)) {
+        if (TargetingManager.IsValidHit(out RaycastHit hit)) {
             agent.SetDestination(hit.point);
 
-            //  
             //movingDir = hit.point - transform.position;
         }
     }
 
     void MouseRightClick() {
         Debug.Log("Right Clicked!");
-    }
-
-    void CheckInput() {
-        //  Debug, can be removed
-        if (input.wasPressed(InputManager.ControllerButtons.Right_Bumper)) {
-            hasWeaponRight = !hasWeaponRight;
-            animator.SetBool("hasWeapon_Right", hasWeaponRight);
-        }
-
-        if (input.wasPressed(InputManager.ControllerButtons.Left_Bumper)) {
-            hasWeaponLeft = !hasWeaponLeft;
-            animator.SetBool("hasWeapon_Left", hasWeaponLeft);
-        }
     }
 
     void UpdateState() {
