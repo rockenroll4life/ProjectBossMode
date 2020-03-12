@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour {
+    //  TODO: [Rock]: Could be problematic...This will trigger the events for EVERYONE who subscribes to it, so if a mobs health changes the player will get a notification...HMMMM
     public readonly Stat HEALTH = new Stat("stat.generic.health", 100, 0, float.MaxValue, (int) GameEvents.Health_Changed);
+    public readonly Stat MANA = new Stat("stat.generic.mana", 100, 0, float.MaxValue, (int) GameEvents.Mana_Changed);
     public readonly Stat MOVEMENT_SPEED = new Stat("stat.generic.movementSpeed", 13.2f, 0, float.MaxValue);
 
     //  TODO: We should make Unit Test that run this instead of clogging up the class file since Stat isn't a Monobehavior

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour {
     public enum ResourceType {
         Health = 0,
-        Resource = 1,
+        Mana = 1,
         _Count = 2
     }
 

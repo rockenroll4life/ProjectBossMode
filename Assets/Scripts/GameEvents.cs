@@ -8,4 +8,5 @@
     Mouse_MiddleClick = 602,
 
     Health_Changed = 603,
+    Mana_Changed = 604,
 }
