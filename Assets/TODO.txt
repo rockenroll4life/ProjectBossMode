@@ -15,9 +15,6 @@ Abilities
 Locomotion
 	- Stop using Navmesh Agent for actual moving around, use it to assist us with getting paths, but actually do the movement ourselves
 
-Entity Stats
-	- All stats related to an entity (Move speed, Health, etc) should be handled in it's own class that supports manipulation of these values (via items, buffs, etc)
-
 Statistics
 	- Generally just fun info to know, even if it rarely effects gameplay (Can also be used for challenge related things or even achievements)
 
