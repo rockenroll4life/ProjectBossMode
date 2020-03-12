@@ -12,7 +12,6 @@ public class Player : MonoBehaviour {
     //  animation so we speed up the animation when we're moving faster than normal or slow down when slowed.
     //  TODO: [Rock]: We need a StateMachineBehavior for our locomotion that adjust the animaiton speed based
     //  this value and the current movement speed
-    static readonly int LAYER_GROUND = 10;
     static readonly float FIXED_MOVEMENT_SPEED = 6.6f;
 
     //  Public Variables
@@ -24,7 +23,6 @@ public class Player : MonoBehaviour {
     //  The rest of the mess...
 
     //  TODO: [Rock]: Cleanup the order of our variables...too lazy and will mess it up while I'm starting to dev this
-    readonly float rollSpeed = 40f;
     readonly float rotationSpeed = 720f;
 
     bool hasWeaponLeft = false;
@@ -40,15 +38,11 @@ public class Player : MonoBehaviour {
     //  TODO: [Rock]: Move to stats class that supports modifications of the base value
     readonly float movementSpeed = 13.2f;
 
-    Vector3 camOffset;
-
     Vector3 movingDir = Vector3.forward;
     bool moving = false;
 
     void Start() {
         cam = Camera.main;
-
-        camOffset = cam.transform.position - transform.position;
 
         animator = GetComponentInChildren<Animator>();
         physicsbody = GetComponent<Rigidbody>();
@@ -57,6 +51,8 @@ public class Player : MonoBehaviour {
         agent.updateRotation = false;
 
         input = new InputManager(0);
+
+        EventManager.StartListening((int) GameEvents.Mouse_LeftClick, MouseLeftClick);
 
         //  TODO: [Rock]: We should have an equipment class that handles setting this when we change our equipment
         animator.SetBool("hasWeapon_Right", false);
@@ -73,6 +69,11 @@ public class Player : MonoBehaviour {
         leftWeapon.transform.localRotation = Quaternion.Euler(0, 0, 90);*/
     }
 
+    private void OnDisable() {
+        EventManager.StopListening((int) GameEvents.Mouse_LeftClick, MouseLeftClick);
+    }
+
+
     void Update() {
          //  Update our input manager to track inputs
         input.update();
@@ -84,32 +85,30 @@ public class Player : MonoBehaviour {
         UpdateAnimations();
     }
 
-    private void LateUpdate() {
-        //  Update camera position
-        cam.transform.position = transform.position + camOffset;
+    void MouseLeftClick() {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100)) {
+            agent.SetDestination(hit.point);
+
+            //  
+            //movingDir = hit.point - transform.position;
+        }
+    }
+
+    void MouseRightClick() {
+        Debug.Log("Right Clicked!");
     }
 
     void CheckInput() {
-        //  TODO: [Rock]: Something better? Not sure...
-        if (Input.GetMouseButtonUp(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100)) {
-                agent.SetDestination(hit.point);
-
-                //  
-                //movingDir = hit.point - transform.position;
-            }
-        }
-
         //  Debug, can be removed
-        if (input.wasPressed(InputManager.Buttons.Right_Bumper)) {
+        if (input.wasPressed(InputManager.ControllerButtons.Right_Bumper)) {
             hasWeaponRight = !hasWeaponRight;
             animator.SetBool("hasWeapon_Right", hasWeaponRight);
         }
 
-        if (input.wasPressed(InputManager.Buttons.Left_Bumper)) {
+        if (input.wasPressed(InputManager.ControllerButtons.Left_Bumper)) {
             hasWeaponLeft = !hasWeaponLeft;
             animator.SetBool("hasWeapon_Left", hasWeaponLeft);
         }
