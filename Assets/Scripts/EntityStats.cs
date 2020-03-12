@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour {
-    public readonly Stat HEALTH = new Stat("stat.generic.health", 100, 0, float.MaxValue);
+    public readonly Stat HEALTH = new Stat("stat.generic.health", 100, 0, float.MaxValue, (int) GameEvents.Health_Changed);
     public readonly Stat MOVEMENT_SPEED = new Stat("stat.generic.movementSpeed", 13.2f, 0, float.MaxValue);
 
     //  TODO: We should make Unit Test that run this instead of clogging up the class file since Stat isn't a Monobehavior
@@ -45,23 +45,43 @@ public class EntityStats : MonoBehaviour {
 
 public class Stat {
     public string name { get; private set; }
-    public float baseValue { get; private set; }
+    private float _currentValue;
+    public float currentValue {
+        get => _currentValue;
+        set {
+            _currentValue = Mathf.Clamp(value, minValue, maxValue);
+
+            //  Support for events when stats change (E.g. when your health changes so you can update the health bar)
+            if (eventID != -1) {
+                EventManager.TriggerEvent(eventID);
+            }
+        }
+    }
 
     readonly Dictionary<System.Guid, StatModifier> modifiers = new Dictionary<System.Guid, StatModifier>();
+    int eventID = -1;
+    
     bool dirty = false;
+    float baseValue;
     float cachedValue;
 
     readonly float minValue;
     readonly float maxValue;
 
-    public Stat(string name, float baseValue, float minValue, float maxValue) {
+    public Stat(string name, float baseValue, float minValue, float maxValue, int eventID) {
         this.name = name;
         this.baseValue = baseValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.eventID = eventID;
         
         dirty = false;
         cachedValue = baseValue;
+        _currentValue = baseValue;
+    }
+
+    public Stat(string name, float baseValue, float minValue, float maxValue)
+        : this (name, baseValue, minValue, maxValue, -1) {
     }
 
     public void SetBaseValue(float value) {
@@ -111,6 +131,23 @@ public class Stat {
         dirty = false;
 
         return cachedValue;
+    }
+
+    public void ResetCurrent() {
+        currentValue = baseValue;
+    }
+
+    public void SetEvent(int eventID) {
+        this.eventID = eventID;
+    }
+
+    public void RemoveEvent() {
+        eventID = -1;
+    }
+
+    public float GetPercent() {
+        //  We're assuming base value isn't null...don't make us regret it!
+        return Mathf.Clamp01(currentValue / baseValue);
     }
 }
 

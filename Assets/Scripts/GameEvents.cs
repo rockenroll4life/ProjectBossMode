@@ -6,4 +6,6 @@
     Mouse_LeftClick = 600,
     Mouse_RightClick = 601,
     Mouse_MiddleClick = 602,
+
+    Health_Changed = 603,
 }
