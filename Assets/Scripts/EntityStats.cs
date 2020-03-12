@@ -6,6 +6,7 @@ public class EntityStats : MonoBehaviour {
     public readonly Stat HEALTH = new Stat("stat.generic.health", 100, 0, float.MaxValue);
     public readonly Stat MOVEMENT_SPEED = new Stat("stat.generic.movementSpeed", 13.2f, 0, float.MaxValue);
 
+    //  TODO: We should make Unit Test that run this instead of clogging up the class file since Stat isn't a Monobehavior
     //  Debug test for stats to verify they're working correctly
     public void DebugTest() {
         Debug.Log("Begin EntityStats DebugTest");
