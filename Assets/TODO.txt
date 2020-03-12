@@ -1,7 +1,4 @@
 
-Player
-	- Rip out most functionality from Player in other classes (Or even into an Entity base class). We want Entities/Players to do very little of the actual game logic
-
 UI
 	- QWER ability + cooldown icons for in-game
 	- Ability Selector (Some way to customize your build)
@@ -10,10 +7,6 @@ Items / Equipment
 	- Decide if items are going to be a thing, and if so add the necessary fixing (UI)
 	- Regardless of the above choice, support an Equipment system (May just be fixed equipment for each character)
 
-Events System
-	- To help untangle a lot of our classes and interdependencies we want to make a generic Events system. While this will create dependencies with this one system, it'll break dependencies between others.
-	E.g. Input talks to events, events tell anyone who cares (No more player specifically checking inputs)
-
 Abilities
 	- System supports a class-less system, however for the purposes of this project we use "classes" (Fixed abilities on a given character)
 	- Decide on a ability manipulation system, probably some Hybrid of D3/Wolcen (Fixed choosable upgrades) and POE (Socketed Gems)
@@ -21,7 +14,6 @@ Abilities
 
 Locomotion
 	- Stop using Navmesh Agent for actual moving around, use it to assist us with getting paths, but actually do the movement ourselves
-	- Abstract locomotion out of the player into a class that can be used via any entity (Though in a derived class of that for mobs we may just let it use NavMeshAgent pathing)
 
 Entity Stats
 	- All stats related to an entity (Move speed, Health, etc) should be handled in it's own class that supports manipulation of these values (via items, buffs, etc)
