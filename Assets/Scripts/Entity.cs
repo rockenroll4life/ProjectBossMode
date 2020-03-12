@@ -9,7 +9,7 @@ public abstract class Entity : MonoBehaviour {
 
     public Locomotion locomotion { get; protected set; }
     public EntityStats stats { get; protected set; }
-    protected EntityAnimator animator;
+    public EntityAnimator animator { get; protected set; }
 
     protected virtual void Start() {
         RegisterEvents();
