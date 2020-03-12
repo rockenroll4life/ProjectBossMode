@@ -8,6 +8,7 @@ public abstract class Entity : MonoBehaviour {
     public GameObject handAttachLeft;
 
     public Locomotion locomotion { get; protected set; }
+    public EntityStats stats { get; protected set; }
     protected EntityAnimator animator;
 
     protected virtual void Start() {
@@ -15,10 +16,15 @@ public abstract class Entity : MonoBehaviour {
 
         animator = gameObject.AddComponent<EntityAnimator>();
         animator.SetOwner(this);
+
+        stats = gameObject.AddComponent<EntityStats>();
+        RegisterStats();
     }
     protected virtual void OnDisable() {
         UnregisterEvents();
     }
+
+    protected virtual void RegisterStats() { }
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }

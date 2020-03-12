@@ -20,5 +20,4 @@ public class Player : Entity {
             locomotion.SetDestination(hit.point);
         }
     }
-
 }

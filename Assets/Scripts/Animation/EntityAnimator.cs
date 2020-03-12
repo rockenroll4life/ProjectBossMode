@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EntityAnimator : MonoBehaviour {
     public GameObject testSwordForAttaching;
 
     Entity owner;
     Animator animator;
-
-    //  TODO: [Rock]: Move to stats class that supports modifications of the base value
-    readonly float movementSpeed = 13.2f;
 
     public void SetOwner(Entity owner) {
         this.owner = owner;
@@ -22,7 +17,7 @@ public class EntityAnimator : MonoBehaviour {
     void Update() {
         //  Update the players movement animation
         animator.SetBool("isMoving", owner.locomotion.isMoving());
-        animator.SetFloat("moveSpeedMultiplier", (movementSpeed / Locomotion.FIXED_MOVEMENT_SPEED), 0.1f, Time.deltaTime);
+        animator.SetFloat("moveSpeedMultiplier", (owner.stats.MOVEMENT_SPEED.GetValue() / Locomotion.FIXED_MOVEMENT_SPEED), 0.1f, Time.deltaTime);
     }
 
     void TEST_ATTACHWEAPONS() {
