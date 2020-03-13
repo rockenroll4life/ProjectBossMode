@@ -72,7 +72,7 @@ public class InputManager : MonoBehaviour {
         controllerEnabled = enabled;
     }
 
-    public static void AddKeyboardListener(KeyCode key, Action listener) {
+    public static void AddKeyboardListener(KeyCode key, Action<int> listener) {
         if (instance.keyboardDictionary.TryGetValue(key, out int numListeners)) {
             numListeners++;
             instance.keyboardDictionary[key] = numListeners;
@@ -84,7 +84,7 @@ public class InputManager : MonoBehaviour {
         EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
     }
 
-    public static void RemoveKeyboardListener(KeyCode key, Action listener) {
+    public static void RemoveKeyboardListener(KeyCode key, Action<int> listener) {
         if (instance.keyboardDictionary.TryGetValue(key, out int numListeners)) {
             EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
 
@@ -102,14 +102,16 @@ public class InputManager : MonoBehaviour {
         //  Mouse Input
         for (int i = 0; i < (int) MouseButtons.Total; i++) {
             if (Input.GetMouseButtonUp(i)) {
-                EventManager.TriggerEvent((int) GameEvents.Mouse_LeftClick + i);
+                //  TODO: [Rock]: Should we pass any value back?
+                EventManager.TriggerEvent((int) GameEvents.Mouse_LeftClick + i, 0);
             }
         }
 
         //  Keyboard Input
         foreach (KeyValuePair<KeyCode, int> key in instance.keyboardDictionary) {
             if (Input.GetKeyUp(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key);
+                //  TODO: [Rock]: Should we pass any value back?
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key, 0);
             }
         }
 

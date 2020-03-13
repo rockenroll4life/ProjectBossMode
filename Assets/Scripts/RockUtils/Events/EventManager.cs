@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour {
-    Dictionary<int, Action> dictionary;
+    Dictionary<int, Action<int>> dictionary;
     static EventManager eventManager;
 
     public static EventManager instance {
@@ -24,12 +24,12 @@ public class EventManager : MonoBehaviour {
 
     void Init() {
         if (dictionary == null) {
-            dictionary = new Dictionary<int, Action>();
+            dictionary = new Dictionary<int, Action<int>>();
         }
     }
 
-    public static void StartListening(int eventID, Action listener) {
-        if (instance.dictionary.TryGetValue(eventID, out Action thisEvent)) {
+    public static void StartListening(int eventID, Action<int> listener) {
+        if (instance.dictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
             thisEvent += listener;
             instance.dictionary[eventID] = thisEvent;
         } else {
@@ -38,20 +38,20 @@ public class EventManager : MonoBehaviour {
         }
     }
 
-    public static void StopListening(int eventID, Action listener) {
+    public static void StopListening(int eventID, Action<int> listener) {
         if (eventManager == null) {
             return;
         }
 
-        if (instance.dictionary.TryGetValue(eventID, out Action thisEvent)) {
+        if (instance.dictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
             thisEvent -= listener;
             instance.dictionary[eventID] = thisEvent;
         }
     }
 
-    public static void TriggerEvent(int eventID) {
-        if (instance.dictionary.TryGetValue(eventID, out Action thisEvent)) {
-            thisEvent.Invoke();
+    public static void TriggerEvent(int eventID, int param) {
+        if (instance.dictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
+            thisEvent.Invoke(param);
         }
     }
 }

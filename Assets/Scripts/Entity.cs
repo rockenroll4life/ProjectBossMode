@@ -29,11 +29,11 @@ public abstract class Entity : MonoBehaviour {
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
 
-    protected void AddEvent(int eventID, Action listener) {
+    protected void AddEvent(int eventID, Action<int> listener) {
         EventManager.StartListening(eventID, listener);
     }
 
-    protected void RemoveEvent(int eventID, Action listener) {
+    protected void RemoveEvent(int eventID, Action<int> listener) {
         EventManager.StopListening(eventID, listener);
     }
 

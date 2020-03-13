@@ -22,18 +22,18 @@ public class Player : Entity {
         RemoveEvent((int) GameEvents.Mana_Changed, ManaChanged);
     }
 
-    void MouseLeftClick() {
+    void MouseLeftClick(int param) {
         if (TargetingManager.IsValidHit(out RaycastHit hit)) {
             locomotion.SetDestination(hit.point);
         }
     }
 
-    void HealthChanged() {
+    void HealthChanged(int param) {
         // Update the players Health UI elements
         ui.UpdateBar(UI.ResourceType.Health, (int) stats.HEALTH.currentValue, stats.HEALTH.GetPercent());
     }
 
-    void ManaChanged() {
+    void ManaChanged(int param) {
         ui.UpdateBar(UI.ResourceType.Mana, (int) stats.MANA.currentValue, stats.MANA.GetPercent());
     }
 }

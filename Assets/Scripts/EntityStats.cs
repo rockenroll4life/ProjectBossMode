@@ -55,7 +55,7 @@ public class Stat {
 
             //  Support for events when stats change (E.g. when your health changes so you can update the health bar)
             if (eventID != -1) {
-                EventManager.TriggerEvent(eventID);
+                EventManager.TriggerEvent(eventID, 0);
             }
         }
     }
