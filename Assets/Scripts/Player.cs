@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 
 public class Player : Entity {
-    UI ui;
+    GameplayUI ui;
+    AbilityManager abilities;
 
     protected override void Start() {
         base.Start();
         
         locomotion = gameObject.AddComponent<PlayerLocomotion>();
-        ui = FindObjectOfType<UI>();
+
+        abilities = gameObject.AddComponent<AbilityManager>();
+        abilities.Setup();
+
+        ui = FindObjectOfType<GameplayUI>();
+        ui.Setup(abilities);
     }
 
     protected override void RegisterEvents() {
@@ -30,10 +36,10 @@ public class Player : Entity {
 
     void HealthChanged(int param) {
         // Update the players Health UI elements
-        ui.UpdateBar(UI.ResourceType.Health, (int) stats.HEALTH.currentValue, stats.HEALTH.GetPercent());
+        ui.UpdateBar(GameplayUI.ResourceType.Health, (int) stats.HEALTH.currentValue, stats.HEALTH.GetPercent());
     }
 
     void ManaChanged(int param) {
-        ui.UpdateBar(UI.ResourceType.Mana, (int) stats.MANA.currentValue, stats.MANA.GetPercent());
+        ui.UpdateBar(GameplayUI.ResourceType.Mana, (int) stats.MANA.currentValue, stats.MANA.GetPercent());
     }
 }

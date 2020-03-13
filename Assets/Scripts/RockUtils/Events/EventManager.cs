@@ -54,4 +54,8 @@ public class EventManager : MonoBehaviour {
             thisEvent.Invoke(param);
         }
     }
+
+    public static void TriggerEvent(int eventID) {
+        TriggerEvent(eventID, 0);
+    }
 }

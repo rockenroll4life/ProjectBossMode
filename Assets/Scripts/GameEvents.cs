@@ -14,6 +14,9 @@
     //  Updating Ability Cooldowns - 10 values reserved (QWERT + Ctrl-QWERT)
     Ability_Cooldown_Update = 613,
 
-    Health_Changed = 623,
-    Mana_Changed = 624,
+    //  Set Ability Max Cooldown - 10 values reserved (QWERT + Ctrl-QWERT)
+    Ability_Cooldown_Max_Update = 623,
+
+    Health_Changed = 633,
+    Mana_Changed = 634,
 }
