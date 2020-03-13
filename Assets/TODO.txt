@@ -17,6 +17,9 @@ Abilities
 Locomotion
 	- Stop using Navmesh Agent for actual moving around, use it to assist us with getting paths, but actually do the movement ourselves
 
+Loot Generator / Manager
+	- You know, that loot-y goodness
+
 Statistics
 	- Generally just fun info to know, even if it rarely effects gameplay (Can also be used for challenge related things or even achievements)
 
