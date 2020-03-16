@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
 public class TargetingManager : MonoBehaviour {
+    static readonly string PLAYER_TAG = "Player";
+    static readonly string ENTITY_TAG = "Entity";
+
     static TargetingManager targetingManager;
     public static TargetingManager instance {
         get {
@@ -28,6 +31,22 @@ public class TargetingManager : MonoBehaviour {
     public static bool IsValidHit(out RaycastHit hit) {
         hit = instance.hit;
         return instance.validRaycastHit;
+    }
+
+    public static Vector3 GetHitLocation() {
+        return instance.hit.point;
+    }
+
+    public static bool IsTargetingEntity() {
+        return IsTargetType(ENTITY_TAG);
+    }
+
+    public static bool IsTargetingPlayer() {
+        return IsTargetType(PLAYER_TAG);
+    }
+
+    static bool IsTargetType(string targetType) {
+        return instance.validRaycastHit && instance.hit.collider.CompareTag(targetType);
     }
 
     private void Update() {

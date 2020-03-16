@@ -9,7 +9,8 @@ public class Locomotion : MonoBehaviour {
     //  animation so we speed up the animation when we're moving faster than normal or slow down when slowed.
     //  TODO: [Rock]: We need a StateMachineBehavior for our locomotion that adjust the animaiton speed based
     //  this value and the current movement speed
-    public static readonly float FIXED_MOVEMENT_SPEED = 6.6f;
+    //public static readonly float FIXED_MOVEMENT_SPEED = 6.6f;
+    public static readonly float FIXED_MOVEMENT_SPEED = 4.95f;
 
     static readonly float ROTATION_SPEED = 720f;
 
@@ -17,7 +18,7 @@ public class Locomotion : MonoBehaviour {
     protected Vector3 lookDir;
     protected Vector3 moveDir;
 
-    public void SetDestination(Vector3 destination) {
+    public void MoveToLocation(Vector3 destination) {
         agent.SetDestination(destination);
     }
 

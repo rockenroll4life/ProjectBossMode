@@ -101,9 +101,12 @@ public class InputManager : MonoBehaviour {
     private void Update() {
         //  Mouse Input
         for (int i = 0; i < (int) MouseButtons.Total; i++) {
-            if (Input.GetMouseButtonUp(i)) {
-                //  TODO: [Rock]: Should we pass any value back?
-                EventManager.TriggerEvent((int) GameEvents.Mouse_LeftClick + i, 0);
+            if (Input.GetMouseButtonDown(i)) {
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Press + i, 0);
+            } else if (Input.GetMouseButtonUp(i)) {
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Release + i, 0);
+            } else if (Input.GetMouseButton(i)) {
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Held + i, 0);
             }
         }
 

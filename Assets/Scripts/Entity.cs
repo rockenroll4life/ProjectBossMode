@@ -37,5 +37,9 @@ public abstract class Entity : MonoBehaviour {
         EventManager.StopListening(eventID, listener);
     }
 
-    protected virtual void Update() { }
+    protected virtual void AIStep() { }
+
+    void Update() {
+        AIStep();
+    }
 }
