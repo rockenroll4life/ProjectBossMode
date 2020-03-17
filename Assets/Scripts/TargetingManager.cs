@@ -1,8 +1,17 @@
 ﻿using UnityEngine;
 
 public class TargetingManager : MonoBehaviour {
+    public enum TargetType {
+        None,
+        World,
+        Mob,
+        Player,
+        Interactable,
+    }
+
     static readonly string PLAYER_TAG = "Player";
-    static readonly string ENTITY_TAG = "Entity";
+    static readonly string MOB_TAG = "Mob";
+    static readonly string INTERACTABLE_TAG = "Interactable";
 
     static TargetingManager targetingManager;
     public static TargetingManager instance {
@@ -23,6 +32,7 @@ public class TargetingManager : MonoBehaviour {
     Camera cam;
     RaycastHit hit;
     bool validRaycastHit;
+    TargetType hitType = TargetType.None;
 
     private void Start() {
         cam = Camera.main;
@@ -37,21 +47,33 @@ public class TargetingManager : MonoBehaviour {
         return instance.hit.point;
     }
 
-    public static bool IsTargetingEntity() {
-        return IsTargetType(ENTITY_TAG);
-    }
-
-    public static bool IsTargetingPlayer() {
-        return IsTargetType(PLAYER_TAG);
+    public static TargetType GetHitType() {
+        return instance.hitType;
     }
 
     static bool IsTargetType(string targetType) {
-        return instance.validRaycastHit && instance.hit.collider.CompareTag(targetType);
+        return instance.hit.collider.CompareTag(targetType);
     }
 
     private void Update() {
         //  Once a frame we'll cast out a ray to see what we hit so that we can cache the value and don't have to cast more than once
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        validRaycastHit = Physics.Raycast(ray, out hit, RAYCAST_DISTANCE);
+        if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
+            validRaycastHit = true;
+
+            //  TODO: We can probably add a component that has a target type so we don't need a big if blob
+            if (IsTargetType(MOB_TAG)) {
+                hitType = TargetType.Mob;
+            } else if (IsTargetType(PLAYER_TAG)) {
+                hitType = TargetType.Player;
+            } else if (IsTargetType(INTERACTABLE_TAG)) {
+                hitType = TargetType.Interactable;
+            } else {
+                hitType = TargetType.World;
+            }
+        } else {
+            validRaycastHit = false;
+            hitType = TargetType.None;
+        }
     }
 }

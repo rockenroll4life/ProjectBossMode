@@ -36,7 +36,7 @@ public class Player : Entity {
 
     void MouseLeftPressed(int param) {
         if (TargetingManager.IsValidHit(out RaycastHit hit)) {
-            if (!TargetingManager.IsTargetingPlayer()) {
+            if (TargetingManager.GetHitType() == TargetingManager.TargetType.World) {
                 moving = true;
                 locomotion.MoveToLocation(hit.point);
             }
