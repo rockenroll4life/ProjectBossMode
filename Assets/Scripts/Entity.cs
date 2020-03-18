@@ -73,6 +73,10 @@ public abstract class Entity : MonoBehaviour {
         EventManager.StopListening(eventID, listener);
     }
 
+    public virtual void OnStatusEffectApplied(StatusEffect effect) { }
+
+    public virtual void OnStatusEffectRemoved(StatusEffect effect) { }
+
     protected virtual void AIStep() { }
 
     void Update() {
