@@ -3,7 +3,7 @@ UI
 	- Ability Selector (Some way to customize your build)
 
 Buffs / Debuffs
-	- General system for adding positive and negative effects to entities either timed for until removed
+	- General system for adding positive and negative effects to entities either timed or until removed
 
 Items / Equipment
 	- Decide if items are going to be a thing, and if so add the necessary fixing (UI)
@@ -16,6 +16,9 @@ Abilities
 
 Locomotion
 	- Stop using Navmesh Agent for actual moving around, use it to assist us with getting paths, but actually do the movement ourselves
+	- Move towards target (attack or ability cast range)
+	- Move towards target location (within ability cast range)
+	- Follow targeted enemy (Attack Range)
 
 Loot Generator / Manager
 	- You know, that loot-y goodness

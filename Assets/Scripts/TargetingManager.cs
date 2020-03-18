@@ -33,6 +33,7 @@ public class TargetingManager : MonoBehaviour {
     RaycastHit hit;
     bool validRaycastHit;
     TargetType hitType = TargetType.None;
+    Entity targetedEntity = null;
 
     private void Start() {
         cam = Camera.main;
@@ -51,29 +52,46 @@ public class TargetingManager : MonoBehaviour {
         return instance.hitType;
     }
 
-    static bool IsTargetType(string targetType) {
-        return instance.hit.collider.CompareTag(targetType);
-    }
-
     private void Update() {
         //  Once a frame we'll cast out a ray to see what we hit so that we can cache the value and don't have to cast more than once
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
             validRaycastHit = true;
 
-            //  TODO: We can probably add a component that has a target type so we don't need a big if blob
-            if (IsTargetType(MOB_TAG)) {
-                hitType = TargetType.Mob;
-            } else if (IsTargetType(PLAYER_TAG)) {
-                hitType = TargetType.Player;
-            } else if (IsTargetType(INTERACTABLE_TAG)) {
-                hitType = TargetType.Interactable;
+            Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
+
+            //  We stopped targeting what we previously were
+            if (targetedEntity != entity && targetedEntity != null) {
+                targetedEntity.OnStopHovering();
+                targetedEntity = null;
+            }
+
+            //  We found a new target
+            if (targetedEntity == null && entity != null) {
+                targetedEntity = entity;
+                targetedEntity.OnStartHovering();
+            }
+
+            if (entity != null) {
+                if (entity.entityType == Entity.EntityType.Mob) {
+                    hitType = TargetType.Mob;
+                } else if (entity.entityType == Entity.EntityType.Player) {
+                    hitType = TargetType.Player;
+                } else if (entity.entityType == Entity.EntityType.Interactable) {
+                    hitType = TargetType.Interactable;
+                }
             } else {
                 hitType = TargetType.World;
             }
         } else {
             validRaycastHit = false;
             hitType = TargetType.None;
+
+            //  TODO: [Rock]: Should we ever really be able to target nothing? We should always at least hit the ground...Investigate
+            if (targetedEntity != null) {
+                targetedEntity.OnStopHovering();
+                targetedEntity = null;
+            }
         }
     }
 }

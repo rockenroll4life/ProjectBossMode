@@ -6,16 +6,11 @@ public class Player : Entity {
 
     bool moving = false;
 
-    protected override void Start() {
-        base.Start();
-        
-        locomotion = gameObject.AddComponent<PlayerLocomotion>();
+    protected override void Initialize() {
+        base.Initialize();
 
-        abilities = gameObject.AddComponent<AbilityManager>();
-        abilities.Setup();
-
-        ui = FindObjectOfType<GameplayUI>();
-        ui.Setup(abilities);
+        entityType = EntityType.Player;
+        highlightColor = new Color(1f, 0.8431f, 0f);
     }
 
     protected override void RegisterEvents() {
@@ -32,6 +27,21 @@ public class Player : Entity {
         RemoveEvent((int) GameEvents.Mouse_Left_Held, MouseLeftHeld);
         RemoveEvent((int) GameEvents.Health_Changed, HealthChanged);
         RemoveEvent((int) GameEvents.Mana_Changed, ManaChanged);
+    }
+
+    protected override void RegisterComponents() {
+        base.RegisterComponents();
+
+        locomotion = gameObject.AddComponent<PlayerLocomotion>();
+
+        abilities = gameObject.AddComponent<AbilityManager>();
+        abilities.Setup();
+
+        ui = FindObjectOfType<GameplayUI>();
+        ui.Setup(abilities);
+
+        animator = gameObject.AddComponent<PlayerAnimator>();
+        animator.SetOwner(this);
     }
 
     void MouseLeftPressed(int param) {
