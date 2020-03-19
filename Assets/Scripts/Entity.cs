@@ -36,6 +36,8 @@ public abstract class Entity : MonoBehaviour {
     public EntityStats stats { get; protected set; }
     public EntityAnimator animator { get; protected set; }
 
+    public StatusEffectManager statusEffects { get; protected set; }
+
     public EntityType entityType { get; protected set; }
 
     void Start() {
@@ -61,6 +63,9 @@ public abstract class Entity : MonoBehaviour {
     protected virtual void RegisterComponents() {
         stats = gameObject.AddComponent<EntityStats>();
 
+        statusEffects = new StatusEffectManager();
+        statusEffects.Setup(this);
+
         renderer = gameObject.GetComponentInChildren<Renderer>();
         highlightShader = Shader.Find("Custom/Entity_Outline");
     }
@@ -80,6 +85,10 @@ public abstract class Entity : MonoBehaviour {
     protected virtual void AIStep() { }
 
     void Update() {
+        //  Update this entities status effects. We handle this first so if their time expires we can clear them before the AI Step
+        statusEffects.Update();
+
+        //  Handle any AI stuffs or extra handling this entity needs
         AIStep();
     }
 

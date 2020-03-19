@@ -51,9 +51,14 @@ public abstract class Ability : MonoBehaviour {
         return false;
     }
 
-    protected virtual void Update() {
+    //  Effects should use this override instead of the normal Update
+    protected virtual void OnUpdate() {
         if (cooldown > 0) {
             cooldown.currentValue -= Time.deltaTime;
         }
+    }
+
+    void Update() {
+        OnUpdate();
     }
 }

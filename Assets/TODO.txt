@@ -10,6 +10,7 @@ Items / Equipment
 	- Regardless of the above choice, support an Equipment system (May just be fixed equipment for each character)
 
 Abilities
+	- Figure out how to support togglable effects
 	- System supports a class-less system, however for the purposes of this project we use "classes" (Fixed abilities on a given character)
 	- Decide on a ability manipulation system, probably some Hybrid of D3/Wolcen (Fixed choosable upgrades) and POE (Socketed Gems)
 	- Abstract abilities out of Player and into their own class (Ideally there's very minimal logic within Player and abilities self handle themselves, abilities know little too nothing about players)

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StatusEffect : MonoBehaviour {
-    public enum ApplicationType {
-        Unique_DurationPriority,
-        Unique_LevelPriority,
-        Stacking,
+public abstract class StatusEffect {
+    public enum Alignment {
+        Positive,
+        Negative,
+        Neutral
     }
 
     public System.Guid effectID { get; protected set; }
@@ -16,10 +16,11 @@ public abstract class StatusEffect : MonoBehaviour {
 
     public int level { get; protected set; } = 1;
 
+    public Alignment alignment { get; protected set; } = Alignment.Neutral;
+
     public bool displayedInUI { get; protected set; } = true;
 
-    //  Whether or not this effect should be the only one of it's effect ID (I.E. should not stack)
-    public ApplicationType applicationType { get; protected set; } = ApplicationType.Unique_LevelPriority;
+    public bool markedForRemoval { get; protected set; } = false;
 
     protected Entity owner = null;
 
@@ -38,6 +39,14 @@ public abstract class StatusEffect : MonoBehaviour {
 
     //  If this status effect needs to do anything actively
     public virtual bool OnUpdate() {
+        if (duration > 0) {
+            duration -= Time.deltaTime;
+
+            if (duration <= 0) {
+                markedForRemoval = true;
+            }
+        }
+
         return needsToUpdate;
     }
 }
