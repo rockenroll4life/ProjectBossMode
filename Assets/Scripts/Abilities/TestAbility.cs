@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TestAbility : Ability {
-    protected override bool CanUseAbility() {
-        return true;
-    }
+    public override void Setup(Entity owner, string name, float cooldownTime) {
+        base.Setup(owner, name, cooldownTime);
 
-    protected override void UseAbility() {
-        
+        interruptsMovement = true;
     }
 }

@@ -27,4 +27,6 @@
 
     Health_Changed = 643,
     Mana_Changed = 644,
+
+    Entity_Stop_Movement = 645,
 }

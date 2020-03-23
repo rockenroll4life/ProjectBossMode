@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimator : EntityAnimator {
     protected override void UpdateAnimations() {
         //  Update the players movement animation
-        animator.SetBool("isMoving", owner.locomotion.isMoving());
+        animator.SetBool("isMoving", owner.locomotion.IsMoving());
         animator.SetFloat("moveSpeedMultiplier", (owner.stats.MOVEMENT_SPEED.GetValue() / Locomotion.FIXED_MOVEMENT_SPEED), 0.1f, Time.deltaTime);
     }
 

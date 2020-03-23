@@ -35,7 +35,7 @@ public class Player : Entity {
         locomotion = gameObject.AddComponent<PlayerLocomotion>();
 
         abilities = gameObject.AddComponent<AbilityManager>();
-        abilities.Setup();
+        abilities.Setup(this);
 
         ui = FindObjectOfType<GameplayUI>();
         ui.Setup(abilities);

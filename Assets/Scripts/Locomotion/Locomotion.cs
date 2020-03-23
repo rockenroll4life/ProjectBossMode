@@ -22,9 +22,13 @@ public class Locomotion : MonoBehaviour {
         agent.SetDestination(destination);
     }
 
-    public bool isMoving() {
+    public bool IsMoving() {
         //  We can probably just use Epsilon squared here?
         return moveDir.sqrMagnitude > Mathf.Epsilon * Mathf.Epsilon;
+    }
+
+    public void StopMovement() {
+        agent.ResetPath();
     }
 
     protected virtual void Start() {
@@ -34,7 +38,7 @@ public class Locomotion : MonoBehaviour {
     protected virtual void Update() {
         //  Movement
         moveDir = agent.velocity;
-        if (isMoving()) {
+        if (IsMoving()) {
             lookDir = moveDir.normalized;
 
         } else {

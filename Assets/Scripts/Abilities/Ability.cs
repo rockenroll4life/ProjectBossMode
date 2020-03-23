@@ -8,12 +8,18 @@ public abstract class Ability : MonoBehaviour {
     //  This is used as an 'id' for this ability for a 1-10 value (What key it's bound to
     public int abilityID { private set; get; }
 
-    public virtual void Setup(string name, float cooldownTime) {
+    public bool interruptsMovement { protected set; get; }
+
+    Entity owner;
+
+    public virtual void Setup(Entity owner, string name, float cooldownTime) {
+        this.owner = owner;
         this.name = name;
         abilityID = -1;
         cooldown = new Stat("", cooldownTime, 0, float.MaxValue);
         //  We're using this a little differently than normal...
         cooldown.currentValue = 0;
+        interruptsMovement = false;
     }
 
     //  TODO: [Rock]: We should probably have a way of cleaning up the ability event listeners
@@ -44,8 +50,14 @@ public abstract class Ability : MonoBehaviour {
         }
     }
 
-    protected abstract bool CanUseAbility();
-    protected abstract void UseAbility();
+    protected virtual bool CanUseAbility() {
+        return true;
+    }
+    protected virtual void UseAbility() {
+        if (interruptsMovement) {
+            owner.locomotion.StopMovement();
+        }
+    }
 
     protected virtual bool canBypassCooldown() {
         return false;

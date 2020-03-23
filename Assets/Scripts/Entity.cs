@@ -14,6 +14,7 @@ public abstract class Entity : MonoBehaviour {
     public GameObject handAttachRight;
     public GameObject handAttachLeft;
 
+    public int entityID { private set; get; }
     Renderer renderer;
     Shader previousShader;
     Shader highlightShader;
