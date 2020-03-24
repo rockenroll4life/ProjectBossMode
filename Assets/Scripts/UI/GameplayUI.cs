@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour {
+    const float AURA_ROTATION_SPEED = 90f;
+
     public enum ResourceType {
         Health = 0,
         Mana = 1,
@@ -20,6 +22,8 @@ public class GameplayUI : MonoBehaviour {
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._Count];
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityButton.ID._Count];
 
+    public static Vector3 auraRotation;
+
     //  TODO: [Rock]: Support rebinding keys
     readonly KeyCode[] defaultKeybindings = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T };
 
@@ -29,6 +33,10 @@ public class GameplayUI : MonoBehaviour {
             this.abilities[i].Setup((AbilityButton.ID) i, defaultKeybindings[i]);
             this.abilities[i].SetValues(abilities.abilities[i].cooldown.GetValue());
         }
+    }
+
+    void Update() {
+        auraRotation.z -= AURA_ROTATION_SPEED * Time.deltaTime;
     }
 
     //  Health / Resource Bars

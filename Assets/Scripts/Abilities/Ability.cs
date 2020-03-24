@@ -3,12 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Ability : MonoBehaviour {
+    public enum TriggerType {
+        Instant,
+        Toggle,
+    }
     public string name { private set; get; }
     public Stat cooldown { private set; get; }
     //  This is used as an 'id' for this ability for a 1-10 value (What key it's bound to
     public int abilityID { private set; get; }
 
     public bool interruptsMovement { protected set; get; }
+
+    public TriggerType triggerType { protected set; get; }
+
+    bool _toggled;
+    public bool toggled {
+        protected set {
+            _toggled = value;
+        }
+        get {
+            return triggerType == TriggerType.Toggle && _toggled;
+        }
+    }
 
     Entity owner;
 
@@ -45,7 +61,6 @@ public abstract class Ability : MonoBehaviour {
 
     void AttemptUseAbility(int param) {
         if ((cooldown == 0 || canBypassCooldown()) && CanUseAbility()) {
-            cooldown.ResetCurrent();
             UseAbility();
         }
     }
@@ -54,6 +69,13 @@ public abstract class Ability : MonoBehaviour {
         return true;
     }
     protected virtual void UseAbility() {
+        if (triggerType != TriggerType.Toggle) {
+            cooldown.ResetCurrent();
+        } else if (triggerType == TriggerType.Toggle) {
+            EventManager.TriggerEvent((int) GameEvents.Ability_Toggle + abilityID);
+            toggled = !toggled;
+        }
+
         if (interruptsMovement) {
             owner.locomotion.StopMovement();
         }

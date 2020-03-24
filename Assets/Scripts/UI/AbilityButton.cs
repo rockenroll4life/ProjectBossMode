@@ -19,6 +19,7 @@ public class AbilityButton {
     public Image cooldown;
     public Text cooldownTimeText;
     public Text keybindText;
+    public Image auraIcon;
     
     ID abilityID = ID.None;
     KeyCode keybind = KeyCode.None;
@@ -38,6 +39,7 @@ public class AbilityButton {
 
         this.abilityID = abilityID;
         EventManager.StartListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StartListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
     }
 
     public void SetValues(float maxCooldown) {
@@ -54,6 +56,7 @@ public class AbilityButton {
     public void RemoveAbilityID() {
         if (abilityID != ID.None) {
             EventManager.StopListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+            EventManager.StopListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
             abilityID = ID.None;
         }
     }
@@ -86,5 +89,9 @@ public class AbilityButton {
 
     void AbilityUsed(int param) {
         EventManager.TriggerEvent((int) GameEvents.Ability_Use + (int) abilityID);
+    }
+
+    void AbilityToggled(int param) {
+        auraIcon.gameObject.SetActive(!auraIcon.gameObject.activeSelf);
     }
 }

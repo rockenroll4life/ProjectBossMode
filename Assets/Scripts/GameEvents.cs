@@ -25,8 +25,11 @@
     //  Set Ability Max Cooldown - 10 values reserved (QWERT + Ctrl-QWERT)
     Ability_Cooldown_Max_Update = 633,
 
-    Health_Changed = 643,
-    Mana_Changed = 644,
+    //  Toggle Ability - 10 value reserved (QWERT + Ctrl-QWERT)
+    Ability_Toggle = 643,
 
-    Entity_Stop_Movement = 645,
+    Health_Changed = 700,
+    Mana_Changed = 701,
+
+    Entity_Stop_Movement = 702,
 }
