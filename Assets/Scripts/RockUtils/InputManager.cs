@@ -36,6 +36,11 @@ public class InputManager : MonoBehaviour {
         Total
     }
 
+    public enum MouseRotation {
+        X = 0,
+        Y,
+    }
+
     static InputManager inputManager;
     public static InputManager instance {
         get {
@@ -54,44 +59,44 @@ public class InputManager : MonoBehaviour {
     }
 
     void Init() {
-        if (keyboardDictionary == null) {
-            keyboardDictionary = new Dictionary<KeyCode, int>();
+        if (inputDictionary == null) {
+            inputDictionary = new Dictionary<KeyCode, int>();
         }
     }
 
     GamePadState prevState;
     GamePadState state;
 
-    //  Keyboard
-    Dictionary<KeyCode, int> keyboardDictionary;
+    //  Input
+    Dictionary<KeyCode, int> inputDictionary;
 
     //  Controller
     bool controllerEnabled = false;
 
-    public void SetControllerEnable(bool enabled) {
+    public void SetControllerEnabled(bool enabled) {
         controllerEnabled = enabled;
     }
 
-    public static void AddKeyboardListener(KeyCode key, Action<int> listener) {
-        if (instance.keyboardDictionary.TryGetValue(key, out int numListeners)) {
+    public static void AddInputListener(KeyCode key, Action<int> listener) {
+        if (instance.inputDictionary.TryGetValue(key, out int numListeners)) {
             numListeners++;
-            instance.keyboardDictionary[key] = numListeners;
+            instance.inputDictionary[key] = numListeners;
         } else {
             numListeners++;
-            instance.keyboardDictionary.Add(key, numListeners);
+            instance.inputDictionary.Add(key, numListeners);
         }
 
         EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
     }
 
-    public static void RemoveKeyboardListener(KeyCode key, Action<int> listener) {
-        if (instance.keyboardDictionary.TryGetValue(key, out int numListeners)) {
+    public static void RemoveInputListener(KeyCode key, Action<int> listener) {
+        if (instance.inputDictionary.TryGetValue(key, out int numListeners)) {
             EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
 
             if (numListeners-- == 0) {
-                instance.keyboardDictionary.Remove(key);
+                instance.inputDictionary.Remove(key);
             } else {
-                instance.keyboardDictionary[key] = numListeners;
+                instance.inputDictionary[key] = numListeners;
             }
 
             EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
@@ -111,7 +116,7 @@ public class InputManager : MonoBehaviour {
         }
 
         //  Keyboard Input
-        foreach (KeyValuePair<KeyCode, int> key in instance.keyboardDictionary) {
+        foreach (KeyValuePair<KeyCode, int> key in instance.inputDictionary) {
             if (Input.GetKeyUp(key.Key)) {
                 //  TODO: [Rock]: Should we pass any value back?
                 EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key, 0);
@@ -123,6 +128,37 @@ public class InputManager : MonoBehaviour {
             prevState = state;
             //  HACK: Because we only support 1 controller while we're a Singleton we need to hack this. FIX ME!
             state = GamePad.GetState(PlayerIndex.One);
+        }
+
+        //  Mouse Rotation
+        //  TODO
+        //  NOTE: Mouse Rotation and controller rotation do the same thing, just in different ways...FIGURE IT OUT! XD
+
+        //  Controller Rotation
+        if (controllerEnabled) {
+            float leftXRot = getStick(ControllerStick.Left).x;
+            if (Math.Abs(leftXRot) > Mathf.Epsilon) {
+                int param = (int) (leftXRot * 1000);
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Move_X, param);
+            }
+
+            float rightXRot = getStick(ControllerStick.Right).x;
+            if (Math.Abs(rightXRot) > Mathf.Epsilon) {
+                int param = (int) (rightXRot * 1000);
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Right_Move_X, param);
+            }
+
+            float leftYRot = getStick(ControllerStick.Left).z;
+            if (Math.Abs(leftYRot) > Mathf.Epsilon) {
+                int param = (int) (leftYRot * 1000);
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Move_Z, param);
+            }
+
+            float rightYRot = getStick(ControllerStick.Right).z;
+            if (Math.Abs(rightYRot) > Mathf.Epsilon) {
+                int param = (int) (rightYRot * 1000);
+                EventManager.TriggerEvent((int) GameEvents.Mouse_Right_Move_Z, param);
+            }
         }
     }
 
