@@ -4,7 +4,7 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 //  TODO: [Rock]: Abilities don't need to be MonoBehaviours, we should let the ability manager handle them
-public abstract class Ability : MonoBehaviour {
+public abstract class Ability {
     public enum TriggerType {
         Instant,
         Toggle,
@@ -88,13 +88,9 @@ public abstract class Ability : MonoBehaviour {
     }
 
     //  Effects should use this override instead of the normal Update
-    protected virtual void OnUpdate() {
+    public virtual void Update() {
         if (cooldown > 0) {
             cooldown.currentValue -= Time.deltaTime;
         }
-    }
-
-    void Update() {
-        OnUpdate();
     }
 }

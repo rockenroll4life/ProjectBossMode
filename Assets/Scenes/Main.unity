@@ -385,7 +385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 142582227}
   - component: {fileID: 142582226}
-  - component: {fileID: 142582228}
+  - component: {fileID: 142582230}
   - component: {fileID: 142582229}
   m_Layer: 0
   m_Name: Global Systems
@@ -421,18 +421,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &142582228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142582225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb56f7320f9a68248b98d2e73defb03f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &142582229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +431,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d739e2c8a054b04495c6400d91ba20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &142582230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142582225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1bda6772471234f8aa2209df569b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &280636807

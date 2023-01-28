@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-//  TODO: [Rock]: Make the abilities not components
-public class AbilityManager : MonoBehaviour {
+public class AbilityManager {
     static readonly int NUM_ABILITIES = 5;
 
     Entity owner;
@@ -14,12 +13,19 @@ public class AbilityManager : MonoBehaviour {
 
         for (int i = 0; i < NUM_ABILITIES; i++) {
             if (i == 0) {
-                abilities[i] = gameObject.AddComponent<TestNoStopAbility>();
+                abilities[i] = new TestNoStopAbility();
             } else {
-                abilities[i] = gameObject.AddComponent<TestAbility>();
+                abilities[i] = new TestAbility();
             }
+            //  TODO: [Rock]: We should never need to setup the ability name nor cooldown, this should be done via the ability
             abilities[i].Setup(owner, "Ability " + i, 10);
             abilities[i].SetAbilityID(i);
+        }
+    }
+
+    public void Update() {
+        foreach(Ability ability in abilities) {
+            ability.Update();
         }
     }
 }

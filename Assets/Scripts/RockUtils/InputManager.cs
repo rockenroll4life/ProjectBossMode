@@ -49,7 +49,7 @@ public class InputManager : MonoBehaviour {
                 inputManager = FindObjectOfType(typeof(InputManager)) as InputManager;
 
                 if (!inputManager) {
-                    Debug.LogError("Using this requires an EventManager on a GameObject within the scene");
+                    Debug.LogError("Using this requires an InputManager on a GameObject within the scene");
                 } else {
                     inputManager.Init();
                 }

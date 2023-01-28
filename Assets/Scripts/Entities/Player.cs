@@ -35,7 +35,7 @@ public class Player : Entity {
 
         locomotion = gameObject.AddComponent<PlayerLocomotion>();
 
-        abilities = gameObject.AddComponent<AbilityManager>();
+        abilities = new AbilityManager();
         abilities.Setup(this);
 
         ui = FindObjectOfType<GameplayUI>();
@@ -48,7 +48,7 @@ public class Player : Entity {
     protected override void UpdateStep() {
         base.UpdateStep();
 
-
+        abilities.Update();
     }
 
     void MouseLeftPressed(int param) {
