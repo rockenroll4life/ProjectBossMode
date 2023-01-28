@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using RockUtils.GameEvents;
 
 [System.Serializable]
 public class AbilityButton {
@@ -50,7 +49,7 @@ public class AbilityButton {
         RemoveAbilityKeybind();
 
         this.keybind = keybind;
-        InputManager.AddKeyboardListener(keybind, AbilityUsed);
+        InputManager.AddInputListener(keybind, AbilityUsed);
     }
 
     public void RemoveAbilityID() {
@@ -63,7 +62,7 @@ public class AbilityButton {
 
     public void RemoveAbilityKeybind() {
         if (keybind != KeyCode.None) {
-            InputManager.RemoveKeyboardListener(keybind, AbilityUsed);
+            InputManager.RemoveInputListener(keybind, AbilityUsed);
             keybind = KeyCode.None;
         }
     }

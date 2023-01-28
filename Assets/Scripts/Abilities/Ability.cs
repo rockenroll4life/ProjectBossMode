@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RockUtils.GameEvents;
 
+//  TODO: [Rock]: Abilities don't need to be MonoBehaviours, we should let the ability manager handle them
 public abstract class Ability : MonoBehaviour {
     public enum TriggerType {
         Instant,

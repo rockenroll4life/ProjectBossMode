@@ -9,9 +9,9 @@ public class TargetingManager : MonoBehaviour {
         Interactable,
     }
 
-    static readonly string PLAYER_TAG = "Player";
-    static readonly string MOB_TAG = "Mob";
-    static readonly string INTERACTABLE_TAG = "Interactable";
+    //static readonly string PLAYER_TAG = "Player";
+    //static readonly string MOB_TAG = "Mob";
+    //static readonly string INTERACTABLE_TAG = "Interactable";
 
     static TargetingManager targetingManager;
     public static TargetingManager instance {
