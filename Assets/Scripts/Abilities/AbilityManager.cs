@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//  TODO: [Rock]: Make the abilities not components
 public class AbilityManager : MonoBehaviour {
     static readonly int NUM_ABILITIES = 5;
 

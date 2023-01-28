@@ -45,6 +45,12 @@ public class Player : Entity {
         animator.SetOwner(this);
     }
 
+    protected override void UpdateStep() {
+        base.UpdateStep();
+
+
+    }
+
     void MouseLeftPressed(int param) {
         if (TargetingManager.IsValidHit(out RaycastHit hit)) {
             if (TargetingManager.GetHitType() == TargetingManager.TargetType.World) {

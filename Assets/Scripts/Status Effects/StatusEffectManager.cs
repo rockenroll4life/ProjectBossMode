@@ -8,7 +8,7 @@ public class StatusEffectManager {
     //  TODO: [Rock]: Consider having this stored as a Dictionary of Dictionaries, where the keys are the effects alignment (Neutral, Positive, Negative) and the values are
     //  dictionaries holding a Guid and status effect...could simplify this some
 
-    //  We are seperating these out into 3 categories so we can more easily render these out in the UI in a logical order
+    //  We are separating these out into 3 categories so we can more easily render these out in the UI in a logical order
     //  Neutral => Positive => Negative
     Dictionary<System.Guid, StatusEffect> neutralStatusEffects = new Dictionary<System.Guid, StatusEffect>();
     Dictionary<System.Guid, StatusEffect> positiveStatusEffects = new Dictionary<System.Guid, StatusEffect>();

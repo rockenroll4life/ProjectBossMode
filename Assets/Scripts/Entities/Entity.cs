@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
@@ -83,14 +81,22 @@ public abstract class Entity : MonoBehaviour {
 
     public virtual void OnStatusEffectRemoved(StatusEffect effect) { }
 
-    protected virtual void AIStep() { }
-
-    void Update() {
+    //  Pre-Update - handle anything that needs to be done prior to the entity trying to act. For example, expiring status effects.
+    protected virtual void PreUpdateStep() {
         //  Update this entities status effects. We handle this first so if their time expires we can clear them before the AI Step
         statusEffects.Update();
+    }
 
-        //  Handle any AI stuffs or extra handling this entity needs
-        AIStep();
+    //  Update - This is where a brunt of the logic for entities will be handled from
+    protected virtual void UpdateStep() { }
+
+    //  Post-Update - This is where we can handle any last minute things before we're done for this tick with the entity
+    protected virtual void PostUpdateStep() { }
+
+    private void Update() {
+        PreUpdateStep();
+        UpdateStep();
+        PostUpdateStep();
     }
 
     public void OnStartHovering() {
