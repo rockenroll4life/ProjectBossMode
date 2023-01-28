@@ -8,6 +8,8 @@
             //  We're reserving the first 512 ids for KeyCode support, probably don't really need this many but that's what we're doing...
             //  Just for safety we'll resume the values at 600
 
+            //  TODO: [Rock]: We should add another two blocks of events for button Released and Held
+
             //  Mouse Actions
             Mouse_Left_Press = 600,
             Mouse_Right_Press = 601,
@@ -22,27 +24,29 @@
             Mouse_Middle_Held = 608,
 
             Mouse_Left_Move_X = 609,
-            Mouse_Left_Move_Z = 610,
+            Mouse_Right_Move_X = 610,
+            Mouse_Middle_Move_X = 611,
 
-            Mouse_Right_Move_X = 611,
-            Mouse_Right_Move_Z = 612,
+            Mouse_Left_Move_Y = 612,
+            Mouse_Right_Move_Y = 613,
+            Mouse_Middle_Move_Y = 614,
 
             //  Ability Use - 10 values reserved (QWERT + Ctrl-QWERT)
-            Ability_Use = 613,
+            Ability_Use = 615,
 
             //  Updating Ability Cooldowns - 10 values reserved (QWERT + Ctrl-QWERT)
-            Ability_Cooldown_Update = 623,
+            Ability_Cooldown_Update = 625,
 
             //  Set Ability Max Cooldown - 10 values reserved (QWERT + Ctrl-QWERT)
-            Ability_Cooldown_Max_Update = 633,
+            Ability_Cooldown_Max_Update = 635,
 
             //  Toggle Ability - 10 value reserved (QWERT + Ctrl-QWERT)
-            Ability_Toggle = 643,
+            Ability_Toggle = 645,
 
-            Health_Changed = 700,
-            Mana_Changed = 701,
+            Health_Changed = 702,
+            Mana_Changed = 703,
 
-            Entity_Stop_Movement = 702,
+            Entity_Stop_Movement = 704,
         }
     }
 }

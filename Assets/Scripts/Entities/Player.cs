@@ -4,12 +4,15 @@ using RockUtils.GameEvents;
 public class Player : Entity {
     GameplayUI ui;
     AbilityManager abilities;
+    Camera camera;
+    float cameraSpeed = 10f;
 
     bool moving = false;
 
     protected override void Initialize() {
         base.Initialize();
 
+        camera = Camera.main;
         entityType = EntityType.Player;
         highlightColor = new Color(1f, 0.8431f, 0f);
     }

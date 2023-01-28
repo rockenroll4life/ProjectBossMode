@@ -29,6 +29,9 @@ public class EventManager : MonoBehaviour {
     }
 
     public static void StartListening(int eventID, Action<int> listener) {
+        //  TODO: [Rock]: If the event ID is related to buttons, we should by default add the button to the input listeners so they properly trigger
+        //  the game events instead of us having to go the backwards route and add a Input Event (That secretly adds a Game Event)
+
         if (instance.dictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
             thisEvent += listener;
             instance.dictionary[eventID] = thisEvent;
