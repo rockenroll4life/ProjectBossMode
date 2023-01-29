@@ -114,6 +114,8 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    //  TODO: [Rock]: We need to create a system within the input manager for CHORDS (Multi-key inputs - E.G. Ctrl+W, Shift+LClick)
+
     private void Update() {
         //  Mouse Button Input
         for (int i = 0; i < (int) MouseButtons.Total; i++) {

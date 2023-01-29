@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RockUtils.GameEvents;
 
 public class TargetingManager : MonoBehaviour {
     public enum TargetType {
@@ -9,35 +10,26 @@ public class TargetingManager : MonoBehaviour {
         Interactable,
     }
 
-    //static readonly string PLAYER_TAG = "Player";
-    //static readonly string MOB_TAG = "Mob";
-    //static readonly string INTERACTABLE_TAG = "Interactable";
-
-    static TargetingManager targetingManager;
+    static TargetingManager _instance;
     public static TargetingManager instance {
         get {
-            if (!targetingManager) {
-                targetingManager = FindObjectOfType(typeof(TargetingManager)) as TargetingManager;
+            if (!_instance) {
+                _instance = FindObjectOfType<TargetingManager>();
 
-                if (!targetingManager) {
+                if (!_instance) {
                     Debug.LogError("Using this requires an EventManager on a GameObject within the scene");
                 }
             }
-            return targetingManager;
+            return _instance;
         }
     }
 
     static readonly int RAYCAST_DISTANCE = 100;
-    
-    Camera cam;
+
     RaycastHit hit;
     bool validRaycastHit;
     TargetType hitType = TargetType.None;
     Entity targetedEntity = null;
-
-    private void Start() {
-        cam = Camera.main;
-    }
 
     public static bool IsValidHit(out RaycastHit hit) {
         hit = instance.hit;
@@ -52,7 +44,41 @@ public class TargetingManager : MonoBehaviour {
         return instance.hitType;
     }
 
-    private void Update() {
+    private void Start() {
+        EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
+    }
+
+    private void OnDisable() {
+        EventManager.StopListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
+    }
+
+    void SelectTarget(int param) {
+        Entity hitEntity = null;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
+            hitEntity = hit.collider.gameObject.GetComponentInParent<Entity>();
+        }
+
+        //  We either selected or unselected an entity
+        if (hitEntity != targetedEntity ) {
+            if (targetedEntity == null) {
+                targetedEntity = hitEntity;
+                targetedEntity.OnStartHovering();
+            } else if (hitEntity == null) {
+                targetedEntity.OnStopHovering();
+                targetedEntity = null;
+            } else {
+                targetedEntity.OnStopHovering();
+                hitEntity.OnStartHovering();
+                targetedEntity = hitEntity;
+            }
+        }
+    }
+
+
+    //  NOTE: [Rock]: For now we're going to not worry about ticking raycast to highlight an entity, while nice, it probably isn't what we want to do.
+    //  For now we'll leave this here in case we want to approach this later in the future.
+    /*private void Update() {
         //  Once a frame we'll cast out a ray to see what we hit so that we can cache the value and don't have to cast more than once
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
@@ -93,5 +119,5 @@ public class TargetingManager : MonoBehaviour {
                 targetedEntity = null;
             }
         }
-    }
+    }*/
 }
