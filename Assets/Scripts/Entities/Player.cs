@@ -2,19 +2,18 @@
 using RockUtils.GameEvents;
 
 public class Player : Entity {
+    static readonly Color PLAYER_COLOR = new Color(1f, 0.8431f, 0f);
+
     GameplayUI ui;
     AbilityManager abilities;
 
     bool moving = false;
 
-    protected override void Initialize() {
-        base.Initialize();
-
-        entityType = EntityType.Player;
-        highlightColor = new Color(1f, 0.8431f, 0f);
-    }
-
+    public override EntityType GetEntityType() { return EntityType.Player; }
     public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Player; }
+
+    protected override Color? GetHighlightColor() { return PLAYER_COLOR; }
+    protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
 
     protected override void RegisterEvents() {
         base.RegisterEvents();

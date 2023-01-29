@@ -17,27 +17,11 @@ public abstract class Entity : MonoBehaviour {
     Shader previousShader;
     Shader highlightShader;
 
-    //  Hidden values, we don't really need to go setting lots of things when we can hide it behind the scenes
-    Color _highlight = Color.white;
-    Color _highlightOutline;
-    protected Color highlightColor {
-        get {
-            return _highlight;
-        }
-
-        set {
-            _highlight = value;
-            _highlightOutline = new Color(value.r, value.g, value.b, 0.5f);
-        }
-    }
-
     public Locomotion locomotion { get; protected set; }
     public EntityStats stats { get; protected set; }
     public EntityAnimator animator { get; protected set; }
 
     public StatusEffectManager statusEffects { get; protected set; }
-
-    public EntityType entityType { get; protected set; }
 
     void Start() {
         Initialize();
@@ -52,7 +36,13 @@ public abstract class Entity : MonoBehaviour {
         UnregisterEvents();
     }
 
+    public abstract EntityType GetEntityType();
     public abstract TargetingManager.TargetType GetTargetType();
+    protected virtual Color? GetHighlightColor() { return null; }
+    protected virtual Color? GetHighlightOutlineColor() { return null; }
+
+    protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
+
 
     protected virtual void Initialize() { }
 
@@ -102,14 +92,25 @@ public abstract class Entity : MonoBehaviour {
     }
 
     public void OnStartHovering() {
-        previousShader = renderer.material.shader;
-        renderer.material.shader = highlightShader;
+        if (HasHighlightColor()) {
+            previousShader = renderer.material.shader;
+            renderer.material.shader = highlightShader;
 
-        renderer.material.SetColor("_FirstOutlineColor", _highlight);
-        renderer.material.SetColor("_SecondOutlineColor", _highlightOutline);
+            Color? highlight = GetHighlightColor();
+            Color? outline = GetHighlightOutlineColor();
+
+            if (highlight.HasValue) {
+                renderer.material.SetColor("_FirstOutlineColor", highlight.Value);
+            }
+            if (outline.HasValue) {
+                renderer.material.SetColor("_SecondOutlineColor", outline.Value);
+            }
+        }
     }
 
     public void OnStopHovering() {
-        renderer.material.shader = previousShader;
+        if (HasHighlightColor()) {
+            renderer.material.shader = previousShader;
+        }
     }
 }

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Mob : Entity {
-    protected override void Initialize() {
-        base.Initialize();
-
-        entityType = EntityType.Mob;
-        highlightColor = Color.red;
-    }
-
+    public override EntityType GetEntityType() { return EntityType.Mob; }
     public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Mob; }
+
+    protected override Color? GetHighlightColor() { return Color.red; }
+    protected override Color? GetHighlightOutlineColor() { return Color.red; }
 
     protected virtual void AIStep() { }
 
