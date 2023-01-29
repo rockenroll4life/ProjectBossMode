@@ -56,7 +56,20 @@ public class TargetingManager : MonoBehaviour {
         Entity hitEntity = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
+            validRaycastHit = true;
             hitEntity = hit.collider.gameObject.GetComponentInParent<Entity>();
+
+            if (hitEntity != null) {
+                if (hitEntity.entityType == Entity.EntityType.Mob) {
+                    hitType = TargetType.Mob;
+                } else if (hitEntity.entityType == Entity.EntityType.Player) {
+                    hitType = TargetType.Player;
+                } else if (hitEntity.entityType == Entity.EntityType.Interactable) {
+                    hitType = TargetType.Interactable;
+                }
+            } else {
+                hitType = TargetType.World;
+            }
         }
 
         //  We either selected or unselected an entity
