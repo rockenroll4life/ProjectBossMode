@@ -62,6 +62,7 @@ public class InputManager : MonoBehaviour {
     private void Awake() {
         if (_instance == null) {
             _instance = this;
+            _instance.Init();
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);
