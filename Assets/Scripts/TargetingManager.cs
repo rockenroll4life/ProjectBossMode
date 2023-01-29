@@ -46,10 +46,12 @@ public class TargetingManager : MonoBehaviour {
 
     private void Start() {
         EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
+        EventManager.StartListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
     }
 
     private void OnDisable() {
         EventManager.StopListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
+        EventManager.StopListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
     }
 
     void SelectTarget(int param) {
@@ -88,6 +90,13 @@ public class TargetingManager : MonoBehaviour {
         }
     }
 
+    void UpdateMoveLocation(int param) {
+        if (hitType == TargetType.World) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //  TODO: [Rock]: We should probably use a layer mask in this instance to only collide with the world?
+            Physics.Raycast(ray, out hit, RAYCAST_DISTANCE);
+        }
+    }
 
     //  NOTE: [Rock]: For now we're going to not worry about ticking raycast to highlight an entity, while nice, it probably isn't what we want to do.
     //  For now we'll leave this here in case we want to approach this later in the future.
