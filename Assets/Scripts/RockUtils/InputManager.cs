@@ -42,20 +42,29 @@ public class InputManager : MonoBehaviour {
         Y,
     }
 
-    static InputManager inputManager;
+    static InputManager _instance;
     public static InputManager instance {
         get {
-            if (!inputManager) {
-                inputManager = FindObjectOfType(typeof(InputManager)) as InputManager;
-
-                if (!inputManager) {
-                    Debug.LogError("Using this requires an InputManager on a GameObject within the scene");
-                } else {
-                    inputManager.Init();
+            if (!_instance) {
+                _instance = FindObjectOfType<InputManager>();
+                if (!_instance) {
+                    GameObject singleton = new GameObject("InputManager");
+                    _instance = singleton.AddComponent<InputManager>();
                 }
+
+                _instance.Init();
             }
 
-            return inputManager;
+            return _instance;
+        }
+    }
+
+    private void Awake() {
+        if (_instance == null) {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
         }
     }
 
