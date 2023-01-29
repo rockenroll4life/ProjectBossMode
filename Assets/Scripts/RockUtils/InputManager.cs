@@ -129,6 +129,12 @@ public class InputManager : MonoBehaviour {
             }
         }
 
+        //  Mouse Wheel Input
+        if (Input.mouseScrollDelta != Vector2.zero) {
+            int param = (int) (Input.mouseScrollDelta.y * 1000);
+            EventManager.TriggerEvent((int) GameEvents.Mouse_Scroll_Wheel, param);
+        }
+
         //  Keyboard Input
         foreach (KeyValuePair<KeyCode, int> key in instance.inputDictionary) {
             if (Input.GetKeyDown(key.Key)) {

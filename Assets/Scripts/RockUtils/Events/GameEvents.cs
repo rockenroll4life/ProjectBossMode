@@ -31,22 +31,24 @@
             Mouse_Right_Move_Y = 613,
             Mouse_Middle_Move_Y = 614,
 
+            Mouse_Scroll_Wheel = 615,
+
             //  Ability Use - 10 values reserved (QWERT + Ctrl-QWERT)
-            Ability_Use = 615,
+            Ability_Use = 616,
 
             //  Updating Ability Cooldowns - 10 values reserved (QWERT + Ctrl-QWERT)
-            Ability_Cooldown_Update = 625,
+            Ability_Cooldown_Update = 626,
 
             //  Set Ability Max Cooldown - 10 values reserved (QWERT + Ctrl-QWERT)
-            Ability_Cooldown_Max_Update = 635,
+            Ability_Cooldown_Max_Update = 636,
 
             //  Toggle Ability - 10 value reserved (QWERT + Ctrl-QWERT)
-            Ability_Toggle = 645,
+            Ability_Toggle = 646,
 
-            Health_Changed = 702,
-            Mana_Changed = 703,
+            Health_Changed = 703,
+            Mana_Changed = 704,
 
-            Entity_Stop_Movement = 704,
+            Entity_Stop_Movement = 705,
         }
     }
 }
