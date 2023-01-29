@@ -4,33 +4,36 @@ using RockUtils.GameEvents;
 public class Player : Entity {
     GameplayUI ui;
     AbilityManager abilities;
-    Camera camera;
-    float cameraSpeed = 10f;
 
     bool moving = false;
 
     protected override void Initialize() {
         base.Initialize();
 
-        camera = Camera.main;
         entityType = EntityType.Player;
         highlightColor = new Color(1f, 0.8431f, 0f);
     }
 
+    public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Player; }
+
     protected override void RegisterEvents() {
-        AddEvent((int) GameEvents.Mouse_Left_Press, MouseLeftPressed);
+        base.RegisterEvents();
+
         AddEvent((int) GameEvents.Mouse_Left_Release, MouseLeftReleased);
-        AddEvent((int) GameEvents.Mouse_Left_Held, MouseLeftHeld);
         AddEvent((int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
         AddEvent((int) GameEvents.Mana_Changed, ManaChanged);
+        AddEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
+        AddEvent((int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void UnregisterEvents() {
-        RemoveEvent((int) GameEvents.Mouse_Left_Press, MouseLeftPressed);
+        base.UnregisterEvents();
+
         RemoveEvent((int) GameEvents.Mouse_Left_Release, MouseLeftReleased);
-        RemoveEvent((int) GameEvents.Mouse_Left_Held, MouseLeftHeld);
         RemoveEvent((int) GameEvents.Health_Changed, HealthChanged);
         RemoveEvent((int) GameEvents.Mana_Changed, ManaChanged);
+        RemoveEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
+        RemoveEvent((int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void RegisterComponents() {
@@ -54,24 +57,19 @@ public class Player : Entity {
         abilities.Update();
     }
 
-    void MouseLeftPressed(int param) {
-        if (TargetingManager.IsValidHit(out RaycastHit hit)) {
-            if (TargetingManager.GetHitType() == TargetingManager.TargetType.World) {
-                moving = true;
-                locomotion.MoveToLocation(hit.point);
-            }
+    void TargetedEntity(int param) {
 
+    }
+
+    void TargetedWorld(int param) {
+        if (TargetingManager.IsValidHit(out RaycastHit hit)) {
+            moving = true;
+            locomotion.MoveToLocation(hit.point);
         }
     }
 
     void MouseLeftReleased(int param) {
         moving = false;
-    }
-
-    void MouseLeftHeld(int param) {
-        if (moving) {
-            locomotion.MoveToLocation(TargetingManager.GetHitLocation());
-        }
     }
 
     void HealthChanged(int param) {

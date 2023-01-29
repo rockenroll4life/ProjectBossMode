@@ -62,16 +62,16 @@ public class TargetingManager : MonoBehaviour {
             hitEntity = hit.collider.gameObject.GetComponentInParent<Entity>();
 
             if (hitEntity != null) {
-                if (hitEntity.entityType == Entity.EntityType.Mob) {
-                    hitType = TargetType.Mob;
-                } else if (hitEntity.entityType == Entity.EntityType.Player) {
-                    hitType = TargetType.Player;
-                } else if (hitEntity.entityType == Entity.EntityType.Interactable) {
-                    hitType = TargetType.Interactable;
-                }
+                hitType = hitEntity.GetTargetType();
+                EventManager.TriggerEvent((int) GameEvents.Targeted_Entity);
             } else {
                 hitType = TargetType.World;
+                EventManager.TriggerEvent((int) GameEvents.Targeted_World);
             }
+        } else {
+            //  NOTE: [Rock]: There shouldn't really ever be an instance where we don't collide with something in the future, however we'll keep this here for now
+            validRaycastHit = false;
+            hitType = TargetType.None;
         }
 
         //  We either selected or unselected an entity
@@ -87,6 +87,9 @@ public class TargetingManager : MonoBehaviour {
                 hitEntity.OnStartHovering();
                 targetedEntity = hitEntity;
             }
+        } else if (targetedEntity != null) {
+            targetedEntity.OnStopHovering();
+            targetedEntity = null;
         }
     }
 
@@ -95,51 +98,7 @@ public class TargetingManager : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             //  TODO: [Rock]: We should probably use a layer mask in this instance to only collide with the world?
             Physics.Raycast(ray, out hit, RAYCAST_DISTANCE);
+            EventManager.TriggerEvent((int) GameEvents.Targeted_World);
         }
     }
-
-    //  NOTE: [Rock]: For now we're going to not worry about ticking raycast to highlight an entity, while nice, it probably isn't what we want to do.
-    //  For now we'll leave this here in case we want to approach this later in the future.
-    /*private void Update() {
-        //  Once a frame we'll cast out a ray to see what we hit so that we can cache the value and don't have to cast more than once
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
-            validRaycastHit = true;
-
-            Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
-
-            //  We stopped targeting what we previously were
-            if (targetedEntity != entity && targetedEntity != null) {
-                targetedEntity.OnStopHovering();
-                targetedEntity = null;
-            }
-
-            //  We found a new target
-            if (targetedEntity == null && entity != null) {
-                targetedEntity = entity;
-                targetedEntity.OnStartHovering();
-            }
-
-            if (entity != null) {
-                if (entity.entityType == Entity.EntityType.Mob) {
-                    hitType = TargetType.Mob;
-                } else if (entity.entityType == Entity.EntityType.Player) {
-                    hitType = TargetType.Player;
-                } else if (entity.entityType == Entity.EntityType.Interactable) {
-                    hitType = TargetType.Interactable;
-                }
-            } else {
-                hitType = TargetType.World;
-            }
-        } else {
-            validRaycastHit = false;
-            hitType = TargetType.None;
-
-            //  TODO: [Rock]: Should we ever really be able to target nothing? We should always at least hit the ground...Investigate
-            if (targetedEntity != null) {
-                targetedEntity.OnStopHovering();
-                targetedEntity = null;
-            }
-        }
-    }*/
 }

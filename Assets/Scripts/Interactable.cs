@@ -7,6 +7,7 @@ public class Interactable : Entity {
         base.Initialize();
 
         entityType = EntityType.Interactable;
-        highlightColor = Color.white;
     }
+
+    public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Interactable; }
 }

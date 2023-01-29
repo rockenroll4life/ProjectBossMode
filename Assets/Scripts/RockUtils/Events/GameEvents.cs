@@ -4,6 +4,8 @@
     {
         public enum GameEvents
         {
+            //  TODO: [Rock]: We need to have these values not as hard coded so it's easier to add new entries without having to adjust a lot of numbers
+
             KeyboardButton_Pressed = 0,
             //  We're reserving the first 512 ids for KeyCode support, probably don't really need this many but that's what we're doing...
             //  Just for safety we'll resume the values at 600
@@ -49,6 +51,10 @@
             Mana_Changed = 704,
 
             Entity_Stop_Movement = 705,
+
+            //  Targetting Game Events
+            Targeted_Entity = 706,
+            Targeted_World = 707,
         }
     }
 }

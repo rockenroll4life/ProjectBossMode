@@ -10,6 +10,8 @@ public class Mob : Entity {
         highlightColor = Color.red;
     }
 
+    public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Mob; }
+
     protected virtual void AIStep() { }
 
     protected override void UpdateStep() {

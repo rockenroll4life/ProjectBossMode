@@ -18,7 +18,7 @@ public abstract class Entity : MonoBehaviour {
     Shader highlightShader;
 
     //  Hidden values, we don't really need to go setting lots of things when we can hide it behind the scenes
-    Color _highlight;
+    Color _highlight = Color.white;
     Color _highlightOutline;
     protected Color highlightColor {
         get {
@@ -51,6 +51,8 @@ public abstract class Entity : MonoBehaviour {
     void OnDisable() {
         UnregisterEvents();
     }
+
+    public abstract TargetingManager.TargetType GetTargetType();
 
     protected virtual void Initialize() { }
 
