@@ -9,5 +9,5 @@ public enum AbilityNum {
     Ability3,
     Ability4,
     Ultimate,
-    TOTAL_
+    _COUNT
 }

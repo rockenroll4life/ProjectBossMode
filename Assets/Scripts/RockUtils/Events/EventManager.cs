@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using RockUtils.GameEvents;
 
 public class EventManager : MonoBehaviour {
     //  TODO: [Rock]: Add increase support to the event manager
@@ -44,6 +45,12 @@ public class EventManager : MonoBehaviour {
             thisEvent += listener;
             instance.dictionary.Add(eventID, thisEvent);
         }
+
+        //  If it's a keyboard button, we want to then add a dictionary entry into the input
+        int keyID = InputManager.GameEventToKeyCode(eventID);
+        if (keyID != -1) {
+            InputManager.AddInputListener((KeyCode) keyID, listener);
+        }
     }
 
     public static void StopListening(int eventID, Action<int> listener) {
@@ -54,6 +61,11 @@ public class EventManager : MonoBehaviour {
         if (instance.dictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
             thisEvent -= listener;
             instance.dictionary[eventID] = thisEvent;
+        }
+
+        int keyID = InputManager.GameEventToKeyCode(eventID);
+        if (keyID != -1) {
+            InputManager.RemoveInputListener((KeyCode) keyID, listener);
         }
     }
 

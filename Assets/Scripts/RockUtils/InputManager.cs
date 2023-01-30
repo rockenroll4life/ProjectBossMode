@@ -96,8 +96,6 @@ public class InputManager : MonoBehaviour {
             numListeners++;
             instance.inputDictionary.Add(key, numListeners);
         }
-
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
     }
 
     public static void RemoveInputListener(KeyCode key, Action<int> listener) {
@@ -109,9 +107,24 @@ public class InputManager : MonoBehaviour {
             } else {
                 instance.inputDictionary[key] = numListeners;
             }
-
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
         }
+    }
+
+    public static int GameEventToKeyCode(int gameEvents) {
+        //  KeyCode Pressed
+        if (gameEvents >= (int) GameEvents.KeyboardButton_Pressed && gameEvents < (int) GameEvents.KeyboardButton_Released) {
+            return gameEvents;
+        }
+        //  KeyCode Released
+        else if (gameEvents >= (int) GameEvents.KeyboardButton_Released && gameEvents < (int) GameEvents.KeyboardButton_Held) {
+            return gameEvents - (int) GameEvents.KeyboardButton_Released;
+        }
+        //  KeyCode Held
+        else if (gameEvents >= (int) GameEvents.KeyboardButton_Held && gameEvents < (int) GameEvents.Mouse_Left_Press) {
+            return gameEvents - (int) GameEvents.KeyboardButton_Held;
+        }
+
+        return -1;
     }
 
     //  TODO: [Rock]: We need to create a system within the input manager for CHORDS (Multi-key inputs - E.G. Ctrl+W, Shift+LClick)
@@ -150,8 +163,11 @@ public class InputManager : MonoBehaviour {
         //  Keyboard Input
         foreach (KeyValuePair<KeyCode, int> key in instance.inputDictionary) {
             if (Input.GetKeyDown(key.Key)) {
-                //  TODO: [Rock]: Should we pass any value back?
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key, 0);
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key);
+            } else if (Input.GetKeyUp(key.Key)) {
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Released + (int) key.Key);
+            } else if (Input.GetKey(key.Key)) {
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Held + (int) key.Key);
             }
         }
 

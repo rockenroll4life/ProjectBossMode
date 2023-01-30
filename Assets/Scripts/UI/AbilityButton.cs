@@ -4,67 +4,58 @@ using RockUtils.GameEvents;
 
 [System.Serializable]
 public class AbilityButton {
-    public enum ID {
-        None = -1,
-        Ability1 = 0,
-        Ability2 = 1,
-        Ability3 = 2,
-        Ability4 = 3,
-        Ability5 = 4,
-        _Count = 5
-    }
-
     public Image icon;
     public Image cooldown;
     public Text cooldownTimeText;
     public Text keybindText;
     public Image auraIcon;
-    
-    ID abilityID = ID.None;
+
+    AbilityNum abilityID = AbilityNum.NONE;
     KeyCode keybind = KeyCode.None;
     float maxCooldown = float.MaxValue;
 
-    public void Setup(ID abilityID, KeyCode keybind) {
-        SetAbilityID(abilityID);
-        SetAbilityKeybind(keybind);
+    public void SetDefaultMaxCooldown(float maxCooldown) {
+        this.maxCooldown = maxCooldown;
     }
 
-    ~AbilityButton() {
-        RemoveAbilityID();
-    }
-
-    public void SetAbilityID(ID abilityID) {
-        RemoveAbilityID();
-
+    public void Setup(AbilityNum abilityID, KeyCode keybind) {
         this.abilityID = abilityID;
+        RegisterEvents();
+        UpdateAbilityKeybind(keybind);
+    }
+
+    public void Breakdown() {
+        UnregisterEvents();
+        UpdateAbilityKeybind(KeyCode.None);
+    }
+
+    void RegisterEvents() {
         EventManager.StartListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
         EventManager.StartListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
     }
 
-    public void SetValues(float maxCooldown) {
-        this.maxCooldown = maxCooldown;
+    void UnregisterEvents() {
+        EventManager.StopListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StopListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
     }
 
-    public void SetAbilityKeybind(KeyCode keybind) {
-        RemoveAbilityKeybind();
-
-        this.keybind = keybind;
-        InputManager.AddInputListener(keybind, AbilityUsed);
+    void UpdateAbilityKeybind(KeyCode keybind) {
         //  TODO: [Rock]: When we add support for Release and Held for buttons, add support for ability to listen for that as well
-    }
 
-    public void RemoveAbilityID() {
-        if (abilityID != ID.None) {
-            EventManager.StopListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
-            EventManager.StopListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
-            abilityID = ID.None;
+        //  If we have a previous Keybind, stop listening for it
+        if (this.keybind != KeyCode.None) {
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) this.keybind, AbilityPressed);
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) this.keybind, AbilityReleased);
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Held + (int) this.keybind, AbilityHeld);
+            this.keybind = KeyCode.None;
         }
-    }
 
-    public void RemoveAbilityKeybind() {
+        //  Then, if we have a new keybind, update our kind and then start listening for it
         if (keybind != KeyCode.None) {
-            InputManager.RemoveInputListener(keybind, AbilityUsed);
-            keybind = KeyCode.None;
+            this.keybind = keybind;
+            EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) this.keybind, AbilityPressed);
+            EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) this.keybind, AbilityReleased);
+            EventManager.StartListening((int) GameEvents.KeyboardButton_Held + (int) this.keybind, AbilityHeld);
         }
     }
 
@@ -87,8 +78,16 @@ public class AbilityButton {
         }
     }
 
-    void AbilityUsed(int param) {
+    void AbilityPressed(int param) {
         EventManager.TriggerEvent((int) GameEvents.Ability_Press + (int) abilityID);
+    }
+
+    void AbilityReleased(int param) {
+        EventManager.TriggerEvent((int) GameEvents.Ability_Release + (int) abilityID);
+    }
+
+    void AbilityHeld(int param) {
+        EventManager.TriggerEvent((int) GameEvents.Ability_Held + (int) abilityID);
     }
 
     void AbilityToggled(int param) {

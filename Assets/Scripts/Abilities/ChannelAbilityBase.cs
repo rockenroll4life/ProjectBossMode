@@ -10,18 +10,22 @@ public class ChannelAbilityBase : AbilityBase {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        EventManager.StartListening((int) GameEvents.Ability_Press + (int) abilityID, AttemptUseAbility);
+        EventManager.StartListening((int) GameEvents.Ability_Held + (int) abilityID, AttemptUseAbility);
     }
 
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        EventManager.StopListening((int) GameEvents.Ability_Press + (int) abilityID, AttemptUseAbility);
+        EventManager.StopListening((int) GameEvents.Ability_Held + (int) abilityID, AttemptUseAbility);
     }
 
     public override void Setup(Entity owner, AbilityNum abilityNum) {
         base.Setup(owner, abilityNum);
 
         interruptsMovement = true;
+    }
+
+    protected override bool CanUseAbility() {
+        return true;
     }
 }

@@ -5,7 +5,7 @@ public class AbilityManager {
     Entity owner;
 
     //
-    public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum.TOTAL_];
+    public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum._COUNT];
 
     public void Setup(Entity owner) {
         this.owner = owner;

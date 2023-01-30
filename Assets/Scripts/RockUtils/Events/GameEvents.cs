@@ -4,69 +4,76 @@
             //========================================================
             //  Input Game Events
             //========================================================
-            KeyboardButton_Pressed = 0,
             //  We're reserving the first 512 ids for KeyCode support, probably don't really need this many but that's what we're doing...
             //  Just for safety we'll resume the values at 600
+            KeyboardButton_Pressed = 0,
 
-            //  TODO: [Rock]: We should add another two blocks of events for button Released and Held
+            //  We're reserving the next 512 ids for KeyCode support, probably don't really need this many but that's what we're doing...
+            //  Just for safety we'll resume the values at 1200
+            KeyboardButton_Released = 600,
+
+            //  We're reserving the next 512 ids for KeyCode support, probably don't really need this many but that's what we're doing...
+            //  Just for safety we'll resume the values at 1800
+            KeyboardButton_Held = 1200,
+            
 
             //  Mouse Actions
-            Mouse_Left_Press = 600,
-            Mouse_Right_Press = 601,
-            Mouse_Middle_Press = 602,
+            Mouse_Left_Press = 1800,
+            Mouse_Right_Press = 1801,
+            Mouse_Middle_Press = 1802,
 
-            Mouse_Left_Release = 603,
-            Mouse_Right_Release = 604,
-            Mouse_Middle_Release = 605,
+            Mouse_Left_Release = 1803,
+            Mouse_Right_Release = 1804,
+            Mouse_Middle_Release = 1805,
 
-            Mouse_Left_Held = 606,
-            Mouse_Right_Held = 607,
-            Mouse_Middle_Held = 608,
+            Mouse_Left_Held = 1806,
+            Mouse_Right_Held = 1807,
+            Mouse_Middle_Held = 1808,
 
-            Mouse_Left_Move_X = 609,
-            Mouse_Right_Move_X = 610,
-            Mouse_Middle_Move_X = 611,
+            Mouse_Left_Move_X = 1809,
+            Mouse_Right_Move_X = 1810,
+            Mouse_Middle_Move_X = 1811,
 
-            Mouse_Left_Move_Y = 612,
-            Mouse_Right_Move_Y = 613,
-            Mouse_Middle_Move_Y = 614,
+            Mouse_Left_Move_Y = 1812,
+            Mouse_Right_Move_Y = 1813,
+            Mouse_Middle_Move_Y = 1814,
 
-            Mouse_Scroll_Wheel = 615,
+            Mouse_Scroll_Wheel = 1815,
 
             //========================================================
             //  Entity Game Events
             //========================================================
             //  Ability Actions - 5 values reserved for each (QWERT)
-            Ability_Press = 700,
+            Ability_Press = 1900,
 
-            Ability_Release = 705,
+            Ability_Release = 1905,
 
-            Ability_Held = 710,
+            Ability_Held = 1910,
 
             //  Updating Ability Cooldowns - 5 values reserved for each (QWERT)
-            Ability_Cooldown_Update = 715,
+            Ability_Cooldown_Update = 1915,
 
             //  Set Ability Max Cooldown - 5 values reserved for each (QWERT)
-            Ability_Cooldown_Max_Update = 720,
+            Ability_Cooldown_Max_Update = 1920,
 
             //  NOTE: [Rock]: Currently used by the UI to set the toggle...however I don't like it...we should setup this as a generic
             //  Ability_Use event with a separate enum list of what the param id means
-            Ability_Toggle = 725,
+            Ability_Toggle = 1925,
 
             //  TODO: [Rock]: We should change this to "Stat_Changed" and generify this
-            Health_Changed = 730,
-            Mana_Changed = 731,
+            Health_Changed = 1930,
+            Mana_Changed = 1931,
 
-            Entity_Stop_Movement = 732,
+            Entity_Stop_Movement = 1932,
 
             //  Targeting Game Events
-            Targeted_Entity = 733,
-            Targeted_World = 734,
+            Targeted_Entity = 1933,
+            Targeted_World = 1934,
 
             //========================================================
             //  Global Game Events
             //========================================================
-            Game_Paused = 800,
+            Game_Paused = 2000,
         }
     }
 }

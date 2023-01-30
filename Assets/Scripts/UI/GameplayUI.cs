@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour {
@@ -9,7 +7,7 @@ public class GameplayUI : MonoBehaviour {
     public enum ResourceType {
         Health = 0,
         Mana = 1,
-        _Count = 2
+        _COUNT = 2
     }
     
     [System.Serializable]
@@ -19,8 +17,8 @@ public class GameplayUI : MonoBehaviour {
         public Text maxText;
     }
 
-    public ResourceBar[] bars = new ResourceBar[(int) ResourceType._Count];
-    public AbilityButton[] abilities = new AbilityButton[(int) AbilityButton.ID._Count];
+    public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
+    public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
 
     public static Vector3 auraRotation;
 
@@ -28,10 +26,16 @@ public class GameplayUI : MonoBehaviour {
     readonly KeyCode[] defaultKeybindings = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T };
 
     //  TODO: [Rock]: I don't think we should be passing the ability manager to the UI. Figure out a way to update the ability max cooldown without it needing to know about this
-    public void Setup(AbilityManager abilities) {
-        for (int i = 0; i < (int) AbilityButton.ID._Count; i++) {
-            this.abilities[i].Setup((AbilityButton.ID) i, defaultKeybindings[i]);
-            this.abilities[i].SetValues(abilities.abilities[i].cooldown.GetValue());
+    public void Setup(AbilityManager abilityManager) {
+        for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
+            this.abilities[i].Setup((AbilityNum) i, defaultKeybindings[i]);
+            this.abilities[i].SetDefaultMaxCooldown(abilityManager.abilities[i].cooldown.GetValue());
+        }
+    }
+
+    public void Breakdown() {
+        foreach (AbilityButton button in abilities) {
+            button.Breakdown();
         }
     }
 
@@ -50,11 +54,11 @@ public class GameplayUI : MonoBehaviour {
     }
 
     //  Abilities
-    public void SetAbilityIcon(AbilityButton.ID buttonNum, Sprite sprite) {
+    public void SetAbilityIcon(AbilityNum buttonNum, Sprite sprite) {
         abilities[(int) buttonNum].icon.sprite = sprite;
     }
 
-    public void SetAbilityKeybind(AbilityButton.ID buttonNum, string keybind) {
+    public void SetAbilityKeybind(AbilityNum buttonNum, string keybind) {
         abilities[(int) buttonNum].keybindText.text = keybind;
     }
 }

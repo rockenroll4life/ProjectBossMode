@@ -47,7 +47,7 @@ public class Player : Entity {
         abilities.SetAbility(AbilityNum.Ability2, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ability3, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
-        abilities.SetAbility(AbilityNum.Ultimate, typeof(TestAbility));
+        abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
 
         ui = FindObjectOfType<GameplayUI>();
         ui.Setup(abilities);
@@ -60,6 +60,8 @@ public class Player : Entity {
         base.UnregisterComponents();
 
         abilities.Breakdown();
+
+        ui.Breakdown();
     }
 
     protected override void UpdateStep() {
