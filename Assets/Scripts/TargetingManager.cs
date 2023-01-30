@@ -65,8 +65,14 @@ public class TargetingManager : MonoBehaviour {
                 hitType = hitEntity.GetTargetType();
                 EventManager.TriggerEvent((int) GameEvents.Targeted_Entity);
             } else {
-                hitType = TargetType.World;
-                EventManager.TriggerEvent((int) GameEvents.Targeted_World);
+                //  If we have an entity selected, let's go ahead and deselect it first. Don't just move if something is selected
+                if (targetedEntity) {
+                    targetedEntity.OnDeselected();
+                    targetedEntity = null;
+                } else {
+                    hitType = TargetType.World;
+                    EventManager.TriggerEvent((int) GameEvents.Targeted_World);
+                }
             }
         } else {
             //  NOTE: [Rock]: There shouldn't really ever be an instance where we don't collide with something in the future, however we'll keep this here for now
@@ -78,17 +84,17 @@ public class TargetingManager : MonoBehaviour {
         if (hitEntity != targetedEntity ) {
             if (targetedEntity == null) {
                 targetedEntity = hitEntity;
-                targetedEntity.OnStartHovering();
+                targetedEntity.OnSelected();
             } else if (hitEntity == null) {
-                targetedEntity.OnStopHovering();
+                targetedEntity.OnDeselected();
                 targetedEntity = null;
             } else {
-                targetedEntity.OnStopHovering();
-                hitEntity.OnStartHovering();
+                targetedEntity.OnDeselected();
+                hitEntity.OnSelected();
                 targetedEntity = hitEntity;
             }
         } else if (targetedEntity != null) {
-            targetedEntity.OnStopHovering();
+            targetedEntity.OnDeselected();
             targetedEntity = null;
         }
     }

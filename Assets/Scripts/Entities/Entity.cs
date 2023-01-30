@@ -91,7 +91,7 @@ public abstract class Entity : MonoBehaviour {
         PostUpdateStep();
     }
 
-    public void OnStartHovering() {
+    public virtual void OnSelected() {
         if (HasHighlightColor()) {
             previousShader = renderer.material.shader;
             renderer.material.shader = highlightShader;
@@ -108,7 +108,7 @@ public abstract class Entity : MonoBehaviour {
         }
     }
 
-    public void OnStopHovering() {
+    public virtual void OnDeselected() {
         if (HasHighlightColor()) {
             renderer.material.shader = previousShader;
         }
