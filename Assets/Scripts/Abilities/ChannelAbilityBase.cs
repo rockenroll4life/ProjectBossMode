@@ -10,6 +10,8 @@ public class ChannelAbilityBase : AbilityBase {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
+        EventManager.StartListening((int) GameEvents.Ability_Press + (int) abilityID, AbilityStart);
+        EventManager.StartListening((int) GameEvents.Ability_Release + (int) abilityID, AbilityStop);
         EventManager.StartListening((int) GameEvents.Ability_Held + (int) abilityID, AttemptUseAbility);
     }
 
@@ -27,5 +29,12 @@ public class ChannelAbilityBase : AbilityBase {
 
     protected override bool CanUseAbility() {
         return true;
+    }
+
+    protected virtual void AbilityStart(int param) {
+        EventManager.TriggerEvent((int) GameEvents.Ability_Channel_Start + (int) abilityID);
+    }
+    protected virtual void AbilityStop(int param) {
+        EventManager.TriggerEvent((int) GameEvents.Ability_Channel_Stop + (int) abilityID);
     }
 }

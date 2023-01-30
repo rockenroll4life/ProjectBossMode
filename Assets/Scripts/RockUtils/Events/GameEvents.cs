@@ -59,16 +59,18 @@
             //  NOTE: [Rock]: Currently used by the UI to set the toggle...however I don't like it...we should setup this as a generic
             //  Ability_Use event with a separate enum list of what the param id means
             Ability_Toggle = 1925,
+            Ability_Channel_Start = 1930,
+            Ability_Channel_Stop = 1935,
 
             //  TODO: [Rock]: We should change this to "Stat_Changed" and generify this
-            Health_Changed = 1930,
-            Mana_Changed = 1931,
+            Health_Changed = 1940,
+            Mana_Changed = 1941,
 
-            Entity_Stop_Movement = 1932,
+            Entity_Stop_Movement = 1942,
 
             //  Targeting Game Events
-            Targeted_Entity = 1933,
-            Targeted_World = 1934,
+            Targeted_Entity = 1943,
+            Targeted_World = 1944,
 
             //========================================================
             //  Global Game Events

@@ -14,6 +14,8 @@ public class AbilityButton {
     KeyCode keybind = KeyCode.None;
     float maxCooldown = float.MaxValue;
 
+    bool channeling = false;
+
     public void SetDefaultMaxCooldown(float maxCooldown) {
         this.maxCooldown = maxCooldown;
     }
@@ -32,11 +34,15 @@ public class AbilityButton {
     void RegisterEvents() {
         EventManager.StartListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
         EventManager.StartListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
+        EventManager.StartListening((int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
+        EventManager.StartListening((int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
     void UnregisterEvents() {
         EventManager.StopListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
         EventManager.StopListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
+        EventManager.StopListening((int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
+        EventManager.StopListening((int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
     void UpdateAbilityKeybind(KeyCode keybind) {
@@ -60,21 +66,23 @@ public class AbilityButton {
     }
 
     void UpdateCooldown(int param) {
-        //  Grab the cooldown percent from the param and convert it back
-        float percent = (param / 10000f);
-        float curTime = maxCooldown * percent;
-        //  We clamp this to an int value since it looks nicer and ceiling it so when it shows it hits 0, is when it actually does
-        int displayValue = (int) Mathf.Ceil(curTime);
+        if (!channeling) {
+            //  Grab the cooldown percent from the param and convert it back
+            float percent = (param / 10000f);
+            float curTime = maxCooldown * percent;
+            //  We clamp this to an int value since it looks nicer and ceiling it so when it shows it hits 0, is when it actually does
+            int displayValue = (int) Mathf.Ceil(curTime);
 
-        if (percent > 0) {
-            cooldown.gameObject.SetActive(true);
-            cooldownTimeText.gameObject.SetActive(true);
+            if (percent > 0) {
+                cooldown.gameObject.SetActive(true);
+                cooldownTimeText.gameObject.SetActive(true);
 
-            cooldown.fillAmount = percent;
-            cooldownTimeText.text = displayValue.ToString();
-        } else {
-            cooldown.gameObject.SetActive(false);
-            cooldownTimeText.gameObject.SetActive(false);
+                cooldown.fillAmount = percent;
+                cooldownTimeText.text = displayValue.ToString();
+            } else {
+                cooldown.gameObject.SetActive(false);
+                cooldownTimeText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -92,5 +100,16 @@ public class AbilityButton {
 
     void AbilityToggled(int param) {
         auraIcon.gameObject.SetActive(!auraIcon.gameObject.activeSelf);
+    }
+
+    void AbilityChannelStart(int param) {
+        channeling = true;
+        cooldown.fillAmount = 100;
+        cooldown.gameObject.SetActive(true);
+    }
+
+    void AbilityChannelStop(int param) {
+        channeling = false;
+        cooldown.gameObject.SetActive(false);
     }
 }
