@@ -43,11 +43,23 @@ public class Player : Entity {
         abilities = new AbilityManager();
         abilities.Setup(this);
 
+        abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
+        abilities.SetAbility(AbilityNum.Ability2, typeof(TestAbility));
+        abilities.SetAbility(AbilityNum.Ability3, typeof(TestAbility));
+        abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
+        abilities.SetAbility(AbilityNum.Ultimate, typeof(TestAbility));
+
         ui = FindObjectOfType<GameplayUI>();
         ui.Setup(abilities);
 
         animator = gameObject.AddComponent<PlayerAnimator>();
         animator.SetOwner(this);
+    }
+
+    protected override void UnregisterComponents() {
+        base.UnregisterComponents();
+
+        abilities.Breakdown();
     }
 
     protected override void UpdateStep() {

@@ -50,6 +50,7 @@ public class AbilityButton {
 
         this.keybind = keybind;
         InputManager.AddInputListener(keybind, AbilityUsed);
+        //  TODO: [Rock]: When we add support for Release and Held for buttons, add support for ability to listen for that as well
     }
 
     public void RemoveAbilityID() {
@@ -87,7 +88,7 @@ public class AbilityButton {
     }
 
     void AbilityUsed(int param) {
-        EventManager.TriggerEvent((int) GameEvents.Ability_Use + (int) abilityID);
+        EventManager.TriggerEvent((int) GameEvents.Ability_Press + (int) abilityID);
     }
 
     void AbilityToggled(int param) {

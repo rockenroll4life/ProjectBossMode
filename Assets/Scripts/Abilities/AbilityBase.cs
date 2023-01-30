@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using RockUtils.GameEvents;
 
 //  TODO: [Rock]: Abilities don't need to be MonoBehaviours, we should let the ability manager handle them
-public abstract class Ability {
+public abstract class AbilityBase {
     public enum TriggerType {
         Instant,
         Toggle,
+        Channel,
     }
+
     public string name { private set; get; }
     public Stat cooldown { private set; get; }
     //  This is used as an 'id' for this ability for a 1-10 value (What key it's bound to
@@ -30,6 +30,13 @@ public abstract class Ability {
 
     Entity owner;
 
+    protected virtual void RegisterEvents() {
+        cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + abilityID);
+    }
+    protected virtual void UnregisterEvents() {
+        cooldown.RemoveEvent();
+    }
+
     public virtual void Setup(Entity owner, string name, float cooldownTime) {
         this.owner = owner;
         this.name = name;
@@ -40,28 +47,25 @@ public abstract class Ability {
         interruptsMovement = false;
     }
 
-    //  TODO: [Rock]: We should probably have a way of cleaning up the ability event listeners
-    
-    public void SetAbilityID(int abilityID) {
+    public virtual void Breakdown() {
         if (abilityID != -1) {
-            EventManager.StopListening((int) GameEvents.Ability_Use + abilityID, AttemptUseAbility);
-            cooldown.RemoveEvent();
+            UnregisterEvents();
         }
+    }
+
+    public void SetAbilityID(int abilityID) {
+        RemoveAbility();
 
         this.abilityID = abilityID;
-        EventManager.StartListening((int) GameEvents.Ability_Use + abilityID, AttemptUseAbility);
-        cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + abilityID);
+        RegisterEvents();
     }
 
     public void RemoveAbility() {
-        if (abilityID != -1) {
-            EventManager.StartListening((int) GameEvents.Ability_Use + abilityID, AttemptUseAbility);
-            cooldown.RemoveEvent();
-            abilityID = -1;
-        }
+        Breakdown();
+        abilityID = -1;
     }
 
-    void AttemptUseAbility(int param) {
+    protected void AttemptUseAbility(int param) {
         if ((cooldown == 0 || canBypassCooldown()) && CanUseAbility()) {
             UseAbility();
         }
@@ -73,7 +77,7 @@ public abstract class Ability {
     protected virtual void UseAbility() {
         if (triggerType != TriggerType.Toggle) {
             cooldown.ResetCurrent();
-        } else if (triggerType == TriggerType.Toggle) {
+        } else {
             EventManager.TriggerEvent((int) GameEvents.Ability_Toggle + abilityID);
             toggled = !toggled;
         }

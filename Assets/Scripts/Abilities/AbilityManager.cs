@@ -1,30 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class AbilityManager {
-    static readonly int NUM_ABILITIES = 5;
-
     Entity owner;
 
     //
-    public Ability[] abilities = new Ability[NUM_ABILITIES];
+    public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum.TOTAL_];
 
     public void Setup(Entity owner) {
         this.owner = owner;
+    }
 
-        for (int i = 0; i < NUM_ABILITIES; i++) {
-            if (i == 0) {
-                abilities[i] = new TestNoStopAbility();
-            } else {
-                abilities[i] = new TestAbility();
-            }
-            //  TODO: [Rock]: We should never need to setup the ability name nor cooldown, this should be done via the ability
-            abilities[i].Setup(owner, "Ability " + i, 10);
-            abilities[i].SetAbilityID(i);
+    public void Breakdown() {
+        foreach (AbilityBase ability in abilities) {
+            ability.Breakdown();
         }
     }
 
+    public void SetAbility(AbilityNum abilityNum, Type ability) {
+        abilities[(int) abilityNum] = (AbilityBase) Activator.CreateInstance(ability);
+        abilities[(int) abilityNum].Setup(owner, "Ability " + abilityNum, 10);
+        abilities[(int) abilityNum].SetAbilityID((int) abilityNum);
+    }
+
     public void Update() {
-        foreach(Ability ability in abilities) {
+        foreach(AbilityBase ability in abilities) {
             ability.Update();
         }
     }

@@ -60,6 +60,10 @@ public abstract class Entity : MonoBehaviour {
         highlightShader = Shader.Find("Custom/Entity_Outline");
     }
 
+    protected virtual void UnregisterComponents() {
+        //  TODO: [Rock]: Make sure to Breakdown anything we need to
+    }
+
     protected void AddEvent(int eventID, Action<int> listener) {
         EventManager.StartListening(eventID, listener);
     }
