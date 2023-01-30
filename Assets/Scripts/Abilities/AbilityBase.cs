@@ -9,51 +9,49 @@ public abstract class AbilityBase {
         Channel,
     }
 
-    public string name { private set; get; }
+    //  NOTE: [Rock]: For some reason the UI needs access to this variables. We need to break that dependency
     public Stat cooldown { private set; get; }
-    //  This is used as an 'id' for this ability for a 1-10 value (What key it's bound to
-    public int abilityID { private set; get; }
+    
+    protected AbilityNum abilityID = AbilityNum.NONE;
 
-    public bool interruptsMovement { protected set; get; }
+    protected bool interruptsMovement = false;
+
+    protected abstract string GetName();
+    protected virtual float GetCooldownTime() { return 0; }
 
     public TriggerType triggerType { protected set; get; }
 
     bool _toggled;
     public bool toggled {
-        protected set {
-            _toggled = value;
-        }
-        get {
-            return triggerType == TriggerType.Toggle && _toggled;
-        }
+        protected set => _toggled = value;
+        get => triggerType == TriggerType.Toggle && _toggled;
     }
 
     Entity owner;
 
     protected virtual void RegisterEvents() {
-        cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + abilityID);
+        cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + (int) abilityID);
     }
     protected virtual void UnregisterEvents() {
         cooldown.RemoveEvent();
     }
 
-    public virtual void Setup(Entity owner, string name, float cooldownTime) {
+    public virtual void Setup(Entity owner, AbilityNum abilityNum) {
         this.owner = owner;
-        this.name = name;
-        abilityID = -1;
-        cooldown = new Stat("", cooldownTime, 0, float.MaxValue);
+        cooldown = new Stat("", GetCooldownTime(), 0, float.MaxValue);
         //  We're using this a little differently than normal...
         cooldown.currentValue = 0;
-        interruptsMovement = false;
+
+        SetAbilityID(abilityNum);
     }
 
     public virtual void Breakdown() {
-        if (abilityID != -1) {
+        if (abilityID != AbilityNum.NONE) {
             UnregisterEvents();
         }
     }
 
-    public void SetAbilityID(int abilityID) {
+    public void SetAbilityID(AbilityNum abilityID) {
         RemoveAbility();
 
         this.abilityID = abilityID;
@@ -62,7 +60,7 @@ public abstract class AbilityBase {
 
     public void RemoveAbility() {
         Breakdown();
-        abilityID = -1;
+        abilityID = AbilityNum.NONE;
     }
 
     protected void AttemptUseAbility(int param) {
@@ -78,7 +76,7 @@ public abstract class AbilityBase {
         if (triggerType != TriggerType.Toggle) {
             cooldown.ResetCurrent();
         } else {
-            EventManager.TriggerEvent((int) GameEvents.Ability_Toggle + abilityID);
+            EventManager.TriggerEvent((int) GameEvents.Ability_Toggle + (int) abilityID);
             toggled = !toggled;
         }
 
