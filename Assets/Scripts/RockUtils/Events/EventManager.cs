@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour {
+    //  TODO: [Rock]: Add increase support to the event manager
+    //  Events should be broken down into two types of events
+    //      1. Global Events - These events are just generic type of events that anyone might want to listen to, for example, the Pause GameEvent.
+    //      2. Targeted Events - These events are specifically targeted towards a specific entity. for example, something might update the players health and the player
+    //                              and UI would want to listen to a specific event targeting the player for the Health Changing.
     Dictionary<int, Action<int>> dictionary;
     static EventManager eventManager;
 

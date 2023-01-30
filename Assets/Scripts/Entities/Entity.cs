@@ -23,6 +23,13 @@ public abstract class Entity : MonoBehaviour {
 
     public StatusEffectManager statusEffects { get; protected set; }
 
+    public abstract EntityType GetEntityType();
+    public abstract TargetingManager.TargetType GetTargetType();
+
+    protected virtual Color? GetHighlightColor() { return null; }
+    protected virtual Color? GetHighlightOutlineColor() { return null; }
+    protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
+
     void Start() {
         Initialize();
 
@@ -35,14 +42,6 @@ public abstract class Entity : MonoBehaviour {
     void OnDisable() {
         UnregisterEvents();
     }
-
-    public abstract EntityType GetEntityType();
-    public abstract TargetingManager.TargetType GetTargetType();
-    protected virtual Color? GetHighlightColor() { return null; }
-    protected virtual Color? GetHighlightOutlineColor() { return null; }
-
-    protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
-
 
     protected virtual void Initialize() { }
 
