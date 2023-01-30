@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using RockUtils.GameEvents;
 
-//  TODO: [Rock]: Abilities don't need to be MonoBehaviours, we should let the ability manager handle them
 public abstract class AbilityBase {
     public enum TriggerType {
-        Instant,
+        Cast,
         Toggle,
         Channel,
     }
@@ -17,15 +16,8 @@ public abstract class AbilityBase {
     protected bool interruptsMovement = false;
 
     protected abstract string GetName();
+    protected virtual TriggerType GetTriggerType() { return TriggerType.Cast; }
     protected virtual float GetCooldownTime() { return 0; }
-
-    public TriggerType triggerType { protected set; get; }
-
-    bool _toggled;
-    public bool toggled {
-        protected set => _toggled = value;
-        get => triggerType == TriggerType.Toggle && _toggled;
-    }
 
     Entity owner;
 
@@ -64,20 +56,18 @@ public abstract class AbilityBase {
     }
 
     protected void AttemptUseAbility(int param) {
-        if ((cooldown == 0 || canBypassCooldown()) && CanUseAbility()) {
+        if (CanUseAbility()) {
             UseAbility();
         }
     }
 
     protected virtual bool CanUseAbility() {
-        return true;
+        return false;
     }
+
     protected virtual void UseAbility() {
-        if (triggerType != TriggerType.Toggle) {
+        if (GetTriggerType() != TriggerType.Toggle) {
             cooldown.ResetCurrent();
-        } else {
-            EventManager.TriggerEvent((int) GameEvents.Ability_Toggle + (int) abilityID);
-            toggled = !toggled;
         }
 
         if (interruptsMovement) {
@@ -89,8 +79,8 @@ public abstract class AbilityBase {
         return false;
     }
 
-    //  Effects should use this override instead of the normal Update
     public virtual void Update() {
+        //  TODO: [Rock]: We should not be updating the cooldown's value in the Ability. Investigate into allowing the cooldown stat to update itself
         if (cooldown > 0) {
             cooldown.currentValue -= Time.deltaTime;
         }

@@ -1,6 +1,4 @@
-﻿using RockUtils.GameEvents;
-
-public class TestAbility : AbilityBase {
+﻿public class TestAbility : CastAbilityBase {
     public override void Setup(Entity owner, AbilityNum abilityNum) {
         base.Setup(owner, abilityNum);
 
@@ -10,16 +8,4 @@ public class TestAbility : AbilityBase {
     protected override string GetName() { return "TestAbility"; }
 
     protected override float GetCooldownTime() { return 5; }
-
-    protected override void RegisterEvents() {
-        base.RegisterEvents();
-
-        EventManager.StartListening((int) GameEvents.Ability_Press + (int) abilityID, AttemptUseAbility);
-    }
-
-    protected override void UnregisterEvents() {
-        base.UnregisterEvents();
-
-        EventManager.StopListening((int) GameEvents.Ability_Press + (int) abilityID, AttemptUseAbility);
-    }
 }
