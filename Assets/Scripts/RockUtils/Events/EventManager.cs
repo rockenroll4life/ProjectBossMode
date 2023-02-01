@@ -58,8 +58,9 @@ namespace RockUtils {
                             instance.ownedDictionary[owner.Value] = thisDictionary;
                         }
                     } else {
-                        thisDictionary.Add(eventID, listener);
-                        instance.ownedDictionary.Add(owner.Value, thisDictionary);
+                        Dictionary<int, Action<int>> newDictionary = new Dictionary<int, Action<int>>();
+                        newDictionary.Add(eventID, listener);
+                        instance.ownedDictionary.Add(owner.Value, newDictionary);
                     }
                 }
                 //  Global Dictionary
@@ -123,9 +124,21 @@ namespace RockUtils {
             }
 
             public static void TriggerEvent(Guid? owner, int eventID, int param) {
-                if (instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
-                    thisEvent.Invoke(param);
+                //  Owned Dictionary
+                if (owner.HasValue) {
+                    if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<int, Action<int>> thisDictionary)) {
+                        if (thisDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
+                            thisEvent.Invoke(param);
+                        }
+                    }
                 }
+                //  Global Dictionary
+                else {
+                    if (instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
+                        thisEvent.Invoke(param);
+                    }
+                }
+                
             }
 
             public static void TriggerEvent(Guid? owner, int eventID) {

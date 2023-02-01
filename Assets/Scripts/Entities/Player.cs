@@ -16,19 +16,19 @@ public class Player : Entity {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        AddEvent((int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
-        AddEvent((int) GameEvents.Mana_Changed, ManaChanged);
-        AddEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
-        AddEvent((int) GameEvents.Targeted_World, TargetedWorld);
+        AddEvent(entityID, (int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
+        AddEvent(entityID, (int) GameEvents.Mana_Changed, ManaChanged);
+        AddEvent(entityID, (int) GameEvents.Targeted_Entity, TargetedEntity);
+        AddEvent(entityID, (int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        RemoveEvent((int) GameEvents.Health_Changed, HealthChanged);
-        RemoveEvent((int) GameEvents.Mana_Changed, ManaChanged);
-        RemoveEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
-        RemoveEvent((int) GameEvents.Targeted_World, TargetedWorld);
+        RemoveEvent(entityID, (int) GameEvents.Health_Changed, HealthChanged);
+        RemoveEvent(entityID, (int) GameEvents.Mana_Changed, ManaChanged);
+        RemoveEvent(entityID, (int) GameEvents.Targeted_Entity, TargetedEntity);
+        RemoveEvent(entityID, (int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void RegisterComponents() {
@@ -67,11 +67,11 @@ public class Player : Entity {
     }
 
     void TargetedEntity(int param) {
-
+        
     }
 
     void TargetedWorld(int param) {
-        if (TargetingManager.IsValidHit(out RaycastHit hit)) {
+        if (targetingManager.IsValidHit(out RaycastHit hit)) {
             locomotion.MoveToLocation(hit.point);
         }
     }

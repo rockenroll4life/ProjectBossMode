@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using RockUtils.GameEvents;
 
-public class TargetingManager : MonoBehaviour {
+public class TargetingManager {
     public enum TargetType {
         None,
         World,
@@ -10,40 +10,33 @@ public class TargetingManager : MonoBehaviour {
         Interactable,
     }
 
-    static TargetingManager _instance;
-    public static TargetingManager instance {
-        get {
-            if (!_instance) {
-                _instance = FindObjectOfType<TargetingManager>();
-
-                if (!_instance) {
-                    Debug.LogError("Using this requires an TargetingManager on a GameObject within the scene");
-                }
-            }
-            return _instance;
-        }
-    }
-
     static readonly int RAYCAST_DISTANCE = 100;
 
+    Entity owner;
     RaycastHit hit;
     bool validRaycastHit;
     TargetType hitType = TargetType.None;
     Entity targetedEntity = null;
 
-    public static bool IsValidHit(out RaycastHit hit) {
-        hit = instance.hit;
-        return instance.validRaycastHit;
+    public bool IsValidHit(out RaycastHit hit) {
+        hit = this.hit;
+        return validRaycastHit;
     }
 
-    private void Start() {
-        EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
-        EventManager.StartListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
+    public void Setup(Entity owner) {
+        this.owner = owner;
+
+        if (owner.GetEntityType() == Entity.EntityType.Player) {
+            EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
+            EventManager.StartListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
+        }
     }
 
-    private void OnDisable() {
-        EventManager.StopListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
-        EventManager.StopListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
+    public void Breakdown() {
+        if (owner.GetEntityType() == Entity.EntityType.Player) {
+            EventManager.StopListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
+            EventManager.StopListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
+        }
     }
 
     void SelectTarget(int param) {
@@ -55,7 +48,7 @@ public class TargetingManager : MonoBehaviour {
 
             if (hitEntity != null) {
                 hitType = hitEntity.GetTargetType();
-                EventManager.TriggerEvent((int) GameEvents.Targeted_Entity);
+                EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
             } else {
                 //  If we have an entity selected, let's go ahead and deselect it first. Don't just move if something is selected
                 if (targetedEntity) {
@@ -63,7 +56,7 @@ public class TargetingManager : MonoBehaviour {
                     targetedEntity = null;
                 } else {
                     hitType = TargetType.World;
-                    EventManager.TriggerEvent((int) GameEvents.Targeted_World);
+                    EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
                 }
             }
         } else {
@@ -96,7 +89,7 @@ public class TargetingManager : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             //  TODO: [Rock]: We should probably use a layer mask in this instance to only collide with the world?
             Physics.Raycast(ray, out hit, RAYCAST_DISTANCE);
-            EventManager.TriggerEvent((int) GameEvents.Targeted_World);
+            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
         }
     }
 }

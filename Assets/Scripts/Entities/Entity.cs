@@ -13,26 +13,30 @@ public abstract class Entity : MonoBehaviour {
     public GameObject handAttachRight;
     public GameObject handAttachLeft;
 
-    public int entityID { private set; get; }
-
     //  Note: [Rock]: We're hiding the inherited member of the same name using the new in front
     new Renderer renderer;
     Shader previousShader;
     Shader highlightShader;
+    protected Guid entityID;
 
     public Locomotion locomotion { get; protected set; }
     public EntityStats stats { get; protected set; }
     public EntityAnimator animator { get; protected set; }
     public StatusEffectManager statusEffects { get; protected set; }
+    public TargetingManager targetingManager { get; protected set; }
 
     public abstract EntityType GetEntityType();
     public abstract TargetingManager.TargetType GetTargetType();
+
+    public Guid GetEntityID() { return entityID; }
 
     protected virtual Color? GetHighlightColor() { return null; }
     protected virtual Color? GetHighlightOutlineColor() { return null; }
     protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
 
     void Start() {
+        Initialize();
+
         RegisterEvents();
 
         RegisterComponents();
@@ -43,6 +47,10 @@ public abstract class Entity : MonoBehaviour {
         UnregisterEvents();
 
         UnregisterComponents();
+    }
+
+    protected virtual void Initialize() {
+        entityID = Guid.NewGuid();
     }
 
     protected virtual void RegisterStats() { }
@@ -56,20 +64,23 @@ public abstract class Entity : MonoBehaviour {
         statusEffects = new StatusEffectManager();
         statusEffects.Setup(this);
 
+        targetingManager = new TargetingManager();
+        targetingManager.Setup(this);
+
         renderer = gameObject.GetComponentInChildren<Renderer>();
         highlightShader = Shader.Find("Custom/Entity_Outline");
     }
 
     protected virtual void UnregisterComponents() {
-        //  TODO: [Rock]: Make sure to Breakdown anything we need to
+        targetingManager.Breakdown();
     }
 
-    protected void AddEvent(int eventID, Action<int> listener) {
-        EventManager.StartListening(eventID, listener);
+    protected void AddEvent(Guid? owner, int eventID, Action<int> listener) {
+        EventManager.StartListening(owner, eventID, listener);
     }
 
-    protected void RemoveEvent(int eventID, Action<int> listener) {
-        EventManager.StopListening(eventID, listener);
+    protected void RemoveEvent(Guid? owner, int eventID, Action<int> listener) {
+        EventManager.StopListening(owner, eventID, listener);
     }
 
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails
