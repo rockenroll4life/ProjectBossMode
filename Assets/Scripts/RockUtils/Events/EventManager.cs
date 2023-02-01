@@ -12,6 +12,10 @@ namespace RockUtils {
             //      2. Targeted Events - These events are specifically targeted towards a specific entity. for example, something might update the players health and the player
             //                              and UI would want to listen to a specific event targeting the player for the Health Changing.
 
+            //  NOTE: [ROCK]: This could probably be implemented easily by adding a nullable GUID value version of the functions. After that
+            //                  store two versions of the dictionary, the current one as a "Global" and a separate one that's a Dictionary<GUID, Dictionary<int, Action<int>>>
+            //                  That contains all the events for a given entity. If we pass a GUID to the trigger we trigger those, else we make the call on the Global
+
             Dictionary<int, Action<int>> dictionary;
             static EventManager eventManager;
 
@@ -38,9 +42,6 @@ namespace RockUtils {
             }
 
             public static void StartListening(int eventID, Action<int> listener) {
-                //  TODO: [Rock]: If the event ID is related to buttons, we should by default add the button to the input listeners so they properly trigger
-                //  the game events instead of us having to go the backwards route and add a Input Event (That secretly adds a Game Event)
-
                 if (instance.dictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                     thisEvent += listener;
                     instance.dictionary[eventID] = thisEvent;
@@ -66,6 +67,7 @@ namespace RockUtils {
                     instance.dictionary[eventID] = thisEvent;
                 }
 
+                //  If it's a keyboard button, we want to then remove a dictionary entry out of the input
                 int keyID = InputManager.GameEventToKeyCode(eventID);
                 if (keyID != -1) {
                     InputManager.RemoveInputListener((KeyCode) keyID, listener);

@@ -14,7 +14,9 @@ public abstract class Entity : MonoBehaviour {
     public GameObject handAttachLeft;
 
     public int entityID { private set; get; }
-    Renderer renderer;
+
+    //  Note: [Rock]: We're hiding the inherited member of the same name using the new in front
+    new Renderer renderer;
     Shader previousShader;
     Shader highlightShader;
 

@@ -1,8 +1,6 @@
 using RockUtils.GameEvents;
 
 public class ChannelAbilityBase : AbilityBase {
-    bool channeling = false;
-
     protected override string GetName() { return "ChannelAbilityBase"; }
 
     protected override TriggerType GetTriggerType() { return TriggerType.Channel; }
@@ -34,6 +32,7 @@ public class ChannelAbilityBase : AbilityBase {
     protected virtual void AbilityStart(int param) {
         EventManager.TriggerEvent((int) GameEvents.Ability_Channel_Start + (int) abilityID);
     }
+
     protected virtual void AbilityStop(int param) {
         EventManager.TriggerEvent((int) GameEvents.Ability_Channel_Stop + (int) abilityID);
     }

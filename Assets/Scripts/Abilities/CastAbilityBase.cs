@@ -21,4 +21,9 @@ public class CastAbilityBase : AbilityBase
     protected override bool CanUseAbility() {
         return cooldown.currentValue == 0 || canBypassCooldown();
     }
+    protected override void UseAbility() {
+        base.UseAbility();
+
+        cooldown.ResetCurrent();
+    }
 }

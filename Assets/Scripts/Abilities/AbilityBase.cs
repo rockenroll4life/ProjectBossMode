@@ -66,10 +66,6 @@ public abstract class AbilityBase {
     }
 
     protected virtual void UseAbility() {
-        if (GetTriggerType() != TriggerType.Toggle) {
-            cooldown.ResetCurrent();
-        }
-
         if (interruptsMovement) {
             owner.locomotion.StopMovement();
         }
