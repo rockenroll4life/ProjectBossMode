@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using RockUtils.GameEvents;
 
 public abstract class Entity : MonoBehaviour {
     public enum EntityType {

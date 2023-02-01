@@ -17,7 +17,7 @@ public class TargetingManager : MonoBehaviour {
                 _instance = FindObjectOfType<TargetingManager>();
 
                 if (!_instance) {
-                    Debug.LogError("Using this requires an EventManager on a GameObject within the scene");
+                    Debug.LogError("Using this requires an TargetingManager on a GameObject within the scene");
                 }
             }
             return _instance;

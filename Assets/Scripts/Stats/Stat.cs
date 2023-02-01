@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using RockUtils.GameEvents;
 public class Stat {
     public string name { get; private set; }
     private float _currentValue;
