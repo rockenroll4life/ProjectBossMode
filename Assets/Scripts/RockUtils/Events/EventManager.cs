@@ -18,7 +18,7 @@ namespace RockUtils {
             public static EventManager instance {
                 get {
                     if (!eventManager) {
-                        eventManager = FindObjectOfType(typeof(EventManager)) as EventManager;
+                        eventManager = FindObjectOfType<EventManager>();
 
                         if (!eventManager) {
                             Debug.LogError("Using this requires an EventManager on a GameObject within the scene");
