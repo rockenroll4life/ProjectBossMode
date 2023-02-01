@@ -100,8 +100,6 @@ public class InputManager : MonoBehaviour {
 
     public static void RemoveInputListener(KeyCode key, Action<int> listener) {
         if (instance.inputDictionary.TryGetValue(key, out int numListeners)) {
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, listener);
-
             if (numListeners-- == 0) {
                 instance.inputDictionary.Remove(key);
             } else {
