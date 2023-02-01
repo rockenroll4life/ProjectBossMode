@@ -36,14 +36,6 @@ public class TargetingManager : MonoBehaviour {
         return instance.validRaycastHit;
     }
 
-    public static Vector3 GetHitLocation() {
-        return instance.hit.point;
-    }
-
-    public static TargetType GetHitType() {
-        return instance.hitType;
-    }
-
     private void Start() {
         EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
         EventManager.StartListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);

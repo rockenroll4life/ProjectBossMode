@@ -20,7 +20,6 @@ public abstract class Entity : MonoBehaviour {
     public Locomotion locomotion { get; protected set; }
     public EntityStats stats { get; protected set; }
     public EntityAnimator animator { get; protected set; }
-
     public StatusEffectManager statusEffects { get; protected set; }
 
     public abstract EntityType GetEntityType();
@@ -31,8 +30,6 @@ public abstract class Entity : MonoBehaviour {
     protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
 
     void Start() {
-        Initialize();
-
         RegisterEvents();
 
         RegisterComponents();
@@ -41,9 +38,9 @@ public abstract class Entity : MonoBehaviour {
     }
     void OnDisable() {
         UnregisterEvents();
-    }
 
-    protected virtual void Initialize() { }
+        UnregisterComponents();
+    }
 
     protected virtual void RegisterStats() { }
 
@@ -72,6 +69,7 @@ public abstract class Entity : MonoBehaviour {
         EventManager.StopListening(eventID, listener);
     }
 
+    //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails
     public virtual void OnStatusEffectApplied(StatusEffect effect) { }
 
     public virtual void OnStatusEffectRemoved(StatusEffect effect) { }

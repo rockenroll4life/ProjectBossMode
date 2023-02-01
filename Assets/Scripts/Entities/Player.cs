@@ -7,8 +7,6 @@ public class Player : Entity {
     GameplayUI ui;
     AbilityManager abilities;
 
-    bool moving = false;
-
     public override EntityType GetEntityType() { return EntityType.Player; }
     public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Player; }
 
@@ -18,7 +16,6 @@ public class Player : Entity {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        AddEvent((int) GameEvents.Mouse_Left_Release, MouseLeftReleased);
         AddEvent((int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
         AddEvent((int) GameEvents.Mana_Changed, ManaChanged);
         AddEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
@@ -28,7 +25,6 @@ public class Player : Entity {
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        RemoveEvent((int) GameEvents.Mouse_Left_Release, MouseLeftReleased);
         RemoveEvent((int) GameEvents.Health_Changed, HealthChanged);
         RemoveEvent((int) GameEvents.Mana_Changed, ManaChanged);
         RemoveEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
@@ -76,13 +72,8 @@ public class Player : Entity {
 
     void TargetedWorld(int param) {
         if (TargetingManager.IsValidHit(out RaycastHit hit)) {
-            moving = true;
             locomotion.MoveToLocation(hit.point);
         }
-    }
-
-    void MouseLeftReleased(int param) {
-        moving = false;
     }
 
     void HealthChanged(int param) {
