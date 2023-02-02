@@ -10,17 +10,15 @@ public class AbilityButton {
     public Text keybindText;
     public Image auraIcon;
 
+    Player owner;
     AbilityNum abilityID = AbilityNum.NONE;
     KeyCode keybind = KeyCode.None;
-    float maxCooldown = float.MaxValue;
+    float maxCooldown = 3;
 
     bool channeling = false;
 
-    public void SetDefaultMaxCooldown(float maxCooldown) {
-        this.maxCooldown = maxCooldown;
-    }
-
-    public void Setup(AbilityNum abilityID, KeyCode keybind) {
+    public void Setup(Player player, AbilityNum abilityID, KeyCode keybind) {
+        this.owner = player;
         this.abilityID = abilityID;
         RegisterEvents();
         UpdateAbilityKeybind(keybind);
@@ -32,17 +30,19 @@ public class AbilityButton {
     }
 
     void RegisterEvents() {
-        EventManager.StartListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
-        EventManager.StartListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
-        EventManager.StartListening((int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
-        EventManager.StartListening((int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
     void UnregisterEvents() {
-        EventManager.StopListening((int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
-        EventManager.StopListening((int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
-        EventManager.StopListening((int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
-        EventManager.StopListening((int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
     void UpdateAbilityKeybind(KeyCode keybind) {
@@ -68,8 +68,9 @@ public class AbilityButton {
     void UpdateCooldown(int param) {
         if (!channeling) {
             //  Grab the cooldown percent from the param and convert it back
-            float percent = (param / 10000f);
-            float curTime = maxCooldown * percent;
+            float curTime = param / 1000f;
+            float percent = (curTime / maxCooldown);
+
             //  We clamp this to an int value since it looks nicer and ceiling it so when it shows it hits 0, is when it actually does
             int displayValue = (int) Mathf.Ceil(curTime);
 
@@ -87,15 +88,15 @@ public class AbilityButton {
     }
 
     void AbilityPressed(int param) {
-        EventManager.TriggerEvent((int) GameEvents.Ability_Press + (int) abilityID);
+        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Press + (int) abilityID);
     }
 
     void AbilityReleased(int param) {
-        EventManager.TriggerEvent((int) GameEvents.Ability_Release + (int) abilityID);
+        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Release + (int) abilityID);
     }
 
     void AbilityHeld(int param) {
-        EventManager.TriggerEvent((int) GameEvents.Ability_Held + (int) abilityID);
+        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Held + (int) abilityID);
     }
 
     void AbilityToggled(int param) {
@@ -111,5 +112,9 @@ public class AbilityButton {
     void AbilityChannelStop(int param) {
         channeling = false;
         cooldown.gameObject.SetActive(false);
+    }
+
+    public void UpdateMaxCooldown(int param) {
+        maxCooldown = param / 1000f;
     }
 }

@@ -17,6 +17,7 @@ public class GameplayUI : MonoBehaviour {
         public Text maxText;
     }
 
+    Player owner;
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
 
@@ -26,10 +27,12 @@ public class GameplayUI : MonoBehaviour {
     readonly KeyCode[] defaultKeybindings = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T };
 
     //  TODO: [Rock]: I don't think we should be passing the ability manager to the UI. Figure out a way to update the ability max cooldown without it needing to know about this
-    public void Setup(AbilityManager abilityManager) {
+    public void Setup(Player owner, AbilityManager abilityManager) {
+        this.owner = owner;
+
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
-            this.abilities[i].Setup((AbilityNum) i, defaultKeybindings[i]);
-            //this.abilities[i].SetDefaultMaxCooldown(abilityManager.abilities[i].cooldown.GetValue());
+            this.abilities[i].Setup(owner, (AbilityNum) i, defaultKeybindings[i]);
+            //this.abilities[i].SetDefaultMaxCooldown(abilityManager.abilities[i]. .cooldown.GetValue());
         }
     }
 

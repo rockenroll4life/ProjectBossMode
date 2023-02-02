@@ -1,22 +1,17 @@
-﻿using UnityEngine;
-using RockUtils.GameEvents;
-
-public abstract class AbilityBase {
+﻿public abstract class AbilityBase {
     public enum TriggerType {
         Cast,
         Toggle,
         Channel,
     }
     
+    protected LivingEntity owner;
     protected AbilityNum abilityID = AbilityNum.NONE;
 
     protected bool interruptsMovement = false;
 
     protected abstract string GetName();
     protected virtual TriggerType GetTriggerType() { return TriggerType.Cast; }
-    protected virtual float GetCooldownTime() { return 0; }
-
-    LivingEntity owner;
 
     protected virtual void RegisterEvents() {
         //cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + (int) abilityID);
@@ -25,11 +20,10 @@ public abstract class AbilityBase {
         //cooldown.RemoveEvent();
     }
 
+    protected virtual void RegisterAttributes() { }
+
     public virtual void Setup(LivingEntity owner, AbilityNum abilityNum) {
         this.owner = owner;
-        //cooldown = new Stat("", GetCooldownTime(), 0, float.MaxValue);
-        //  We're using this a little differently than normal...
-        //cooldown.currentValue = 0;
 
         SetAbilityID(abilityNum);
     }
@@ -45,6 +39,7 @@ public abstract class AbilityBase {
 
         this.abilityID = abilityID;
         RegisterEvents();
+        RegisterAttributes();
     }
 
     public void RemoveAbility() {
@@ -70,12 +65,5 @@ public abstract class AbilityBase {
 
     protected virtual bool canBypassCooldown() {
         return false;
-    }
-
-    public virtual void Update() {
-        //  TODO: [Rock]: We should not be updating the cooldown's value in the Ability. Investigate into allowing the cooldown stat to update itself
-        /*if (cooldown > 0) {
-            cooldown.currentValue -= Time.deltaTime;
-        }*/
     }
 }

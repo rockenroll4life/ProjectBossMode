@@ -24,7 +24,9 @@ public class AbilityManager {
 
     public void Update() {
         foreach(AbilityBase ability in abilities) {
-            ability.Update();
+            if (ability is CastAbilityBase castAbility) {
+                castAbility.Update();
+            }
         }
     }
 }

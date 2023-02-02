@@ -3,6 +3,13 @@ using RockUtils.GameEvents;
 
 public class Player : LivingEntity {
     public static readonly RangedAttribute MAX_MANA = new RangedAttribute("generic.mana", 100, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY1_COOLDOWN = new RangedAttribute("generic.ability1", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY2_COOLDOWN = new RangedAttribute("generic.ability2", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY3_COOLDOWN = new RangedAttribute("generic.ability3", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY4_COOLDOWN = new RangedAttribute("generic.ability4", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ULTIMATE_COOLDOWN = new RangedAttribute("generic.ultimate", 5, 0, float.MaxValue);
+
+    public static readonly RangedAttribute[] ABILITY_COOLDOWNS = { ABILITY1_COOLDOWN, ABILITY2_COOLDOWN, ABILITY3_COOLDOWN, ABILITY4_COOLDOWN, ULTIMATE_COOLDOWN };
 
     static readonly Color PLAYER_COLOR = new Color(1f, 0.8431f, 0f);
 
@@ -37,6 +44,9 @@ public class Player : LivingEntity {
 
         locomotion = gameObject.AddComponent<PlayerLocomotion>();
 
+        ui = FindObjectOfType<GameplayUI>();
+        ui.Setup(this, abilities);
+
         abilities = new AbilityManager();
         abilities.Setup(this);
 
@@ -45,9 +55,6 @@ public class Player : LivingEntity {
         abilities.SetAbility(AbilityNum.Ability3, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
-
-        ui = FindObjectOfType<GameplayUI>();
-        ui.Setup(abilities);
 
         animator = gameObject.AddComponent<PlayerAnimator>();
         animator.SetOwner(this);
@@ -66,6 +73,12 @@ public class Player : LivingEntity {
 
         //  Register any unique attributes to this entity
         GetAttributes().RegisterAttribute(MAX_MANA);
+
+        GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
+        GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
+        GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);
+        GetAttributes().RegisterAttribute(ABILITY4_COOLDOWN);
+        GetAttributes().RegisterAttribute(ULTIMATE_COOLDOWN);
 
         //  Update any of the base attribute values for this entity
         GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).SetBaseValue(500);

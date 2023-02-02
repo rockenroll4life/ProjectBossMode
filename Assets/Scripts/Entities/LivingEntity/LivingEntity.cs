@@ -17,9 +17,9 @@ public abstract class LivingEntity : Entity {
 
         RegisterEvents();
 
-        RegisterComponents();
-
         RegisterAttributes();
+
+        RegisterComponents();
     }
 
     protected override void Breakdown() {
