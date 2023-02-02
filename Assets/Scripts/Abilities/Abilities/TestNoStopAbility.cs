@@ -1,6 +1,6 @@
 ﻿public class TestNoStopAbility : ToggleAbilityBase {
-    public override void Setup(LivingEntity owner, AbilityNum abilityNum) {
-        base.Setup(owner, abilityNum);
+    public TestNoStopAbility(Player owner, AbilityNum abilityNum)
+        : base(owner, abilityNum) {
     }
 
     protected override string GetName() { return "TestNoStopAbility"; }

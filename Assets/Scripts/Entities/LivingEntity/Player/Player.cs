@@ -47,8 +47,7 @@ public class Player : LivingEntity {
         ui = FindObjectOfType<GameplayUI>();
         ui.Setup(this, abilities);
 
-        abilities = new AbilityManager();
-        abilities.Setup(this);
+        abilities = new AbilityManager(this);
 
         abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
         abilities.SetAbility(AbilityNum.Ability2, typeof(TestAbility));

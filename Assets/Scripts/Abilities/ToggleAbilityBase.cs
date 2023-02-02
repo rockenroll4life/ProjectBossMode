@@ -2,15 +2,14 @@ using RockUtils.GameEvents;
 
 public class ToggleAbilityBase : AbilityBase {
     protected bool toggled = false;
+    public ToggleAbilityBase(Player owner, AbilityNum abilityNum)
+        : base(owner, abilityNum) {
+    }
 
     protected override string GetName() { return "ToggleAbilityBase"; }
 
     protected override TriggerType GetTriggerType() {
         return TriggerType.Toggle;
-    }
-
-    public override void Setup(LivingEntity owner, AbilityNum abilityNum) {
-        base.Setup(owner, abilityNum);
     }
 
     protected override void RegisterEvents() {

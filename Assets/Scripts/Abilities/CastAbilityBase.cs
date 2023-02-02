@@ -2,9 +2,12 @@ using RockUtils.GameEvents;
 using UnityEngine;
 
 public class CastAbilityBase : AbilityBase {
-
-    protected float maxCooldown;
     protected float cooldown = 0;
+    protected float maxCooldown;
+
+    public CastAbilityBase(Player owner, AbilityNum abilityNum)
+        : base(owner, abilityNum) {
+    }
 
     protected override string GetName() { return "CastAbilityBase"; }
 

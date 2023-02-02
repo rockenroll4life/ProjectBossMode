@@ -1,9 +1,8 @@
 ﻿public class TestAbility : CastAbilityBase {
-    protected override string GetName() { return "TestAbility"; }
-
-    public override void Setup(LivingEntity owner, AbilityNum abilityNum) {
-        base.Setup(owner, abilityNum);
-
+    public TestAbility(Player owner, AbilityNum abilityNum)
+        : base(owner, abilityNum) {
         interruptsMovement = true;
     }
+
+    protected override string GetName() { return "TestAbility"; }
 }

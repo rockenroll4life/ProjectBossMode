@@ -10,6 +10,11 @@
 
     protected bool interruptsMovement = false;
 
+    public AbilityBase(Player owner, AbilityNum abilityNum) {
+        this.owner = owner;
+        SetAbilityID(abilityNum);
+    }
+
     protected abstract string GetName();
     protected virtual TriggerType GetTriggerType() { return TriggerType.Cast; }
 
@@ -21,12 +26,6 @@
     }
 
     protected virtual void RegisterAttributes() { }
-
-    public virtual void Setup(LivingEntity owner, AbilityNum abilityNum) {
-        this.owner = owner;
-
-        SetAbilityID(abilityNum);
-    }
 
     public virtual void Breakdown() {
         if (abilityID != AbilityNum.NONE) {

@@ -1,6 +1,11 @@
 using RockUtils.GameEvents;
 
 public class ChannelAbilityBase : AbilityBase {
+    public ChannelAbilityBase(Player owner, AbilityNum abilityNum)
+        : base(owner, abilityNum) {
+        interruptsMovement = true;
+    }
+
     protected override string GetName() { return "ChannelAbilityBase"; }
 
     protected override TriggerType GetTriggerType() { return TriggerType.Channel; }
@@ -17,12 +22,6 @@ public class ChannelAbilityBase : AbilityBase {
         base.UnregisterEvents();
 
         EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Held + (int) abilityID, AttemptUseAbility);
-    }
-
-    public override void Setup(LivingEntity owner, AbilityNum abilityNum) {
-        base.Setup(owner, abilityNum);
-
-        interruptsMovement = true;
     }
 
     protected override bool CanUseAbility() {
