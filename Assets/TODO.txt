@@ -1,5 +1,4 @@
-- Convert Stats to Attributes and the ability to instance them
-- Integrate Owned GameEvents into the Stats system so on a stat update the entities is told and not everyone
+- Implement Status Effect system
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
 - Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
 - Implement an AI Goal and Goal Selector system, based of how Minecraft does it as it's quite elegant

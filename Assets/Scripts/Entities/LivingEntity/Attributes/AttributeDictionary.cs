@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttributeDictionary {
-    LivingEntity owner;
+    readonly LivingEntity owner;
     readonly Dictionary<Attribute, AttributeInstance> attributeDictionary = new Dictionary<Attribute, AttributeInstance>();
     readonly Dictionary<Attribute, Action<int>> attributeListeners = new Dictionary<Attribute, Action<int>>();
 

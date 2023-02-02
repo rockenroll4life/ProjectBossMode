@@ -1,9 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ModifiableAttributeInstance : AttributeInstance {
     readonly AttributeDictionary attributeDictionary;
+    readonly Dictionary<AttributeModifier.Operation, Dictionary<Guid, AttributeModifier>> modifiers = new Dictionary<AttributeModifier.Operation, Dictionary<Guid, AttributeModifier>>();
     readonly Attribute attribute;
     float baseValue;
     float cachedValue;
@@ -14,6 +15,10 @@ public class ModifiableAttributeInstance : AttributeInstance {
         this.attribute = attribute;
 
         baseValue = attribute.GetDefaultValue();
+
+        for (int i = 0; i < (int) AttributeModifier.Operation._TOTAL; i++) {
+            modifiers.Add((AttributeModifier.Operation) i, new Dictionary<Guid, AttributeModifier>());
+        }
     }
 
     public Attribute GetAttribute() {
@@ -50,20 +55,45 @@ public class ModifiableAttributeInstance : AttributeInstance {
     float CalculateValue() {
         float value = GetBaseValue();
 
-        //  TODO: [Rock]: Implement Attribute Modifiers - Addition, Multiply Base, Multiply Total
-
-        //  Loop through all the Addition modifiers and add them to value
-        //  value += modifier.Amount();
+        foreach (AttributeModifier modifier in GetModifiers(AttributeModifier.Operation.Addition)) {
+            value += modifier.GetAmount();
+        }
 
         float result = value;
 
-        //  Loops through all the Multiply Base modifiers
-        //  result += value * modifier.Amount();
+        foreach (AttributeModifier modifier in GetModifiers(AttributeModifier.Operation.Multiply_Base)) {
+            result += value * modifier.GetAmount();
+        }
 
-        //  Loop through all the Multiply Total modifiers
-        // result *= 1 + modifier.Amount();
+        foreach (AttributeModifier modifier in GetModifiers(AttributeModifier.Operation.Multiply_Total)) {
+            result *= 1 + modifier.GetAmount();
+        }
 
         //  Lastly, make sure the value is cleaned up and within any bounds that it needs to be within
         return attribute.CleanupValue(result);
+    }
+
+    public void AddModifier(AttributeModifier modifier) {
+        if (modifiers[modifier.GetOperation()].ContainsKey(modifier.GetID())) {
+            Debug.LogException(new Exception("This modifier has already been added!"));
+        }
+
+        modifiers[modifier.GetOperation()].Add(modifier.GetID(), modifier);
+
+        SetDirty();
+    }
+
+    public void RemoveModifier(AttributeModifier modifier) {
+        if (!modifiers[modifier.GetOperation()].ContainsKey(modifier.GetID())) {
+            Debug.LogException(new Exception("This modifier does not exist!"));
+        }
+
+        modifiers[modifier.GetOperation()].Remove(modifier.GetID());
+
+        SetDirty();
+    }
+
+    IEnumerable<AttributeModifier> GetModifiers(AttributeModifier.Operation operation) {
+        return modifiers[operation].Values;
     }
 }
