@@ -1,31 +1,8 @@
-
-UI
-	- Ability Selector (Some way to customize your build)
-
-Buffs / Debuffs
-	- General system for adding positive and negative effects to entities either timed or until removed
-
-Items / Equipment
-	- Decide if items are going to be a thing, and if so add the necessary fixing (UI)
-	- Regardless of the above choice, support an Equipment system (May just be fixed equipment for each character)
-
-Abilities
-	- Figure out how to support togglable effects
-	- System supports a class-less system, however for the purposes of this project we use "classes" (Fixed abilities on a given character)
-	- Decide on a ability manipulation system, probably some Hybrid of D3/Wolcen (Fixed choosable upgrades) and POE (Socketed Gems)
-	- Abstract abilities out of Player and into their own class (Ideally there's very minimal logic within Player and abilities self handle themselves, abilities know little too nothing about players)
-
-Locomotion
-	- Stop using Navmesh Agent for actual moving around, use it to assist us with getting paths, but actually do the movement ourselves
-	- Move towards target (attack or ability cast range)
-	- Move towards target location (within ability cast range)
-	- Follow targeted enemy (Attack Range)
-
-Loot Generator / Manager
-	- You know, that loot-y goodness
-
-Statistics
-	- Generally just fun info to know, even if it rarely effects gameplay (Can also be used for challenge related things or even achievements)
-
-Achievements
-	- General system to support Achievements (Added hooks to go outwards for things like Steam), even if we don't use it
+- Convert Stats to Attributes and the ability to instance them
+- Integrate Owned GameEvents into the Stats system so on a stat update the entities is told and not everyone
+- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
+- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
+- Implement an AI Goal and Goal Selector system, based of how Minecraft does it as it's quite elegant
+- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
+- Implement Wave Spawner system
+- Fog of war

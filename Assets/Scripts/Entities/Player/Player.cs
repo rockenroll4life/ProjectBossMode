@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using RockUtils.GameEvents;
 
-public class Player : Entity {
+public class Player : LivingEntity {
     static readonly Color PLAYER_COLOR = new Color(1f, 0.8431f, 0f);
 
     GameplayUI ui;

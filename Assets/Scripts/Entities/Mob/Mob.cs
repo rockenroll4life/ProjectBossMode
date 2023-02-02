@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mob : Entity {
+public class Mob : LivingEntity {
     public override EntityType GetEntityType() { return EntityType.Mob; }
     public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Mob; }
 

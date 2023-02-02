@@ -5,6 +5,7 @@ public class TargetingManager {
     public enum TargetType {
         None,
         World,
+        LivingEntity,
         Mob,
         Player,
         Interactable,

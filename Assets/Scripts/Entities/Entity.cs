@@ -5,6 +5,7 @@ using RockUtils.GameEvents;
 public abstract class Entity : MonoBehaviour {
     public enum EntityType {
         Undefined,
+        LivingEntity,
         Player,
         Mob,
         Interactable,
@@ -41,7 +42,7 @@ public abstract class Entity : MonoBehaviour {
 
         RegisterComponents();
 
-        RegisterStats();
+        RegisterAttributes();
     }
     void OnDisable() {
         UnregisterEvents();
@@ -53,7 +54,7 @@ public abstract class Entity : MonoBehaviour {
         entityID = Guid.NewGuid();
     }
 
-    protected virtual void RegisterStats() { }
+    protected virtual void RegisterAttributes() { }
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
