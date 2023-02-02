@@ -5,7 +5,6 @@ public abstract class LivingEntity : Entity {
     public GameObject handAttachLeft;
 
     public Locomotion locomotion { get; protected set; }
-    public EntityStats stats { get; protected set; }
     public StatusEffectManager statusEffects { get; protected set; }
     public TargetingManager targetingManager { get; protected set; }
 
@@ -32,8 +31,6 @@ public abstract class LivingEntity : Entity {
     }
 
     protected virtual void RegisterComponents() {
-        stats = gameObject.AddComponent<EntityStats>();
-
         statusEffects = new StatusEffectManager();
         statusEffects.Setup(this);
 
@@ -46,8 +43,11 @@ public abstract class LivingEntity : Entity {
     }
 
     protected virtual void RegisterAttributes() {
+        //  These are the base attributes that every entity has, only register attributes here that everyone will have (Even if we set them to a value
+        //  of 0 in the actual entity themselves.
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MAX_HEALTH);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED);
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE);
     }
 
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails

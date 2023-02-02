@@ -2,6 +2,8 @@
 using RockUtils.GameEvents;
 
 public class Player : LivingEntity {
+    public static readonly RangedAttribute MAX_MANA = new RangedAttribute("generic.mana", 100, 0, float.MaxValue);
+
     static readonly Color PLAYER_COLOR = new Color(1f, 0.8431f, 0f);
 
     GameplayUI ui;
@@ -62,6 +64,10 @@ public class Player : LivingEntity {
     protected override void RegisterAttributes() {
         base.RegisterAttributes();
 
+        //  Register any unique attributes to this entity
+        GetAttributes().RegisterAttribute(MAX_MANA);
+
+        //  Update any of the base attribute values for this entity
         GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).SetBaseValue(500);
     }
 
@@ -82,11 +88,19 @@ public class Player : LivingEntity {
     }
 
     void HealthChanged(int param) {
-        // Update the players Health UI elements
-        ui.UpdateBar(GameplayUI.ResourceType.Health, (int) stats.HEALTH.currentValue, stats.HEALTH.GetPercent());
+        //  TODO: [Rock]: Once we have Entity Data to store things such as health we'll pull from that data.
+        float currentHealth = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        float maxHealth = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        float healthPercent = currentHealth / maxHealth;
+
+        ui.UpdateBar(GameplayUI.ResourceType.Health, (int) currentHealth, healthPercent);
     }
 
     void ManaChanged(int param) {
-        ui.UpdateBar(GameplayUI.ResourceType.Mana, (int) stats.MANA.currentValue, stats.MANA.GetPercent());
+        float currentMana = GetAttribute(MAX_MANA).GetValue();
+        float maxMana = GetAttribute(MAX_MANA).GetValue();
+        float ManaPercent = currentMana / maxMana;
+
+        ui.UpdateBar(GameplayUI.ResourceType.Mana, (int) currentMana, ManaPercent);
     }
 }

@@ -23,7 +23,7 @@ public class AttributeDictionary {
         return attributeDictionary.GetValueOrDefault(attribute);
     }
 
-    public ICollection<AttributeInstance> GetAttributes() {
+    public IEnumerable<AttributeInstance> GetAttributes() {
         return attributeDictionary.Values;
     }
 }

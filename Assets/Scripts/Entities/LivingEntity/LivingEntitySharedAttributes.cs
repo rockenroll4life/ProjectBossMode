@@ -1,7 +1,6 @@
 public class LivingEntitySharedAttributes {
     //  Some generic values for these stats, they can be adjusted on a per entity basis
     public static readonly RangedAttribute MAX_HEALTH = new RangedAttribute("generic.health", 100, 0, float.MaxValue);
-    public static readonly RangedAttribute MAX_MANA = new RangedAttribute("generic.mana", 100, 0, float.MaxValue);
     public static readonly RangedAttribute MOVEMENT_SPEED = new RangedAttribute("generic.movementSpeed", 13.2f, 0, float.MaxValue);
     public static readonly RangedAttribute ATTACK_DAMAGE = new RangedAttribute("generic.attackDamage", 25, 0, float.MaxValue);
 
