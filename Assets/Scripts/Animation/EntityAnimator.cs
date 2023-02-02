@@ -3,10 +3,10 @@
 public class EntityAnimator : MonoBehaviour {
     public GameObject testSwordForAttaching;
 
-    protected Entity owner;
+    protected LivingEntity owner;
     protected Animator animator;
 
-    public void SetOwner(Entity owner) {
+    public void SetOwner(LivingEntity owner) {
         this.owner = owner;
     }
 

@@ -19,7 +19,7 @@ public abstract class AbilityBase {
     protected virtual TriggerType GetTriggerType() { return TriggerType.Cast; }
     protected virtual float GetCooldownTime() { return 0; }
 
-    Entity owner;
+    LivingEntity owner;
 
     protected virtual void RegisterEvents() {
         cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + (int) abilityID);
@@ -28,7 +28,7 @@ public abstract class AbilityBase {
         cooldown.RemoveEvent();
     }
 
-    public virtual void Setup(Entity owner, AbilityNum abilityNum) {
+    public virtual void Setup(LivingEntity owner, AbilityNum abilityNum) {
         this.owner = owner;
         cooldown = new Stat("", GetCooldownTime(), 0, float.MaxValue);
         //  We're using this a little differently than normal...

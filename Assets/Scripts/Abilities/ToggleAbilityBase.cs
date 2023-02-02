@@ -9,7 +9,7 @@ public class ToggleAbilityBase : AbilityBase {
         return TriggerType.Toggle;
     }
 
-    public override void Setup(Entity owner, AbilityNum abilityNum) {
+    public override void Setup(LivingEntity owner, AbilityNum abilityNum) {
         base.Setup(owner, abilityNum);
     }
 

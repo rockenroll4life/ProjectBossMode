@@ -41,14 +41,14 @@ public class TargetingManager {
     }
 
     void SelectTarget(int param) {
-        Entity hitEntity = null;
+        LivingEntity hitEntity = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
             validRaycastHit = true;
-            hitEntity = hit.collider.gameObject.GetComponentInParent<Entity>();
+            hitEntity = hit.collider.gameObject.GetComponentInParent<LivingEntity>();
 
             if (hitEntity != null) {
-                hitType = hitEntity.GetTargetType();
+                hitType = EntityTypeToTargetType(hitEntity.GetEntityType());
                 EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
             } else {
                 //  If we have an entity selected, let's go ahead and deselect it first. Don't just move if something is selected
@@ -91,6 +91,17 @@ public class TargetingManager {
             //  TODO: [Rock]: We should probably use a layer mask in this instance to only collide with the world?
             Physics.Raycast(ray, out hit, RAYCAST_DISTANCE);
             EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
+        }
+    }
+
+    TargetType EntityTypeToTargetType(Entity.EntityType entityType) {
+        switch (entityType) {
+            case Entity.EntityType.LivingEntity:    return TargetType.LivingEntity;
+            case Entity.EntityType.Player:          return TargetType.Player;
+            case Entity.EntityType.Mob:             return TargetType.Mob;
+            case Entity.EntityType.Interactable:    return TargetType.Interactable;
+
+            default:                                return TargetType.None;
         }
     }
 }

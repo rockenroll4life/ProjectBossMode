@@ -8,7 +8,6 @@ public class Player : LivingEntity {
     AbilityManager abilities;
 
     public override EntityType GetEntityType() { return EntityType.Player; }
-    public override TargetingManager.TargetType GetTargetType() { return TargetingManager.TargetType.Player; }
 
     protected override Color? GetHighlightColor() { return PLAYER_COLOR; }
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
@@ -16,19 +15,19 @@ public class Player : LivingEntity {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        AddEvent(entityID, (int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
-        AddEvent(entityID, (int) GameEvents.Mana_Changed, ManaChanged);
-        AddEvent(entityID, (int) GameEvents.Targeted_Entity, TargetedEntity);
-        AddEvent(entityID, (int) GameEvents.Targeted_World, TargetedWorld);
+        AddOwnedEvent((int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
+        AddOwnedEvent((int) GameEvents.Mana_Changed, ManaChanged);
+        AddOwnedEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
+        AddOwnedEvent((int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        RemoveEvent(entityID, (int) GameEvents.Health_Changed, HealthChanged);
-        RemoveEvent(entityID, (int) GameEvents.Mana_Changed, ManaChanged);
-        RemoveEvent(entityID, (int) GameEvents.Targeted_Entity, TargetedEntity);
-        RemoveEvent(entityID, (int) GameEvents.Targeted_World, TargetedWorld);
+        RemoveOwnedEvent((int) GameEvents.Health_Changed, HealthChanged);
+        RemoveOwnedEvent((int) GameEvents.Mana_Changed, ManaChanged);
+        RemoveOwnedEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
+        RemoveOwnedEvent((int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void RegisterComponents() {
@@ -58,6 +57,12 @@ public class Player : LivingEntity {
         abilities.Breakdown();
 
         ui.Breakdown();
+    }
+
+    protected override void RegisterAttributes() {
+        base.RegisterAttributes();
+
+        GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).SetBaseValue(500);
     }
 
     protected override void UpdateStep() {

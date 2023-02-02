@@ -2,12 +2,12 @@
 using UnityEngine;
 
 public class AbilityManager {
-    Entity owner;
+    LivingEntity owner;
 
     //
     public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum._COUNT];
 
-    public void Setup(Entity owner) {
+    public void Setup(LivingEntity owner) {
         this.owner = owner;
     }
 

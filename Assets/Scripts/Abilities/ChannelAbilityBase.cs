@@ -19,7 +19,7 @@ public class ChannelAbilityBase : AbilityBase {
         EventManager.StopListening((int) GameEvents.Ability_Held + (int) abilityID, AttemptUseAbility);
     }
 
-    public override void Setup(Entity owner, AbilityNum abilityNum) {
+    public override void Setup(LivingEntity owner, AbilityNum abilityNum) {
         base.Setup(owner, abilityNum);
 
         interruptsMovement = true;

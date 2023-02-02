@@ -22,12 +22,12 @@ public abstract class StatusEffect {
 
     public bool markedForRemoval { get; protected set; } = false;
 
-    protected Entity owner = null;
+    protected LivingEntity owner = null;
 
     protected bool needsToUpdate = false;
 
     //  When this Status Effect is given to an Entity, do stuff
-    public virtual void OnApply(Entity owner) {
+    public virtual void OnApply(LivingEntity owner) {
         this.owner = owner;
         owner.OnStatusEffectApplied(this);
     }
