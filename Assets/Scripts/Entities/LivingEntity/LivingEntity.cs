@@ -64,7 +64,7 @@ public abstract class LivingEntity : Entity {
 
     public AttributeDictionary GetAttributes() {
         if (attributes == null) {
-            attributes = new AttributeDictionary();
+            attributes = new AttributeDictionary(this);
         }
 
         return attributes;

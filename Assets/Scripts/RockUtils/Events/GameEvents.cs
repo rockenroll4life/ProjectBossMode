@@ -62,7 +62,7 @@
             Ability_Channel_Start = 1930,
             Ability_Channel_Stop = 1935,
 
-            //  TODO: [Rock]: We should change this to "Stat_Changed" and generify this
+            //  TODO: [Rock]: We should change this to "Attribute_Changed" and generify this
             Health_Changed = 1940,
             Mana_Changed = 1941,
 

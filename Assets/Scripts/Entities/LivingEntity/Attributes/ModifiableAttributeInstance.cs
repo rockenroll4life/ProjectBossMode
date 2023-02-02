@@ -16,6 +16,15 @@ public class ModifiableAttributeInstance : AttributeInstance {
         baseValue = attribute.GetDefaultValue();
     }
 
+    public Attribute GetAttribute() {
+        return attribute;
+    }
+
+    void SetDirty() {
+        dirty = true;
+        attributeDictionary.OnAttributeModified(this);
+    }
+
     public float GetBaseValue() {
         return baseValue;
     }
@@ -35,9 +44,7 @@ public class ModifiableAttributeInstance : AttributeInstance {
         }
 
         this.baseValue = baseValue;
-        dirty = true;
-
-        //  NOTE: [Rock]: Do we need to tell our Attribute Dictionary that we changed?
+        SetDirty();
     }
 
     float CalculateValue() {
