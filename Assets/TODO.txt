@@ -1,3 +1,5 @@
+- Add an attribute for the ability cooldowns, we'll want each character to set those values in the future for their character
+- Fix up the Ability Cooldown timer, it was previously using Stats and we've gone ahead and removed them
 - Implement Status Effect system
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
 - Render Status Effects on the players UI and below (Non-Local Player) Enties health bar

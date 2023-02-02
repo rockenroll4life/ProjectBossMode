@@ -7,9 +7,6 @@ public abstract class AbilityBase {
         Toggle,
         Channel,
     }
-
-    //  NOTE: [Rock]: For some reason the UI needs access to this variables. We need to break that dependency
-    public Stat cooldown { private set; get; }
     
     protected AbilityNum abilityID = AbilityNum.NONE;
 
@@ -22,17 +19,17 @@ public abstract class AbilityBase {
     LivingEntity owner;
 
     protected virtual void RegisterEvents() {
-        cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + (int) abilityID);
+        //cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + (int) abilityID);
     }
     protected virtual void UnregisterEvents() {
-        cooldown.RemoveEvent();
+        //cooldown.RemoveEvent();
     }
 
     public virtual void Setup(LivingEntity owner, AbilityNum abilityNum) {
         this.owner = owner;
-        cooldown = new Stat("", GetCooldownTime(), 0, float.MaxValue);
+        //cooldown = new Stat("", GetCooldownTime(), 0, float.MaxValue);
         //  We're using this a little differently than normal...
-        cooldown.currentValue = 0;
+        //cooldown.currentValue = 0;
 
         SetAbilityID(abilityNum);
     }
@@ -77,8 +74,8 @@ public abstract class AbilityBase {
 
     public virtual void Update() {
         //  TODO: [Rock]: We should not be updating the cooldown's value in the Ability. Investigate into allowing the cooldown stat to update itself
-        if (cooldown > 0) {
+        /*if (cooldown > 0) {
             cooldown.currentValue -= Time.deltaTime;
-        }
+        }*/
     }
 }

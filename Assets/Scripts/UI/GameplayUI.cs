@@ -29,7 +29,7 @@ public class GameplayUI : MonoBehaviour {
     public void Setup(AbilityManager abilityManager) {
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             this.abilities[i].Setup((AbilityNum) i, defaultKeybindings[i]);
-            this.abilities[i].SetDefaultMaxCooldown(abilityManager.abilities[i].cooldown.GetValue());
+            //this.abilities[i].SetDefaultMaxCooldown(abilityManager.abilities[i].cooldown.GetValue());
         }
     }
 
