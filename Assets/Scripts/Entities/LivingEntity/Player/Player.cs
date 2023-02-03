@@ -48,6 +48,7 @@ public class Player : LivingEntity {
         ui.Setup(this, abilities);
 
         abilities = new AbilityManager(this);
+        targeter = new PlayerTargeter(this);
 
         abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
         abilities.SetAbility(AbilityNum.Ability2, typeof(TestAbility));
@@ -94,8 +95,9 @@ public class Player : LivingEntity {
     }
 
     void TargetedWorld(int param) {
-        if (targetingManager.IsValidHit(out RaycastHit hit)) {
-            locomotion.MoveToLocation(hit.point);
+        Vector3? location = targeter.GetTargetedLocation();
+        if (location.HasValue) {
+            locomotion.MoveToLocation(location.Value);
         }
     }
 

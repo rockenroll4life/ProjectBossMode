@@ -6,8 +6,8 @@ public abstract class LivingEntity : Entity {
 
     public Locomotion locomotion { get; protected set; }
     public StatusEffectManager statusEffects { get; protected set; }
-    public TargetingManager targetingManager { get; protected set; }
-
+    
+    protected Targeter targeter;
     AttributeDictionary attributes;
 
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
@@ -32,13 +32,9 @@ public abstract class LivingEntity : Entity {
 
     protected virtual void RegisterComponents() {
         statusEffects = new StatusEffectManager(this);
-
-        targetingManager = new TargetingManager(this);
     }
 
-    protected virtual void UnregisterComponents() {
-        targetingManager.Breakdown();
-    }
+    protected virtual void UnregisterComponents() { }
 
     protected virtual void RegisterAttributes() {
         //  These are the base attributes that every entity has, only register attributes here that everyone will have (Even if we set them to a value
