@@ -18,12 +18,8 @@
     protected abstract string GetName();
     protected virtual TriggerType GetTriggerType() { return TriggerType.Cast; }
 
-    protected virtual void RegisterEvents() {
-        //cooldown.SetValueUpdatedEvent((int) GameEvents.Ability_Cooldown_Update + (int) abilityID);
-    }
-    protected virtual void UnregisterEvents() {
-        //cooldown.RemoveEvent();
-    }
+    protected virtual void RegisterEvents() { }
+    protected virtual void UnregisterEvents() { }
 
     protected virtual void RegisterAttributes() { }
 

@@ -1,9 +1,8 @@
 ﻿using System;
 
 public class AbilityManager {
-    Player owner;
+    readonly Player owner;
 
-    //
     public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum._COUNT];
 
     public AbilityManager(Player owner) {

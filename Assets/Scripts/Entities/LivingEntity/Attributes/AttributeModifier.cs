@@ -13,7 +13,7 @@ public class AttributeModifier
     readonly float amount;
     readonly Operation operation;
     readonly string name;
-    Guid id;
+    readonly Guid id;
 
     public AttributeModifier(Guid id, string name, float amount, Operation operation) {
         this.id = id;

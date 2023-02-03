@@ -2,16 +2,16 @@
 using RockUtils.GameEvents;
 
 public class Player : LivingEntity {
-    public static readonly RangedAttribute MAX_MANA = new RangedAttribute("generic.mana", 100, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY1_COOLDOWN = new RangedAttribute("generic.ability1", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY2_COOLDOWN = new RangedAttribute("generic.ability2", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY3_COOLDOWN = new RangedAttribute("generic.ability3", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY4_COOLDOWN = new RangedAttribute("generic.ability4", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ULTIMATE_COOLDOWN = new RangedAttribute("generic.ultimate", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute MAX_MANA = new("generic.mana", 100, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY2_COOLDOWN = new("generic.ability2", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY3_COOLDOWN = new("generic.ability3", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY4_COOLDOWN = new("generic.ability4", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ULTIMATE_COOLDOWN = new("generic.ultimate", 5, 0, float.MaxValue);
 
     public static readonly RangedAttribute[] ABILITY_COOLDOWNS = { ABILITY1_COOLDOWN, ABILITY2_COOLDOWN, ABILITY3_COOLDOWN, ABILITY4_COOLDOWN, ULTIMATE_COOLDOWN };
 
-    static readonly Color PLAYER_COLOR = new Color(1f, 0.8431f, 0f);
+    static readonly Color PLAYER_COLOR = new(1f, 0.8431f, 0f);
 
     GameplayUI ui;
     AbilityManager abilities;

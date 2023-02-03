@@ -13,24 +13,24 @@ public class TargetingManager {
 
     static readonly int RAYCAST_DISTANCE = 100;
 
-    Entity owner;
+    readonly LivingEntity owner;
     RaycastHit hit;
     bool validRaycastHit;
     TargetType hitType = TargetType.None;
     Entity targetedEntity = null;
 
-    public bool IsValidHit(out RaycastHit hit) {
-        hit = this.hit;
-        return validRaycastHit;
-    }
-
-    public void Setup(Entity owner) {
+    public TargetingManager(LivingEntity owner) {
         this.owner = owner;
 
         if (owner.GetEntityType() == Entity.EntityType.Player) {
             EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
             EventManager.StartListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
         }
+    }
+
+    public bool IsValidHit(out RaycastHit hit) {
+        hit = this.hit;
+        return validRaycastHit;
     }
 
     public void Breakdown() {

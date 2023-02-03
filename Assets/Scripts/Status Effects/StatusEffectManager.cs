@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StatusEffectManager {
-    LivingEntity owner;
+    readonly LivingEntity owner;
     
     //  TODO: [Rock]: Consider having this stored as a Dictionary of Dictionaries, where the keys are the effects alignment (Neutral, Positive, Negative) and the values are
     //  dictionaries holding a Guid and status effect...could simplify this some
@@ -16,7 +16,7 @@ public class StatusEffectManager {
 
     List<System.Guid> toRemove = new List<System.Guid>();
 
-    public void Setup(LivingEntity owner) {
+    public StatusEffectManager(LivingEntity owner) {
         this.owner = owner;
     }
 

@@ -31,11 +31,9 @@ public abstract class LivingEntity : Entity {
     }
 
     protected virtual void RegisterComponents() {
-        statusEffects = new StatusEffectManager();
-        statusEffects.Setup(this);
+        statusEffects = new StatusEffectManager(this);
 
-        targetingManager = new TargetingManager();
-        targetingManager.Setup(this);
+        targetingManager = new TargetingManager(this);
     }
 
     protected virtual void UnregisterComponents() {
