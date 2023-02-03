@@ -54,7 +54,7 @@
 
     protected virtual void UseAbility() {
         if (interruptsMovement) {
-            owner.locomotion.StopMovement();
+            owner.GetLocomotion().StopMovement();
         }
     }
 

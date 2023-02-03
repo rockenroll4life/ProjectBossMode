@@ -42,7 +42,7 @@ public class Player : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
-        locomotion = gameObject.AddComponent<PlayerLocomotion>();
+        locomotion = new PlayerLocomotion(this);
 
         ui = FindObjectOfType<GameplayUI>();
         ui.Setup(this, abilities);

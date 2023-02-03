@@ -4,13 +4,15 @@ public abstract class LivingEntity : Entity {
     public GameObject handAttachRight;
     public GameObject handAttachLeft;
 
-    public Locomotion locomotion { get; protected set; }
     public StatusEffectManager statusEffects { get; protected set; }
-    
+    protected Locomotion locomotion;
     protected Targeter targeter;
     AttributeDictionary attributes;
 
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
+
+    public Targeter GetTargeter() { return targeter; }
+    public Locomotion GetLocomotion() { return locomotion; }
 
     protected override void Setup() {
         base.Setup();
@@ -54,6 +56,12 @@ public abstract class LivingEntity : Entity {
 
         //  Update this entities status effects. We handle this first so if their time expires we can clear them before the AI Step
         statusEffects.Update();
+    }
+
+    protected override void UpdateStep() {
+        base.UpdateStep();
+
+        locomotion.Update();
     }
 
     public AttributeDictionary GetAttributes() {
