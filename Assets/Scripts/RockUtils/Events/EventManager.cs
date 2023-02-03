@@ -4,32 +4,16 @@ using UnityEngine;
 
 namespace RockUtils {
     namespace GameEvents {
-        public class EventManager : MonoBehaviour
-        {
-            //  TODO: [Rock]: Add increase support to the event manager
-            //  Events should be broken down into two types of events
-            //      1. Global Events - These events are just generic type of events that anyone might want to listen to, for example, the Pause GameEvent.
-            //      2. Targeted Events - These events are specifically targeted towards a specific entity. for example, something might update the players health and the player
-            //                              and UI would want to listen to a specific event targeting the player for the Health Changing.
-
-            //  NOTE: [ROCK]: This could probably be implemented easily by adding a nullable GUID value version of the functions. After that
-            //                  store two versions of the dictionary, the current one as a "Global" and a separate one that's a Dictionary<GUID, Dictionary<int, Action<int>>>
-            //                  That contains all the events for a given entity. If we pass a GUID to the trigger we trigger those, else we make the call on the Global
-
+        public class EventManager {
             Dictionary<int, Action<int>> globalDictionary;
             Dictionary<Guid, Dictionary<int, Action<int>>> ownedDictionary;
             static EventManager eventManager;
 
             public static EventManager instance {
                 get {
-                    if (!eventManager) {
-                        eventManager = FindObjectOfType<EventManager>();
-
-                        if (!eventManager) {
-                            Debug.LogError("Using this requires an EventManager on a GameObject within the scene");
-                        } else {
-                            eventManager.Init();
-                        }
+                    if (eventManager == null) {
+                        eventManager = new EventManager();
+                        eventManager.Init();
                     }
 
                     return eventManager;
@@ -88,11 +72,6 @@ namespace RockUtils {
             }
 
             public static void StopListening(Guid? owner, int eventID, Action<int> listener) {
-                //  NOTE: [Rock]: For some reason we were doing a null check here, however I don't think we need it...monitor this...
-                /*if (eventManager == null) {
-                    return;
-                }*/
-
                 //  Owned Dictionary
                 if (owner.HasValue) {
                     if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<int, Action<int>> thisDictionary)) {
@@ -138,7 +117,6 @@ namespace RockUtils {
                         thisEvent.Invoke(param);
                     }
                 }
-                
             }
 
             public static void TriggerEvent(Guid? owner, int eventID) {
