@@ -6,6 +6,7 @@ public abstract class LivingEntity : Entity {
 
     public StatusEffectManager statusEffects { get; protected set; }
     protected Locomotion locomotion;
+    protected EntityAnimator animator;
     protected Targeter targeter;
     AttributeDictionary attributes;
 
@@ -62,6 +63,7 @@ public abstract class LivingEntity : Entity {
         base.UpdateStep();
 
         locomotion.Update();
+        animator.Update();
     }
 
     public AttributeDictionary GetAttributes() {

@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimator : EntityAnimator {
-    protected override void UpdateAnimations() {
+    public PlayerAnimator(LivingEntity owner)
+        : base(owner) {
+    }
+
+    public override void Update() {
         //  Update the players movement animation
         animator.SetBool("isMoving", owner.GetLocomotion().IsMoving());
         animator.SetFloat("moveSpeedMultiplier", (owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue()  / Locomotion.FIXED_MOVEMENT_SPEED), 0.1f, Time.deltaTime);

@@ -56,8 +56,7 @@ public class Player : LivingEntity {
         abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
 
-        animator = gameObject.AddComponent<PlayerAnimator>();
-        animator.SetOwner(this);
+        animator = new PlayerAnimator(this);
     }
 
     protected override void UnregisterComponents() {

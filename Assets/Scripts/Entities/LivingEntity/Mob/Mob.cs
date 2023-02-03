@@ -6,6 +6,14 @@ public class Mob : LivingEntity {
     protected override Color? GetHighlightColor() { return Color.red; }
     protected override Color? GetHighlightOutlineColor() { return Color.red; }
 
+    protected override void RegisterComponents() {
+        base.RegisterComponents();
+
+        //  TODO: [Rock]: Create a MobLocomotion Class if necessary
+        locomotion = new Locomotion(this);
+        animator = new EntityAnimator(this);
+    }
+
     protected virtual void AIStep() { }
 
     protected override void UpdateStep() {

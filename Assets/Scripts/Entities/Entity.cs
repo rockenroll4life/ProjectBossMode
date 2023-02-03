@@ -17,8 +17,6 @@ public abstract class Entity : MonoBehaviour {
     Shader highlightShader;
     protected Guid entityID;
 
-    public EntityAnimator animator { get; protected set; }
-
     public abstract EntityType GetEntityType();
 
     public Guid GetEntityID() { return entityID; }

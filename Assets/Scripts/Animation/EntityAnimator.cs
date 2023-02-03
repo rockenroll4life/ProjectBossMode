@@ -1,22 +1,15 @@
 ﻿using UnityEngine;
 
-public class EntityAnimator : MonoBehaviour {
+public class EntityAnimator {
     public GameObject testSwordForAttaching;
 
     protected LivingEntity owner;
     protected Animator animator;
 
-    public void SetOwner(LivingEntity owner) {
+    public EntityAnimator(LivingEntity owner) {
         this.owner = owner;
-    }
-
-    void Start() {
-        animator = GetComponentInChildren<Animator>();
+        animator = owner.GetComponentInChildren<Animator>();
     }
     
-    void Update() {
-        UpdateAnimations();
-    }
-
-    protected virtual void UpdateAnimations() { }
+    public virtual void Update() { }
 }
