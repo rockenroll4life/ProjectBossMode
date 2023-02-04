@@ -54,7 +54,6 @@ public class Player : LivingEntity {
 
         //  Register any unique attributes to this entity
         GetAttributes().RegisterAttribute(MAX_MANA);
-
         GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);

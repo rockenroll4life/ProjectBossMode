@@ -2,6 +2,8 @@
 using UnityEngine;
 
 public class PlayerLocomotion : Locomotion {
+    LivingEntity targetedEntity = null;
+
     public PlayerLocomotion(LivingEntity owner)
         : base(owner) {
         agent.updateRotation = false;
@@ -16,13 +18,27 @@ public class PlayerLocomotion : Locomotion {
     }
 
     void TargetedWorld(int param) {
+        targetedEntity = null;
+        
         Vector3? location = owner.GetTargeter().GetTargetedLocation();
         if (location.HasValue) {
+            agent.stoppingDistance = Mathf.Epsilon;
             MoveToLocation(location.Value);
         }
     }
 
     void TargetedEntity(int param) {
-        Debug.Log("Targeted an Entity!");
+        targetedEntity = owner.GetTargeter().GetTargetedEntity();
+
+        agent.stoppingDistance = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
+        MoveToLocation(targetedEntity.transform.position);
+    }
+
+    public override void Update() {
+        base.Update();
+
+        if (targetedEntity) {
+            MoveToLocation(targetedEntity.transform.position);
+        }
     }
 }

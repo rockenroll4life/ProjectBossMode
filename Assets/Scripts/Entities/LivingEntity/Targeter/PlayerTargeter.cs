@@ -28,6 +28,7 @@ public class PlayerTargeter : TargeterBase {
     }
 
     void SelectTarget(int param) {
+        LivingEntity prevTargetedEntity = targetedEntity;
         LivingEntity hitEntity = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
@@ -36,18 +37,14 @@ public class PlayerTargeter : TargeterBase {
 
             if (hitEntity != null) {
                 hitType = EntityTypeToTargetType(hitEntity.GetEntityType());
-                EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
+                targetedEntity = hitEntity;
                 targetedLocation = null;
+                EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
             } else {
-                //  If we have an entity selected, let's go ahead and deselect it first. Don't just move if something is selected
-                if (targetedEntity) {
-                    targetedEntity.OnDeselected();
-                    targetedEntity = null;
-                } else {
-                    hitType = TargetType.World;
-                    targetedLocation = hit.point;
-                    EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
-                }
+                hitType = TargetType.World;
+                targetedEntity = null;
+                targetedLocation = hit.point;
+                EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
             }
         } else {
             //  NOTE: [Rock]: There shouldn't really ever be an instance where we don't collide with something in the future, however we'll keep this here for now
@@ -61,21 +58,19 @@ public class PlayerTargeter : TargeterBase {
         }
 
         //  We either selected or unselected an entity
-        if (hitEntity != targetedEntity) {
-            if (targetedEntity == null) {
-                targetedEntity = hitEntity;
-                targetedEntity.OnSelected();
+        if (hitEntity != prevTargetedEntity) {
+            if (prevTargetedEntity == null) {
+                if (hitEntity != owner) {
+                    hitEntity.OnSelected();
+                }
             } else if (hitEntity == null) {
-                targetedEntity.OnDeselected();
-                targetedEntity = null;
+                if (prevTargetedEntity != owner) {
+                    prevTargetedEntity.OnDeselected();
+                }
             } else {
-                targetedEntity.OnDeselected();
+                prevTargetedEntity.OnDeselected();
                 hitEntity.OnSelected();
-                targetedEntity = hitEntity;
             }
-        } else if (targetedEntity != null) {
-            targetedEntity.OnDeselected();
-            targetedEntity = null;
         }
     }
 
