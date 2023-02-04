@@ -26,8 +26,6 @@ public class Player : LivingEntity {
 
         AddOwnedEvent((int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
         AddOwnedEvent((int) GameEvents.Mana_Changed, ManaChanged);
-        AddOwnedEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
-        AddOwnedEvent((int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void UnregisterEvents() {
@@ -35,8 +33,6 @@ public class Player : LivingEntity {
 
         RemoveOwnedEvent((int) GameEvents.Health_Changed, HealthChanged);
         RemoveOwnedEvent((int) GameEvents.Mana_Changed, ManaChanged);
-        RemoveOwnedEvent((int) GameEvents.Targeted_Entity, TargetedEntity);
-        RemoveOwnedEvent((int) GameEvents.Targeted_World, TargetedWorld);
     }
 
     protected override void RegisterComponents() {
@@ -87,17 +83,6 @@ public class Player : LivingEntity {
         base.UpdateStep();
 
         abilities.Update();
-    }
-
-    void TargetedEntity(int param) {
-        
-    }
-
-    void TargetedWorld(int param) {
-        Vector3? location = targeter.GetTargetedLocation();
-        if (location.HasValue) {
-            locomotion.MoveToLocation(location.Value);
-        }
     }
 
     void HealthChanged(int param) {
