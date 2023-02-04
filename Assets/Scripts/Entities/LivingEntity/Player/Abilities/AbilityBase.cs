@@ -5,7 +5,7 @@
         Channel,
     }
     
-    protected LivingEntity owner;
+    protected Player owner;
     protected AbilityNum abilityID = AbilityNum.NONE;
 
     protected bool interruptsMovement = false;

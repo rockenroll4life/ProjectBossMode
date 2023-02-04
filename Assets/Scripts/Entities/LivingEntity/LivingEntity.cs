@@ -1,6 +1,8 @@
 using UnityEngine;
+using RockUtils.GameEvents;
 
 public abstract class LivingEntity : Entity {
+    public GameObject attackProjectilePrefab;
     public GameObject handAttachRight;
     public GameObject handAttachLeft;
 
@@ -9,6 +11,11 @@ public abstract class LivingEntity : Entity {
     protected EntityAnimator animator;
     protected Targeter targeter;
     AttributeDictionary attributes;
+
+    float attackTimer = 0;
+
+    //  TODO: [Rock]: Replace with EntityData
+    protected float health;
 
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
 
@@ -42,7 +49,10 @@ public abstract class LivingEntity : Entity {
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MAX_HEALTH);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE);
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_SPEED);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_RANGE);
+
+        health = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
     }
 
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails
@@ -53,15 +63,21 @@ public abstract class LivingEntity : Entity {
     protected override void PreUpdateStep() {
         base.PreUpdateStep();
 
-        //  Update this entities status effects. We handle this first so if their time expires we can clear them before the AI Step
         statusEffects.Update();
+        locomotion.Update();
+        animator.Update();
     }
 
     protected override void UpdateStep() {
         base.UpdateStep();
 
-        locomotion.Update();
-        animator.Update();
+        if (attackTimer > 0) {
+            attackTimer -= Time.deltaTime;
+        } else {
+            if (CanAttack()) {
+                Attack();
+            }
+        }
     }
 
     public AttributeDictionary GetAttributes() {
@@ -74,5 +90,24 @@ public abstract class LivingEntity : Entity {
 
     public AttributeInstance GetAttribute(Attribute attribute) {
         return GetAttributes().GetInstance(attribute);
+    }
+
+    public float GetHealth() { return health; }
+
+    protected virtual bool CanAttack() {
+        return attackTimer <= 0 && targeter.GetTargetedEntity() != null;
+    }
+
+    protected virtual void Attack() {
+        attackTimer = GetAttribute(LivingEntitySharedAttributes.ATTACK_SPEED).GetValue();
+
+        Vector3 offset = (transform.forward * 1) + Vector3.up;
+        Projectile proj = Instantiate(attackProjectilePrefab, transform.position + offset, transform.rotation).GetComponent<Projectile>();
+        proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE).GetValue());
+    }
+
+    public virtual void Hurt(Entity damager, float damage) {
+        health -= damage;
+        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int)(health * 1000));
     }
 }

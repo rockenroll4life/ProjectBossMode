@@ -2,7 +2,8 @@
 using RockUtils.GameEvents;
 
 public class Player : LivingEntity {
-    public static readonly RangedAttribute MAX_MANA = new("generic.mana", 100, 0, float.MaxValue);
+    public static readonly RangedAttribute MAX_MANA = new("generic.mana", 72, 0, float.MaxValue);
+    public static readonly RangedAttribute MANA_REGEN_RATE = new("generic.manaRegenRate", 2.5f, float.MinValue, float.MaxValue);
     public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
     public static readonly RangedAttribute ABILITY2_COOLDOWN = new("generic.ability2", 5, 0, float.MaxValue);
     public static readonly RangedAttribute ABILITY3_COOLDOWN = new("generic.ability3", 5, 0, float.MaxValue);
@@ -16,10 +17,20 @@ public class Player : LivingEntity {
     GameplayUI ui;
     AbilityManager abilities;
 
+    protected float mana;
+    protected float manaRegenRate = 5;
+
     public override EntityType GetEntityType() { return EntityType.Player; }
 
     protected override Color? GetHighlightColor() { return PLAYER_COLOR; }
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
+
+    public float GetMana() { return mana; }
+
+    public void UseMana(float mana) {
+        this.mana = Mathf.Max(this.mana - mana, 0);
+        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
+    }
 
     protected override void RegisterComponents() {
         base.RegisterComponents();
@@ -38,7 +49,7 @@ public class Player : LivingEntity {
         abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
 
-        animator = new PlayerAnimator(this);
+        animator = new LivingEntityAnimator(this);
     }
 
     protected override void UnregisterComponents() {
@@ -54,6 +65,8 @@ public class Player : LivingEntity {
 
         //  Register any unique attributes to this entity
         GetAttributes().RegisterAttribute(MAX_MANA);
+        GetAttributes().RegisterAttribute(MANA_REGEN_RATE);
+
         GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);
@@ -62,11 +75,23 @@ public class Player : LivingEntity {
 
         //  Update any of the base attribute values for this entity
         GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).SetBaseValue(500);
+        health = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+
+        mana = GetAttribute(MAX_MANA).GetValue();
+
+        //  TODO: [Rock]: We need to add an attribute listener for the max health changing so we can update the UI
     }
 
     protected override void UpdateStep() {
         base.UpdateStep();
 
         abilities.Update();
+
+        float oldMana = mana;
+        mana += Time.deltaTime * GetAttribute(MANA_REGEN_RATE).GetValue();
+        mana = Mathf.Clamp(mana, 0, GetAttribute(MAX_MANA).GetValue());
+        if (mana != oldMana) {
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed);
+        }
     }
 }

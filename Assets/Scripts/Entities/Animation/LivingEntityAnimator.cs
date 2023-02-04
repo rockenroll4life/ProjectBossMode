@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class PlayerAnimator : EntityAnimator {
-    public PlayerAnimator(LivingEntity owner)
+public class LivingEntityAnimator : EntityAnimator {
+    public LivingEntityAnimator(LivingEntity owner)
         : base(owner) {
     }
 

@@ -4,6 +4,7 @@ public class LivingEntitySharedAttributes {
     public static readonly RangedAttribute MAX_HEALTH = new("generic.health", 100, 0, float.MaxValue);
     public static readonly RangedAttribute MOVEMENT_SPEED = new("generic.movementSpeed", 3.5f, 0, float.MaxValue);
     public static readonly RangedAttribute ATTACK_DAMAGE = new("generic.attackDamage", 25, 0, float.MaxValue);
+    public static readonly RangedAttribute ATTACK_SPEED = new("generic.attackSpeed", 3, 0, float.MaxValue);
     public static readonly RangedAttribute ATTACK_RANGE = new("generic.attackRange", 5, 0, float.MaxValue);
 
     //  NOTE: [Rock]: We may need to format attribute values for saving/loading...we'll save that for when we need it

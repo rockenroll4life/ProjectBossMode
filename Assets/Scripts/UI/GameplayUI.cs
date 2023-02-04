@@ -18,7 +18,7 @@ public class GameplayUI : MonoBehaviour {
         public Text maxText;
     }
 
-    LivingEntity owner;
+    Player owner;
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
 
@@ -35,7 +35,17 @@ public class GameplayUI : MonoBehaviour {
             abilities[i].Setup(owner, (AbilityNum) i, defaultKeybindings[i]);
         }
 
+        int healthMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        UpdateBar(ResourceType.Health, healthMax, healthMax);
+
+        int manaMax = (int) owner.GetAttribute(Player.MAX_MANA).GetValue();
+        UpdateBar(ResourceType.Mana, manaMax, manaMax);
+
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Health_Changed, HealthChanged);
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MAX_HEALTH, HealthChanged);
+
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Mana_Changed, ManaChanged);
+        owner.GetAttributes().RegisterListener(Player.MAX_MANA, ManaChanged);
     }
 
     public void Breakdown() {
@@ -51,13 +61,10 @@ public class GameplayUI : MonoBehaviour {
     }
 
     //  Health / Resource Bars
-    public void SetBarMax(ResourceType type, int amount) {
-        bars[(int) type].maxText.text = amount.ToString();
-    }
-
-    public void UpdateBar(ResourceType type, int current, float percent) {
-        bars[(int) type].currentText.text = current.ToString();
-        bars[(int) type].barFill.fillAmount = percent;
+    public void UpdateBar(ResourceType type, float current, float max) {
+        bars[(int) type].currentText.text = ((int) current).ToString();
+        bars[(int) type].maxText.text = ((int) max).ToString();
+        bars[(int) type].barFill.fillAmount = current / max;
     }
 
     //  Abilities
@@ -71,18 +78,16 @@ public class GameplayUI : MonoBehaviour {
 
     void HealthChanged(int param) {
         //  TODO: [Rock]: Once we have Entity Data to store things such as health we'll pull from that data.
-        float currentHealth = owner.GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        float currentHealth = owner.GetHealth();
         float maxHealth = owner.GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
-        float healthPercent = currentHealth / maxHealth;
 
-        UpdateBar(GameplayUI.ResourceType.Health, (int) currentHealth, healthPercent);
+        UpdateBar(ResourceType.Health, currentHealth, maxHealth);
     }
 
     void ManaChanged(int param) {
-        float currentMana = owner.GetAttribute(Player.MAX_MANA).GetValue();
+        float currentMana = owner.GetMana();
         float maxMana = owner.GetAttribute(Player.MAX_MANA).GetValue();
-        float ManaPercent = currentMana / maxMana;
 
-        UpdateBar(GameplayUI.ResourceType.Mana, (int) currentMana, ManaPercent);
+        UpdateBar(ResourceType.Mana, currentMana, maxMana);
     }
 }

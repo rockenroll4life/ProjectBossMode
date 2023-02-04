@@ -4,6 +4,7 @@ using UnityEngine;
 public class CastAbilityBase : AbilityBase {
     protected float cooldown = 0;
     protected float maxCooldown;
+    protected int manaCost = 10;
 
     public CastAbilityBase(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
@@ -35,12 +36,13 @@ public class CastAbilityBase : AbilityBase {
     }
 
     protected override bool CanUseAbility() {
-        return cooldown == 0 || canBypassCooldown();
+        return (cooldown == 0 && owner.GetMana() >= manaCost) || canBypassCooldown();
     }
     protected override void UseAbility() {
         base.UseAbility();
 
         cooldown = owner.GetAttribute(Player.ABILITY_COOLDOWNS[(int) abilityID]).GetValue();
+        owner.UseMana(manaCost);
     }
 
     public virtual void CooldownAttributeChanged(int param) {

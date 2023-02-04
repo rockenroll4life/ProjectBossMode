@@ -11,7 +11,8 @@ public class Mob : LivingEntity {
 
         //  TODO: [Rock]: Create a MobLocomotion Class if necessary
         locomotion = new MobLocomotion(this);
-        animator = new EntityAnimator(this);
+        animator = new LivingEntityAnimator(this);
+        targeter = new MobTargeter(this);
     }
 
     protected override void RegisterAttributes() {
@@ -27,5 +28,13 @@ public class Mob : LivingEntity {
 
         //  Handle any AI stuffs or extra handling this entity needs
         AIStep();
+    }
+
+    public override void Hurt(Entity damager, float damage) {
+        base.Hurt(damager, damage);
+
+        if (health <= 0) {
+            Destroy(gameObject);
+        }
     }
 }
