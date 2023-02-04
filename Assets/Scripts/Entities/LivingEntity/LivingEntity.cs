@@ -4,7 +4,7 @@ public abstract class LivingEntity : Entity {
     public GameObject handAttachRight;
     public GameObject handAttachLeft;
 
-    public StatusEffectManager statusEffects { get; protected set; }
+    protected StatusEffectManager statusEffects;
     protected Locomotion locomotion;
     protected EntityAnimator animator;
     protected Targeter targeter;
@@ -19,9 +19,7 @@ public abstract class LivingEntity : Entity {
         base.Setup();
 
         RegisterEvents();
-
         RegisterAttributes();
-
         RegisterComponents();
     }
 
@@ -29,7 +27,6 @@ public abstract class LivingEntity : Entity {
         base.Breakdown();
 
         UnregisterEvents();
-
         UnregisterComponents();
     }
 
@@ -45,6 +42,7 @@ public abstract class LivingEntity : Entity {
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MAX_HEALTH);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE);
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_RANGE);
     }
 
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails

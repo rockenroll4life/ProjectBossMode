@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class StatusEffectManager {
     readonly LivingEntity owner;
@@ -13,8 +11,8 @@ public class StatusEffectManager {
     Dictionary<System.Guid, StatusEffect> neutralStatusEffects = new Dictionary<System.Guid, StatusEffect>();
     Dictionary<System.Guid, StatusEffect> positiveStatusEffects = new Dictionary<System.Guid, StatusEffect>();
     Dictionary<System.Guid, StatusEffect> negativeStatusEffects = new Dictionary<System.Guid, StatusEffect>();
-
-    List<System.Guid> toRemove = new List<System.Guid>();
+    
+    readonly List<System.Guid> toRemove = new List<System.Guid>();
 
     public StatusEffectManager(LivingEntity owner) {
         this.owner = owner;
