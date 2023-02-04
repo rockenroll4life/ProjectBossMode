@@ -10,8 +10,14 @@ public class Mob : LivingEntity {
         base.RegisterComponents();
 
         //  TODO: [Rock]: Create a MobLocomotion Class if necessary
-        locomotion = new Locomotion(this);
+        locomotion = new MobLocomotion(this);
         animator = new EntityAnimator(this);
+    }
+
+    protected override void RegisterAttributes() {
+        base.RegisterAttributes();
+
+        GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).SetBaseValue(3f);
     }
 
     protected virtual void AIStep() { }

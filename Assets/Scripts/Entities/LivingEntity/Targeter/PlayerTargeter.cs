@@ -77,9 +77,11 @@ public class PlayerTargeter : TargeterBase {
     void UpdateMoveLocation(int param) {
         if (hitType == TargetType.World) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //  TODO: [Rock]: We should probably use a layer mask in this instance to only collide with the world?
-            Physics.Raycast(ray, out hit, RAYCAST_DISTANCE);
-            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
+            //  NOTE: [Rock]: In the future we'll probably want to have an ignore mask here...
+            if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
+                targetedLocation = hit.point;
+                EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
+            }
         }
     }
 }
