@@ -21,20 +21,6 @@ public class Player : LivingEntity {
     protected override Color? GetHighlightColor() { return PLAYER_COLOR; }
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
 
-    protected override void RegisterEvents() {
-        base.RegisterEvents();
-
-        AddOwnedEvent((int) GameEvents.Health_Changed, HealthChanged);   //  Do we need to move Health Changed somewhere else?
-        AddOwnedEvent((int) GameEvents.Mana_Changed, ManaChanged);
-    }
-
-    protected override void UnregisterEvents() {
-        base.UnregisterEvents();
-
-        RemoveOwnedEvent((int) GameEvents.Health_Changed, HealthChanged);
-        RemoveOwnedEvent((int) GameEvents.Mana_Changed, ManaChanged);
-    }
-
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
@@ -83,22 +69,5 @@ public class Player : LivingEntity {
         base.UpdateStep();
 
         abilities.Update();
-    }
-
-    void HealthChanged(int param) {
-        //  TODO: [Rock]: Once we have Entity Data to store things such as health we'll pull from that data.
-        float currentHealth = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
-        float maxHealth = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
-        float healthPercent = currentHealth / maxHealth;
-
-        ui.UpdateBar(GameplayUI.ResourceType.Health, (int) currentHealth, healthPercent);
-    }
-
-    void ManaChanged(int param) {
-        float currentMana = GetAttribute(MAX_MANA).GetValue();
-        float maxMana = GetAttribute(MAX_MANA).GetValue();
-        float ManaPercent = currentMana / maxMana;
-
-        ui.UpdateBar(GameplayUI.ResourceType.Mana, (int) currentMana, ManaPercent);
     }
 }
