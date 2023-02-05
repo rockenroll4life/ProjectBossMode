@@ -8,7 +8,6 @@ public class Locomotion {
 
     protected LivingEntity owner;
     protected NavMeshAgent agent;
-    protected Vector3 lookDir;
 
     public Locomotion(LivingEntity owner) {
         this.owner = owner;
@@ -29,15 +28,12 @@ public class Locomotion {
         agent.ResetPath();
     }
 
-    public virtual void Update() {
-        //  Movement
-        if (IsMoving()) {
-            lookDir = agent.velocity.normalized;
-        }
+    protected virtual Vector3 GetLookingDirection() {
+        return IsMoving() ? agent.velocity.normalized : owner.transform.forward;
+    }
 
+    public virtual void Update() {
         //  Rotation
-        if (lookDir.sqrMagnitude > (Mathf.Epsilon * Mathf.Epsilon)) {
-            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(lookDir), ROTATION_SPEED * Time.deltaTime);
-        }
+        owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(GetLookingDirection()), ROTATION_SPEED * Time.deltaTime);
     }
 }

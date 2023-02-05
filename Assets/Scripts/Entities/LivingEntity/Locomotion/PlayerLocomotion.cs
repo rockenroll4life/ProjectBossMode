@@ -34,14 +34,11 @@ public class PlayerLocomotion : Locomotion {
         MoveToLocation(targetedEntity.transform.position);
     }
 
-    public override void Update() {
-        base.Update();
-
-        /*if (targetedEntity) {
-            MoveToLocation(targetedEntity.transform.position);
-
-            Vector3 dir = (targetedEntity.transform.position - owner.transform.position).normalized;
-            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(dir), ROTATION_SPEED * Time.deltaTime);
-        }*/
+    protected override Vector3 GetLookingDirection() {
+        if (!IsMoving() && targetedEntity) {
+            return (targetedEntity.transform.position - owner.transform.position).normalized;
+        }
+        
+        return base.GetLookingDirection();
     }
 }
