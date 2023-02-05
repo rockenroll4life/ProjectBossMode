@@ -101,7 +101,15 @@ public abstract class LivingEntity : Entity {
     public float GetHealth() { return health; }
 
     protected virtual bool CanAttack() {
-        return attackTimer <= 0 && targeter.GetTargetedEntity() != null;
+        if (attackTimer <= 0) {
+            LivingEntity target = targeter.GetTargetedEntity();
+            if (target != null) {
+                float attackRange = GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
+                return (target.transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);
+            }
+        }
+
+        return false;
     }
 
     protected virtual void Attack() {

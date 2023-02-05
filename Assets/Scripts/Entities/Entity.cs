@@ -11,8 +11,7 @@ public abstract class Entity : MonoBehaviour {
         Interactable,
     }
 
-    //  Note: [Rock]: We're hiding the inherited member of the same name using the new in front
-    new Renderer renderer;
+    public Renderer rendererToOutline;
     Shader previousShader;
     Shader highlightShader;
     protected Guid entityID;
@@ -35,7 +34,6 @@ public abstract class Entity : MonoBehaviour {
     protected virtual void Setup() {
         entityID = Guid.NewGuid();
 
-        renderer = gameObject.GetComponentInChildren<Renderer>();
         highlightShader = Shader.Find("Custom/Entity_Outline");
     }
     protected virtual void Breakdown() { }
@@ -69,24 +67,24 @@ public abstract class Entity : MonoBehaviour {
 
     public virtual void OnSelected() {
         if (HasHighlightColor()) {
-            previousShader = renderer.material.shader;
-            renderer.material.shader = highlightShader;
+            previousShader = rendererToOutline.material.shader;
+            rendererToOutline.material.shader = highlightShader;
 
             Color? highlight = GetHighlightColor();
             Color? outline = GetHighlightOutlineColor();
 
             if (highlight.HasValue) {
-                renderer.material.SetColor("_FirstOutlineColor", highlight.Value);
+                rendererToOutline.material.SetColor("_FirstOutlineColor", highlight.Value);
             }
             if (outline.HasValue) {
-                renderer.material.SetColor("_SecondOutlineColor", outline.Value);
+                rendererToOutline.material.SetColor("_SecondOutlineColor", outline.Value);
             }
         }
     }
 
     public virtual void OnDeselected() {
         if (HasHighlightColor()) {
-            renderer.material.shader = previousShader;
+            rendererToOutline.material.shader = previousShader;
         }
     }
 }
