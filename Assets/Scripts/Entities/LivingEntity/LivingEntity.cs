@@ -46,13 +46,19 @@ public abstract class LivingEntity : Entity {
     protected virtual void RegisterAttributes() {
         //  These are the base attributes that every entity has, only register attributes here that everyone will have (Even if we set them to a value
         //  of 0 in the actual entity themselves.
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MAX_HEALTH);
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.HEALTH_MAX);
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.HEALTH_REGEN_RATE);
+
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MANA_MAX);
+        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE);
+
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED);
+
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_SPEED);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_RANGE);
 
-        health = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        health = GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
     }
 
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails

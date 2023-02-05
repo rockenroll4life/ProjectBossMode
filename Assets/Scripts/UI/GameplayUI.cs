@@ -35,17 +35,17 @@ public class GameplayUI : MonoBehaviour {
             abilities[i].Setup(owner, (AbilityNum) i, defaultKeybindings[i]);
         }
 
-        int healthMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        int healthMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
         UpdateBar(ResourceType.Health, healthMax, healthMax);
 
-        int manaMax = (int) owner.GetAttribute(Player.MAX_MANA).GetValue();
+        int manaMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
         UpdateBar(ResourceType.Mana, manaMax, manaMax);
 
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Health_Changed, HealthChanged);
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MAX_HEALTH, HealthChanged);
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.HEALTH_MAX, HealthChanged);
 
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Mana_Changed, ManaChanged);
-        owner.GetAttributes().RegisterListener(Player.MAX_MANA, ManaChanged);
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MANA_MAX, ManaChanged);
     }
 
     public void Breakdown() {
@@ -79,14 +79,14 @@ public class GameplayUI : MonoBehaviour {
     void HealthChanged(int param) {
         //  TODO: [Rock]: Once we have Entity Data to store things such as health we'll pull from that data.
         float currentHealth = owner.GetHealth();
-        float maxHealth = owner.GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        float maxHealth = owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
 
         UpdateBar(ResourceType.Health, currentHealth, maxHealth);
     }
 
     void ManaChanged(int param) {
         float currentMana = owner.GetMana();
-        float maxMana = owner.GetAttribute(Player.MAX_MANA).GetValue();
+        float maxMana = owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
 
         UpdateBar(ResourceType.Mana, currentMana, maxMana);
     }

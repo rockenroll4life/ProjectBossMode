@@ -2,8 +2,6 @@
 using RockUtils.GameEvents;
 
 public class Player : LivingEntity {
-    public static readonly RangedAttribute MAX_MANA = new("generic.mana", 72, 0, float.MaxValue);
-    public static readonly RangedAttribute MANA_REGEN_RATE = new("generic.manaRegenRate", 2.5f, float.MinValue, float.MaxValue);
     public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
     public static readonly RangedAttribute ABILITY2_COOLDOWN = new("generic.ability2", 5, 0, float.MaxValue);
     public static readonly RangedAttribute ABILITY3_COOLDOWN = new("generic.ability3", 5, 0, float.MaxValue);
@@ -64,9 +62,6 @@ public class Player : LivingEntity {
         base.RegisterAttributes();
 
         //  Register any unique attributes to this entity
-        GetAttributes().RegisterAttribute(MAX_MANA);
-        GetAttributes().RegisterAttribute(MANA_REGEN_RATE);
-
         GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);
@@ -74,10 +69,11 @@ public class Player : LivingEntity {
         GetAttributes().RegisterAttribute(ULTIMATE_COOLDOWN);
 
         //  Update any of the base attribute values for this entity
-        GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).SetBaseValue(500);
-        health = GetAttribute(LivingEntitySharedAttributes.MAX_HEALTH).GetValue();
+        GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).SetBaseValue(500);
+        health = GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
 
-        mana = GetAttribute(MAX_MANA).GetValue();
+        GetAttribute(LivingEntitySharedAttributes.MANA_MAX).SetBaseValue(100);
+        mana = GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
 
         //  TODO: [Rock]: We need to add an attribute listener for the max health changing so we can update the UI
     }
@@ -88,8 +84,8 @@ public class Player : LivingEntity {
         abilities.Update();
 
         float oldMana = mana;
-        mana += Time.deltaTime * GetAttribute(MANA_REGEN_RATE).GetValue();
-        mana = Mathf.Clamp(mana, 0, GetAttribute(MAX_MANA).GetValue());
+        mana += Time.deltaTime * GetAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE).GetValue();
+        mana = Mathf.Clamp(mana, 0, GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
         if (mana != oldMana) {
             EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed);
         }

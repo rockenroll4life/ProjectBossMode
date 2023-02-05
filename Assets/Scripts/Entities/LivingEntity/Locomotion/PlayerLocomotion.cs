@@ -39,6 +39,9 @@ public class PlayerLocomotion : Locomotion {
 
         if (targetedEntity) {
             MoveToLocation(targetedEntity.transform.position);
+
+            Vector3 dir = (targetedEntity.transform.position - owner.transform.position).normalized;
+            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(dir), ROTATION_SPEED * Time.deltaTime);
         }
     }
 }

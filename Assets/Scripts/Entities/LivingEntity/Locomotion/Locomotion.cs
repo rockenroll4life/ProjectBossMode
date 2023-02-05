@@ -4,7 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Locomotion {
     public static readonly float FIXED_MOVEMENT_SPEED = 1.414f;
-    static readonly float ROTATION_SPEED = 720f;
+    protected static readonly float ROTATION_SPEED = 720f;
 
     protected LivingEntity owner;
     protected NavMeshAgent agent;
@@ -22,7 +22,7 @@ public class Locomotion {
 
     public bool IsMoving() {
         //  We can probably just use Epsilon squared here?
-        return agent.velocity.sqrMagnitude > (Mathf.Epsilon * Mathf.Epsilon);
+        return agent.velocity.sqrMagnitude > 1f;
     }
 
     public void StopMovement() {
