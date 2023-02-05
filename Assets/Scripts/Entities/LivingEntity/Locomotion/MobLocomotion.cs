@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MobLocomotion : Locomotion {
+public class MobLocomotion : LivingEntityLocomotion {
     readonly Vector3[] randPos = new Vector3[2];
     int currentTarget = 0;
 
@@ -14,11 +14,19 @@ public class MobLocomotion : Locomotion {
     public override void Update() {
         base.Update();
 
-        float dist = Vector3.Distance(owner.transform.position, randPos[currentTarget]);
-        if (dist <= 0.5f) {
-            currentTarget = (currentTarget + 1) % 2;
-        }
+        //  NOTE: [Rock]: Code like this will want to be moved out of here and into the targeter...
+        if (!targetedEntity) {
+            float dist = Vector3.Distance(owner.transform.position, randPos[currentTarget]);
+            if (dist <= 0.5f) {
+                currentTarget = (currentTarget + 1) % 2;
+                MoveToLocation(randPos[currentTarget]);
+            }
+        } else {
 
-        MoveToLocation(randPos[currentTarget]);
+        }
+    }
+
+    protected override void TargetedEntity(int param) {
+        base.TargetedEntity(param);
     }
 }

@@ -2,14 +2,14 @@
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Locomotion {
+public class LocomotionBase {
     public static readonly float FIXED_MOVEMENT_SPEED = 1.414f;
     protected static readonly float ROTATION_SPEED = 720f;
 
     protected LivingEntity owner;
     protected NavMeshAgent agent;
 
-    public Locomotion(LivingEntity owner) {
+    public LocomotionBase(LivingEntity owner) {
         this.owner = owner;
         agent = owner.GetComponent<NavMeshAgent>();
         agent.speed = owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue();

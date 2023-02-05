@@ -1,44 +1,6 @@
-﻿using RockUtils.GameEvents;
-using UnityEngine;
-
-public class PlayerLocomotion : Locomotion {
-    LivingEntity targetedEntity = null;
-
+﻿//  NOTE: [Rock]: Hmmmm. We may not need the PlayerLocomotion anymore...
+public class PlayerLocomotion : LivingEntityLocomotion {
     public PlayerLocomotion(LivingEntity owner)
         : base(owner) {
-        agent.updateRotation = false;
-
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, TargetedWorld);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, TargetedEntity);
-    }
-
-    ~PlayerLocomotion() {
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, TargetedWorld);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, TargetedEntity);
-    }
-
-    void TargetedWorld(int param) {
-        targetedEntity = null;
-        
-        Vector3? location = owner.GetTargeter().GetTargetedLocation();
-        if (location.HasValue) {
-            agent.stoppingDistance = Mathf.Epsilon;
-            MoveToLocation(location.Value);
-        }
-    }
-
-    void TargetedEntity(int param) {
-        targetedEntity = owner.GetTargeter().GetTargetedEntity();
-
-        agent.stoppingDistance = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
-        MoveToLocation(targetedEntity.transform.position);
-    }
-
-    protected override Vector3 GetLookingDirection() {
-        if (!IsMoving() && targetedEntity) {
-            return (targetedEntity.transform.position - owner.transform.position).normalized;
-        }
-        
-        return base.GetLookingDirection();
     }
 }
