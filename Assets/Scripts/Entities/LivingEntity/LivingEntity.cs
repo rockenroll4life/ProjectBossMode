@@ -17,10 +17,14 @@ public abstract class LivingEntity : Entity {
     //  TODO: [Rock]: Replace with EntityData
     protected float health;
 
+    Entity lastDamager = null;
+
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
 
     public Targeter GetTargeter() { return targeter; }
     public Locomotion GetLocomotion() { return locomotion; }
+
+    public Entity GetLastDamager() { return lastDamager; }
 
     protected override void Setup() {
         base.Setup();
@@ -124,6 +128,8 @@ public abstract class LivingEntity : Entity {
 
     public virtual void Hurt(Entity damager, float damage) {
         health -= damage;
+        lastDamager = damager;
+        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int)(health * 1000));
     }
 }

@@ -19,6 +19,12 @@ public class MobTargeter : TargeterBase {
         randPos[1] = new Vector3(5, 0, 6);
 
         playerEntity = Object.FindObjectOfType<Player>();
+
+        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.LivingEntity_Hurt, EntityHurt);
+    }
+
+    ~MobTargeter() {
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.LivingEntity_Hurt, EntityHurt);
     }
 
     public override LivingEntity GetTargetedEntity() { return targetedEntity; }
@@ -45,6 +51,12 @@ public class MobTargeter : TargeterBase {
         }
     }
 
-    //  TODO: [Rock]: Test for getting hurt and then set our targetedEntity to the one who hurt us
-    //  This will also want to be a part of a AI behavior
+    //  NOTE: [Rock]: This will also want to be a part of a AI behavior
+    void EntityHurt(int param) {
+        Entity lastDamager = owner.GetLastDamager();
+        if (lastDamager.GetEntityType() == Entity.EntityType.Player) {
+            targetedEntity = (LivingEntity) owner.GetLastDamager();
+            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
+        }
+    }
 }
