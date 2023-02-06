@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class Mob : LivingEntity {
+    GoalSelector goalSelector;
     public override EntityType GetEntityType() { return EntityType.Mob; }
 
     protected override Color? GetHighlightColor() { return Color.red; }
@@ -11,6 +12,7 @@ public class Mob : LivingEntity {
 
         animator = new LivingEntityAnimator(this);
         targeter = new MobTargeter(this);
+        goalSelector = new GoalSelector();
     }
 
     protected override void RegisterAttributes() {
@@ -19,7 +21,9 @@ public class Mob : LivingEntity {
         GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).SetBaseValue(3f);
     }
 
-    protected virtual void AIStep() { }
+    protected virtual void AIStep() {
+        goalSelector.Update();
+    }
 
     protected override void UpdateStep() {
         base.UpdateStep();
