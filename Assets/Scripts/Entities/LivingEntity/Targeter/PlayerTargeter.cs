@@ -1,10 +1,7 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public class PlayerTargeter : TargeterBase {
-    LivingEntity targetedEntity = null;
-    Vector3? targetedLocation = null;
-
+public class PlayerTargeter : LivingEntityTargeter {
     RaycastHit hit;
     TargetType hitType = TargetType.None;
 
@@ -17,14 +14,6 @@ public class PlayerTargeter : TargeterBase {
     ~PlayerTargeter() {
         EventManager.StopListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
         EventManager.StopListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
-    }
-
-    public override LivingEntity GetTargetedEntity() {
-        return targetedEntity;
-    }
-
-    public override Vector3? GetTargetedLocation() {
-        return targetedLocation;
     }
 
     void SelectTarget(int param) {

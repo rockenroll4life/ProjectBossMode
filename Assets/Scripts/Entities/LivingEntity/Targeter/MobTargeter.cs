@@ -1,13 +1,7 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public class MobTargeter : TargeterBase {
-    LivingEntity playerEntity = null;
-
-    //  TODO: [Rock]: Make a LivingEntity Targeter, there's enough here that is shared with the Player to do so
-    LivingEntity targetedEntity = null;
-    Vector3? targetedLocation = null;
-
+public class MobTargeter : LivingEntityTargeter {
     //  TEMP
     readonly Vector3[] randPos = new Vector3[2];
     int currentTarget = 0;
@@ -18,18 +12,12 @@ public class MobTargeter : TargeterBase {
         randPos[0] = new Vector3(-5, 0, 6);
         randPos[1] = new Vector3(5, 0, 6);
 
-        playerEntity = Object.FindObjectOfType<Player>();
-
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.LivingEntity_Hurt, EntityHurt);
     }
 
     ~MobTargeter() {
         EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.LivingEntity_Hurt, EntityHurt);
     }
-
-    public override LivingEntity GetTargetedEntity() { return targetedEntity; }
-
-    public override Vector3? GetTargetedLocation() { return targetedLocation; }
 
     //  TODO: [Rock]: Get the update function out of the targeter, we need to have AI behaviors tell the Targeter what to target (Entity or World) so it can then tell others
     public override void Update() {
