@@ -40,4 +40,16 @@ public class LivingEntityLocomotion : LocomotionBase {
 
         return base.GetLookingDirection();
     }
+
+    public override void Update() {
+        base.Update();
+
+        //  TODO: [Rock]: Think of a way we can optimize this instead of it checking every frame
+        if (targetedEntity) {
+            float attackRange = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
+            if ((targetedEntity.transform.position - owner.transform.position).sqrMagnitude > (attackRange * attackRange)) {
+                MoveToLocation(targetedEntity.transform.position);
+            }
+        }
+    }
 }

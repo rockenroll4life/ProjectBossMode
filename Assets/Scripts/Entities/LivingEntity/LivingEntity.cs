@@ -72,6 +72,7 @@ public abstract class LivingEntity : Entity {
         statusEffects.Update();
         locomotion.Update();
         animator.Update();
+        targeter.Update();
     }
 
     protected override void UpdateStep() {

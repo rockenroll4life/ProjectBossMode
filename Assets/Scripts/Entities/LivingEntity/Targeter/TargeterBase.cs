@@ -21,6 +21,8 @@ public abstract class TargeterBase : Targeter {
     public abstract LivingEntity GetTargetedEntity();
 
     public abstract Vector3? GetTargetedLocation();
+    
+    public virtual void Update() { }
 
     protected TargetType EntityTypeToTargetType(Entity.EntityType entityType) {
         switch (entityType) {
@@ -32,4 +34,5 @@ public abstract class TargeterBase : Targeter {
             default:                                return TargetType.None;
         }
     }
+
 }
