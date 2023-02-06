@@ -9,7 +9,6 @@ public class Mob : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
-        locomotion = new MobLocomotion(this);
         animator = new LivingEntityAnimator(this);
         targeter = new MobTargeter(this);
     }

@@ -33,8 +33,6 @@ public class Player : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
-        locomotion = new PlayerLocomotion(this);
-
         ui = FindObjectOfType<GameplayUI>();
         ui.Setup(this, abilities);
 

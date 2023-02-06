@@ -7,7 +7,7 @@ public abstract class LivingEntity : Entity {
     public GameObject handAttachLeft;
 
     protected StatusEffectManager statusEffects;
-    protected LocomotionBase locomotion;
+    protected Locomotion locomotion;
     protected EntityAnimator animator;
     protected Targeter targeter;
     AttributeDictionary attributes;
@@ -20,7 +20,7 @@ public abstract class LivingEntity : Entity {
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
 
     public Targeter GetTargeter() { return targeter; }
-    public LocomotionBase GetLocomotion() { return locomotion; }
+    public Locomotion GetLocomotion() { return locomotion; }
 
     protected override void Setup() {
         base.Setup();
@@ -39,6 +39,7 @@ public abstract class LivingEntity : Entity {
 
     protected virtual void RegisterComponents() {
         statusEffects = new StatusEffectManager(this);
+        locomotion = new Locomotion(this);
     }
 
     protected virtual void UnregisterComponents() { }
