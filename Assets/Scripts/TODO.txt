@@ -1,8 +1,9 @@
+- Implement an AI Goal and Goal Selector system, based of how Minecraft does it as it's quite elegant
 - Implement Status Effect system
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
 - Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
-- Implement an AI Goal and Goal Selector system, based of how Minecraft does it as it's quite elegant
 - Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
 - Implement Wave Spawner system
 - Make the animation system + locomotion not feel so jerky when having to stutter step to get just a little bit closer to attack
+- Controller Support
 - Fog of war
