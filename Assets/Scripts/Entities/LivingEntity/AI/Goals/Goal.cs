@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+
 public abstract class Goal {
+    readonly HashSet<Flag> flags = new HashSet<Flag>();
     public abstract bool CanUse();
     
     public virtual bool CanContinueToUse() {
@@ -13,4 +16,20 @@ public abstract class Goal {
     public virtual void Stop() { }
 
     public virtual void Update() { }
+
+    public void SetFlags(HashSet<Flag> requiredControlFlags) {
+        flags.Clear();
+        flags.UnionWith(requiredControlFlags);
+    }
+
+    public virtual HashSet<Flag> GetFlags() {
+        return flags;
+    }
+
+    public enum Flag {
+        MOVE,
+        LOOK,
+        JUMP,
+        TARGET,
+    }
 }

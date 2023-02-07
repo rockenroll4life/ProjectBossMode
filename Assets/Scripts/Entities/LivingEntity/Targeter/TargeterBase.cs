@@ -18,6 +18,9 @@ public abstract class TargeterBase : Targeter {
         this.owner = owner;
     }
 
+    public abstract void SetTargetedEntity(LivingEntity entity);
+    public abstract void SetTargetedLocation(Vector3? location);
+
     public abstract LivingEntity GetTargetedEntity();
 
     public abstract Vector3? GetTargetedLocation();

@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class WrappedGoal : Goal {
-    Goal goal;
-    int priority;
+    readonly Goal goal;
+    readonly int priority;
     bool isRunning;
 
     public WrappedGoal(int priority, Goal goal) {
@@ -10,7 +13,11 @@ public class WrappedGoal : Goal {
 
     public Goal GetGoal() { return goal; }
     public int GetPriority() { return priority; }
-    public bool IsRunning() { return isRunning; }
+    public virtual bool IsRunning() { return isRunning; }
+
+    public bool CanBeReplacedBy(WrappedGoal goal) {
+        return IsInteruptable() && goal.GetPriority() < GetPriority();
+    }
 
     public override bool CanUse() {
         return goal.CanUse();
@@ -44,6 +51,10 @@ public class WrappedGoal : Goal {
 
     public override void Update() {
         goal.Update();
+    }
+
+    public override HashSet<Flag> GetFlags() {
+        return goal.GetFlags();
     }
 
     public override bool Equals(object obj) {

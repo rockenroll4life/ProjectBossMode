@@ -17,14 +17,15 @@ public abstract class LivingEntity : Entity {
     //  TODO: [Rock]: Replace with EntityData
     protected float health;
 
-    Entity lastDamager = null;
+    //  NOTE: [Rock]: This is LivingEntity for now...but not sure if we need to change this to Entity instead...
+    LivingEntity lastDamager = null;
 
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
 
     public Targeter GetTargeter() { return targeter; }
     public Locomotion GetLocomotion() { return locomotion; }
 
-    public Entity GetLastDamager() { return lastDamager; }
+    public LivingEntity GetLastDamager() { return lastDamager; }
 
     protected override void Setup() {
         base.Setup();
@@ -126,7 +127,7 @@ public abstract class LivingEntity : Entity {
         proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE).GetValue());
     }
 
-    public virtual void Hurt(Entity damager, float damage) {
+    public virtual void Hurt(LivingEntity damager, float damage) {
         health -= damage;
         lastDamager = damager;
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
