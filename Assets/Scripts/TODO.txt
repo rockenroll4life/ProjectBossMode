@@ -1,9 +1,18 @@
-- Implement an AI Goal and Goal Selector system, based of how Minecraft does it as it's quite elegant
-- Implement Status Effect system
-- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
-- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
-- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
 - Implement Wave Spawner system
-- Make the animation system + locomotion not feel so jerky when having to stutter step to get just a little bit closer to attack
+- Implement Player Spawner, that way we don't need to have the player in the scene and we can have the spawner instantiate the correct player prefab character
+- Implement Descructable Objects. Main Tower, Spawners, etc
+- Implement Spellcast indicators (AOE, Area target, Lineshot, entity target) We need these to show how Abilities can be used
+- Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
+- Implement Pets (Totems, Golems, etc)
+- Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
+- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
+- Player Level System for stats and abilities
 - Controller Support
+- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
+- Implement Status Effect system
+- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
+- Make the animation system + locomotion not feel so jerky when having to stutter step to get just a little bit closer to attack
 - Fog of war
+- Multiplayer Integration
+- Multiplayer difficulty scaling
+- Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
