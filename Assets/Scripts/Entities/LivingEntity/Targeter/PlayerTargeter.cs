@@ -1,7 +1,7 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public class PlayerTargeter : LivingEntityTargeter {
+public class PlayerTargeter : TargeterBase {
     RaycastHit hit;
     TargetType hitType = TargetType.None;
 

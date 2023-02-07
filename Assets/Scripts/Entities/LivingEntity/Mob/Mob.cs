@@ -24,7 +24,7 @@ public class Mob : LivingEntity {
         base.RegisterComponents();
 
         animator = new LivingEntityAnimator(this);
-        targeter = new MobTargeter(this);
+        targeter = new TargeterBase(this);
         goalSelector = new GoalSelector();
     }
 
@@ -41,7 +41,6 @@ public class Mob : LivingEntity {
     protected override void UpdateStep() {
         base.UpdateStep();
 
-        //  Handle any AI stuffs or extra handling this entity needs
         AIStep();
     }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
+using RockUtils.GameEvents;
 
-public abstract class TargeterBase : Targeter {
+public class TargeterBase : Targeter {
     public enum TargetType {
         None,
         World,
@@ -10,6 +11,9 @@ public abstract class TargeterBase : Targeter {
         Interactable,
     }
 
+    protected LivingEntity targetedEntity = null;
+    protected Vector3? targetedLocation = null;
+
     protected static readonly int RAYCAST_DISTANCE = 100;
 
     protected readonly LivingEntity owner;
@@ -18,12 +22,23 @@ public abstract class TargeterBase : Targeter {
         this.owner = owner;
     }
 
-    public abstract void SetTargetedEntity(LivingEntity entity);
-    public abstract void SetTargetedLocation(Vector3? location);
+    public void SetTargetedEntity(LivingEntity entity) {
+        targetedEntity = entity;
 
-    public abstract LivingEntity GetTargetedEntity();
+        if (entity) {
+            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
+        }
+    }
+    public void SetTargetedLocation(Vector3? location) {
+        targetedLocation = location;
 
-    public abstract Vector3? GetTargetedLocation();
+        if (location.HasValue) {
+            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
+        }
+    }
+
+    public LivingEntity GetTargetedEntity() { return targetedEntity; }
+    public Vector3? GetTargetedLocation() { return targetedLocation; }
     
     public virtual void Update() { }
 
