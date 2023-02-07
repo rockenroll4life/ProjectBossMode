@@ -132,5 +132,9 @@ public abstract class LivingEntity : Entity {
         lastDamager = damager;
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int)(health * 1000));
+
+        if (health <= 0) {
+            Destroy(gameObject);
+        }
     }
 }
