@@ -1199,10 +1199,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2eff5d9c1a96274e83b0a288b810cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rendererToOutline: {fileID: 0}
   attackProjectilePrefab: {fileID: 2020115621512650537, guid: 14c1567b31c97c24682d56b097a7e0b1,
     type: 3}
   handAttachRight: {fileID: 0}
   handAttachLeft: {fileID: 0}
+  spellIndicatorConePrefab: {fileID: 7735685148325701978, guid: b1fa7e9cb8fa4b0488f5635fa1118b10,
+    type: 3}
+  spellIndicatorAOEPrefab: {fileID: 7735685148325701978, guid: 52ff90b484e3ce949800e061d0a1a0c5,
+    type: 3}
+  spellIndicatorAreaTargetPrefab: {fileID: 6860919435879142798, guid: e57055c236354a74494d8082681b74bd,
+    type: 3}
+  spellIndicatorAreaRangePrefab: {fileID: 6860919435879142798, guid: 4760eacc7e502d849baff7e5c91b2789,
+    type: 3}
 --- !u!54 &4039540286108288005
 Rigidbody:
   m_ObjectHideFlags: 0

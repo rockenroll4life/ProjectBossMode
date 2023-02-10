@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_SI_Cone
-  m_Shader: {fileID: -6465566751694194690, guid: 13f9338cac11590429b70bdc301bac1a,
+  m_Name: Mat_SI_AOE
+  m_Shader: {fileID: -6465566751694194690, guid: c0aa43ea5377de9499ff34a2d7c3b971,
     type: 3}
   m_ValidKeywords:
   - _BUILTIN_SURFACE_TYPE_TRANSPARENT
@@ -74,7 +74,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Angle: 45
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
@@ -100,7 +99,6 @@ Material:
     - _OcclusionStrength: 1
     - _OuterRingScale: 1
     - _Parallax: 0.02
-    - _Rotation: 270
     - _Scale: 1
     - _ScaleModifier: 0.030000001
     - _Size: 0.1

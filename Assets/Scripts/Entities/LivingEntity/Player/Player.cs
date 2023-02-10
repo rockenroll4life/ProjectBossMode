@@ -14,6 +14,12 @@ public class Player : LivingEntity {
 
     GameplayUI ui;
     AbilityManager abilities;
+    SpellIndicators spellIndicators;
+
+    public GameObject spellIndicatorConePrefab;
+    public GameObject spellIndicatorAOEPrefab;
+    public GameObject spellIndicatorAreaTargetPrefab;
+    public GameObject spellIndicatorAreaRangePrefab;
 
     protected float mana;
     protected float manaRegenRate = 5;
@@ -38,6 +44,7 @@ public class Player : LivingEntity {
 
         abilities = new AbilityManager(this);
         targeter = new PlayerTargeter(this);
+        spellIndicators = new SpellIndicators(this);
 
         abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
         abilities.SetAbility(AbilityNum.Ability2, typeof(TestAbility));
@@ -80,6 +87,7 @@ public class Player : LivingEntity {
         base.UpdateStep();
 
         abilities.Update();
+        spellIndicators.Update();
 
         float oldMana = mana;
         mana += Time.deltaTime * GetAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE).GetValue();
