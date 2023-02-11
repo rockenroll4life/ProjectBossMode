@@ -6,6 +6,8 @@ public abstract class ChannelAbilityBase : AbilityBase {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Channel;
+    //  TODO: [Rock]: Let's not make Channels cancel movement by default, additionally, we need to add a listener
+    //  for entity or world selection to cancel the channel if this ability interrupts movement
     protected override bool InterruptsMovement() => true;
 
     protected override void RegisterEvents() {
