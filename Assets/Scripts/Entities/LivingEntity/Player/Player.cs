@@ -26,6 +26,8 @@ public class Player : LivingEntity {
 
     public override EntityType GetEntityType() { return EntityType.Player; }
 
+    public SpellIndicators GetSpellIndicators() { return spellIndicators; }
+
     protected override Color? GetHighlightColor() { return PLAYER_COLOR; }
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
 
@@ -47,7 +49,7 @@ public class Player : LivingEntity {
         spellIndicators = new SpellIndicators(this);
 
         abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
-        abilities.SetAbility(AbilityNum.Ability2, typeof(TestAbility));
+        abilities.SetAbility(AbilityNum.Ability2, typeof(TestConeAbility));
         abilities.SetAbility(AbilityNum.Ability3, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
         abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));

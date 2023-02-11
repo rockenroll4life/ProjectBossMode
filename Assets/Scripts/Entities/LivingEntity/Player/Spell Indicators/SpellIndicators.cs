@@ -35,7 +35,7 @@ public class SpellIndicators {
         areaTarget.Update();
     }
 
-    void ResetIndicators() {
+    public void ResetIndicators() {
         cone.Deactivate();
         aoe.Deactivate();
         areaTarget.Deactivate();

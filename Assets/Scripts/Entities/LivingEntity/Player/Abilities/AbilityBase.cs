@@ -8,15 +8,14 @@
     protected Player owner;
     protected AbilityNum abilityID = AbilityNum.NONE;
 
-    protected bool interruptsMovement = false;
-
     public AbilityBase(Player owner, AbilityNum abilityNum) {
         this.owner = owner;
         SetAbilityID(abilityNum);
     }
 
     protected abstract string GetName();
-    protected virtual TriggerType GetTriggerType() { return TriggerType.Cast; }
+    protected virtual TriggerType GetTriggerType() => TriggerType.Cast;
+    protected virtual bool InterruptsMovement() => false;
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
@@ -53,7 +52,7 @@
     }
 
     protected virtual void UseAbility() {
-        if (interruptsMovement) {
+        if (InterruptsMovement()) {
             owner.GetLocomotion().StopMovement();
         }
     }

@@ -3,12 +3,11 @@ using RockUtils.GameEvents;
 public class ChannelAbilityBase : AbilityBase {
     public ChannelAbilityBase(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
-        interruptsMovement = true;
     }
 
-    protected override string GetName() { return "ChannelAbilityBase"; }
-
-    protected override TriggerType GetTriggerType() { return TriggerType.Channel; }
+    protected override string GetName() => "ChannelAbilityBase";
+    protected override TriggerType GetTriggerType() => TriggerType.Channel;
+    protected override bool InterruptsMovement() => true;
 
     protected override void RegisterEvents() {
         base.RegisterEvents();

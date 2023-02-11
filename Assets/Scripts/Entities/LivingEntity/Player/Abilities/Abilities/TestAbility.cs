@@ -1,8 +1,9 @@
-﻿public class TestAbility : CastAbilityBase {
+﻿public class TestAbility : ConeAbility {
     public TestAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
-        interruptsMovement = true;
     }
 
-    protected override string GetName() { return "TestAbility"; }
+    protected override string GetName() =>"TestAbility";
+    protected override float GetSpellAngle() => 90;
+    protected override float GetSpellRadius() => 7;
 }

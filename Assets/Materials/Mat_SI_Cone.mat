@@ -74,7 +74,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Angle: 45
+    - _Angle: 180
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
@@ -102,7 +102,7 @@ Material:
     - _Parallax: 0.02
     - _Rotation: 270
     - _Scale: 1
-    - _ScaleModifier: 0.030000001
+    - _ScaleModifier: 0.042857144
     - _Size: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
