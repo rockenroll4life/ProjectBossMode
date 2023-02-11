@@ -50,8 +50,8 @@ public class Player : LivingEntity {
 
         abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
         abilities.SetAbility(AbilityNum.Ability2, typeof(TestConeAbility));
-        abilities.SetAbility(AbilityNum.Ability3, typeof(TestAbility));
-        abilities.SetAbility(AbilityNum.Ability4, typeof(TestAbility));
+        abilities.SetAbility(AbilityNum.Ability3, typeof(TestAOEAbility));
+        abilities.SetAbility(AbilityNum.Ability4, typeof(TestAreaTargetAbility));
         abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
 
         animator = new LivingEntityAnimator(this);

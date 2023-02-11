@@ -14,6 +14,8 @@
     }
 
     protected abstract string GetName();
+
+    //  NOTE: [Rock]: Do we even need this at this point? Investigate...
     protected abstract TriggerType GetTriggerType();
 
     protected virtual bool InterruptsMovement() => false;
