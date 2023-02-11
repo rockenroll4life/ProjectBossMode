@@ -3,15 +3,12 @@ using UnityEngine;
 
 public abstract class CastAbilityBase : AbilityBase {
     protected float cooldown = 0;
-    protected float maxCooldown;
-
     bool isCasting = false;
 
     public CastAbilityBase(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 
-    protected override string GetName() => "CastAbilityBase";
     protected override TriggerType GetTriggerType() => TriggerType.Cast;
     protected virtual int GetManaCost() => 10;
 
@@ -77,7 +74,6 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     public virtual void CooldownAttributeChanged(int param) {
-        maxCooldown = param / 1000f;
         EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, param);
     }
 

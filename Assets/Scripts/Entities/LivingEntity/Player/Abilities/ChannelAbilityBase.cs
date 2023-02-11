@@ -1,11 +1,10 @@
 using RockUtils.GameEvents;
 
-public class ChannelAbilityBase : AbilityBase {
+public abstract class ChannelAbilityBase : AbilityBase {
     public ChannelAbilityBase(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 
-    protected override string GetName() => "ChannelAbilityBase";
     protected override TriggerType GetTriggerType() => TriggerType.Channel;
     protected override bool InterruptsMovement() => true;
 

@@ -14,7 +14,8 @@
     }
 
     protected abstract string GetName();
-    protected virtual TriggerType GetTriggerType() => TriggerType.Cast;
+    protected abstract TriggerType GetTriggerType();
+
     protected virtual bool InterruptsMovement() => false;
 
     protected virtual void RegisterEvents() { }
@@ -47,9 +48,7 @@
         }
     }
 
-    protected virtual bool CanUseAbility() {
-        return false;
-    }
+    protected virtual bool CanUseAbility() => false;
 
     protected virtual void UseAbility() {
         if (InterruptsMovement()) {
@@ -57,7 +56,5 @@
         }
     }
 
-    protected virtual bool canBypassCooldown() {
-        return false;
-    }
+    protected virtual bool canBypassCooldown() => false;
 }

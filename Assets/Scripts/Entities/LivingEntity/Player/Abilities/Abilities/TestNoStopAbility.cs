@@ -3,5 +3,5 @@
         : base(owner, abilityNum) {
     }
 
-    protected override string GetName() { return "TestNoStopAbility"; }
+    protected override string GetName() => "TestNoStopAbility";
 }
