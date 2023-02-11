@@ -1,4 +1,4 @@
-- Hook up Spell Indicators for AOE and Area Target
+- Have the Spell Indicators able to return the target(s) that would be hit by the indicators
 - Implement Wave Spawner system
 - Implement Player Spawner, that way we don't need to have the player in the scene and we can have the spawner instantiate the correct player prefab character
 - Implement Descructable Objects. Main Tower, Spawners, etc
