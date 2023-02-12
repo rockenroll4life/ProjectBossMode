@@ -1,4 +1,5 @@
 using RockUtils.GameEvents;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class CastAbilityBase : AbilityBase {
@@ -109,4 +110,6 @@ public abstract class CastAbilityBase : AbilityBase {
     AttributeInstance GetCooldownAttribute () {
         return owner.GetAttribute(Player.ABILITY_COOLDOWNS[(int) abilityID]);
     }
+
+    protected abstract List<Entity> GetEntitiesHitByAbility(int layerMask);
 }

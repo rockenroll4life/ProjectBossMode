@@ -16,6 +16,7 @@ public class Player : LivingEntity {
     AbilityManager abilities;
     SpellIndicators spellIndicators;
 
+    //  NOTE: [Rock]: I don't like this being a part of the player...
     public GameObject spellIndicatorConePrefab;
     public GameObject spellIndicatorAOEPrefab;
     public GameObject spellIndicatorAreaTargetPrefab;

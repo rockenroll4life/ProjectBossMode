@@ -1,12 +1,12 @@
-- Have the Spell Indicators able to return the target(s) that would be hit by the indicators
+- Add some type of overlay on abilities you don't have enough mana to cast
 - Implement Wave Spawner system
 - Implement Player Spawner, that way we don't need to have the player in the scene and we can have the spawner instantiate the correct player prefab character
 - Implement Descructable Objects. Main Tower, Spawners, etc
 - Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
 - Implement Pet AI (Totems, Golems, etc)
-- Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
-- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
 - Player Level System for stats and abilities
+- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
+- Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
 - Add Support for Input Chords (A use case will be for Smart Casting)
 - Controller Support
 - Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc

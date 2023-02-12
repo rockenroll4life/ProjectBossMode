@@ -1,4 +1,10 @@
-﻿public abstract class AbilityBase {
+﻿using UnityEngine;
+
+public abstract class AbilityBase {
+    protected static readonly int LAYER_MASK_GROUND = LayerMask.GetMask("Ground");
+    protected static readonly int LAYER_MASK_MOB = LayerMask.GetMask("Mob");
+    protected static readonly int LAYER_MASK_PLAYER = LayerMask.GetMask("Player");
+
     public enum TriggerType {
         Cast,
         Toggle,
