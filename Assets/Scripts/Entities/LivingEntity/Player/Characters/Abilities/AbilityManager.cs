@@ -1,8 +1,19 @@
 ﻿using System;
+using UnityEngine;
+
+[Serializable]
+public struct AbilityTextures {
+    public Texture2D ability1Texture;
+    public Texture2D ability2Texture;
+    public Texture2D ability3Texture;
+    public Texture2D ability4Texture;
+    public Texture2D ability5Texture;
+}
 
 public class AbilityManager {
     readonly Player owner;
 
+    //  TOOD: [Rock]: I think I want to change this to a dictionary...
     public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum._COUNT];
 
     public AbilityManager(Player owner) {

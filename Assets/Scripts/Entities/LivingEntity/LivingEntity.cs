@@ -3,8 +3,6 @@ using RockUtils.GameEvents;
 
 public abstract class LivingEntity : Entity {
     public GameObject attackProjectilePrefab;
-    public GameObject handAttachRight;
-    public GameObject handAttachLeft;
 
     protected StatusEffectManager statusEffects;
     protected Locomotion locomotion;

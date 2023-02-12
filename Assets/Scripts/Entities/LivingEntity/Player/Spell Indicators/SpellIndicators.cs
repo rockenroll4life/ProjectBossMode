@@ -1,6 +1,17 @@
+using System;
 using UnityEngine;
 
-public class SpellIndicators {
+[Serializable]
+public struct SpellIndicatorPrefabs
+{
+    public GameObject Cone;
+    public GameObject AOE;
+    public GameObject AreaTarget;
+    public GameObject AreaRange;
+}
+
+public class SpellIndicators
+{
     public static readonly Color DEFAULT_COLOR = new(0, 0.8196079f, 0.7143784f, 0.25f);
     readonly ConeIndicator cone;
     readonly AOEIndicator aoe;

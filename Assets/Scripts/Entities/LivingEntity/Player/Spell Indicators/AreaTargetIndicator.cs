@@ -9,9 +9,9 @@ public class AreaTargetIndicator : IndicatorBase {
     float rangeRadius;
 
     public AreaTargetIndicator(Player owner)
-        : base(owner, owner.spellIndicatorAreaTargetPrefab) {
+        : base(owner, owner.spellIndicatorPrefabs.AreaTarget) {
 
-        areaObject = Object.Instantiate(owner.spellIndicatorAreaRangePrefab, owner.transform);
+        areaObject = Object.Instantiate(owner.spellIndicatorPrefabs.AreaRange, owner.transform);
         areaMaterial = areaObject.GetComponent<Renderer>().sharedMaterial;
     }
 

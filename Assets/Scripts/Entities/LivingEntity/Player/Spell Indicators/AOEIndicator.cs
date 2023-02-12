@@ -4,7 +4,7 @@ public class AOEIndicator : IndicatorBase {
     static readonly float SCALE_MODIFIER_BASE = 0.3f;
 
     public AOEIndicator(Player owner)
-        : base(owner, owner.spellIndicatorAOEPrefab) {
+        : base(owner, owner.spellIndicatorPrefabs.AOE) {
     }
 
     public void Setup(Color color, float radius) {

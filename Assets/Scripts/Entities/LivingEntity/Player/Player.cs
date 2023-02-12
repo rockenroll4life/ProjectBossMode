@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using RockUtils.GameEvents;
 
-public class Player : LivingEntity {
+public abstract class Player : LivingEntity {
     public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
     public static readonly RangedAttribute ABILITY2_COOLDOWN = new("generic.ability2", 5, 0, float.MaxValue);
     public static readonly RangedAttribute ABILITY3_COOLDOWN = new("generic.ability3", 5, 0, float.MaxValue);
@@ -15,26 +15,22 @@ public class Player : LivingEntity {
     public GameObject UIPrefab;
 
     GameplayUI ui;
-    AbilityManager abilities;
+    protected AbilityManager abilities;
     SpellIndicators spellIndicators;
 
-    //  NOTE: [Rock]: I don't like this being a part of the player...
-    public GameObject spellIndicatorConePrefab;
-    public GameObject spellIndicatorAOEPrefab;
-    public GameObject spellIndicatorAreaTargetPrefab;
-    public GameObject spellIndicatorAreaRangePrefab;
+    //  Character related Prefabs and Textures
+    public SpellIndicatorPrefabs spellIndicatorPrefabs;
+    public AbilityTextures abilityTextures;
 
     protected float mana;
-    protected float manaRegenRate = 5;
 
-    public override EntityType GetEntityType() { return EntityType.Player; }
+    public override EntityType GetEntityType() => EntityType.Player;
+    public SpellIndicators GetSpellIndicators() => spellIndicators;
+    public float GetMana() => mana;
 
-    public SpellIndicators GetSpellIndicators() { return spellIndicators; }
-
-    protected override Color? GetHighlightColor() { return PLAYER_COLOR; }
+    protected override Color? GetHighlightColor() => PLAYER_COLOR;
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
 
-    public float GetMana() { return mana; }
 
     public void UseMana(float mana) {
         this.mana = Mathf.Max(this.mana - mana, 0);
@@ -45,20 +41,18 @@ public class Player : LivingEntity {
         base.RegisterComponents();
 
         abilities = new AbilityManager(this);
+        RegisterAbilities();
+        
         targeter = new PlayerTargeter(this);
         spellIndicators = new SpellIndicators(this);
-
-        abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
-        abilities.SetAbility(AbilityNum.Ability2, typeof(TestConeAbility));
-        abilities.SetAbility(AbilityNum.Ability3, typeof(TestAOEAbility));
-        abilities.SetAbility(AbilityNum.Ability4, typeof(TestAreaTargetAbility));
-        abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
 
         ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();
         ui.Setup(this, abilities);
 
         animator = new LivingEntityAnimator(this);
     }
+
+    protected abstract void RegisterAbilities();
 
     protected override void UnregisterComponents() {
         base.UnregisterComponents();

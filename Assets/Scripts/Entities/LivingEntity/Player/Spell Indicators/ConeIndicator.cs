@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ConeIndicator : IndicatorBase {
     public ConeIndicator(Player owner)
-        : base(owner, owner.spellIndicatorConePrefab) {
+        : base(owner, owner.spellIndicatorPrefabs.Cone) {
         SetActive(false);
     }
 

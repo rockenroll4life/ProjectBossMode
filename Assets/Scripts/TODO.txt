@@ -20,3 +20,4 @@
 
 BUGS
 - Spell Indicators won't disappear for an ability if we go to press another ability that we don't have enough mana to cast
+- Spell Indicators won't disappear when Channel or Toggle abilities are pressed

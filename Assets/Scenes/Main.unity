@@ -1096,10 +1096,9 @@ PrefabInstance:
     - target: {fileID: 3805046548821274124, guid: 97a3a3b3ddcd0bf4e955286ef40eeb07,
         type: 3}
       propertyPath: m_Name
-      value: Y Bot
+      value: TestCharacter1
       objectReference: {fileID: 0}
-    - target: {fileID: 4039540286108288006, guid: 97a3a3b3ddcd0bf4e955286ef40eeb07,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: rendererToOutline
       value: 
       objectReference: {fileID: 318389115}
