@@ -1,7 +1,7 @@
 - Implement Wave Spawner system
-- Implement Player Spawner, that way we don't need to have the player in the scene and we can have the spawner instantiate the correct player prefab character
 - Implement Descructable Objects. Main Tower, Spawners, etc
 - Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
+- Implement World Event System. These are global events that can happen either at interval times or when a wave spawns
 - Implement Pet AI (Totems, Golems, etc)
 - Player Level System for stats and abilities
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
