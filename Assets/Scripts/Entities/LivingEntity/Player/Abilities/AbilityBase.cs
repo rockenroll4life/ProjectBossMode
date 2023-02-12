@@ -25,6 +25,7 @@ public abstract class AbilityBase {
     protected abstract TriggerType GetTriggerType();
 
     protected virtual bool InterruptsMovement() => false;
+    public virtual int GetManaCost() => 0;
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }

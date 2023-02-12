@@ -7,7 +7,7 @@ public class TestAOEAbility : AOEAbility {
     }
 
     protected override string GetName() => "TestAOEAbility";
-    protected override int GetManaCost() => 30;
+    public override int GetManaCost() => 30;
     protected override float GetSpellRadius() => 6;
 
     protected override void CastAbility() {

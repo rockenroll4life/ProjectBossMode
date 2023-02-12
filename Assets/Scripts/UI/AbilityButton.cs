@@ -9,20 +9,25 @@ public class AbilityButton {
     public Text cooldownTimeText;
     public Text keybindText;
     public Image auraIcon;
+    public Image notEnoughMana;
 
     Player owner;
+    AbilityBase ability;
     AbilityNum abilityID = AbilityNum.NONE;
     KeyCode keybind = KeyCode.None;
     float maxCooldown = 3;
 
     bool channeling = false;
 
-    public void Setup(Player player, AbilityNum abilityID, KeyCode keybind) {
+    public void Setup(Player player, AbilityBase ability, AbilityNum abilityID, KeyCode keybind) {
         this.owner = player;
+        this.ability = ability;
         this.abilityID = abilityID;
         RegisterEvents();
         UpdateAbilityKeybind(keybind);
     }
+
+    public AbilityBase GetAbility() => ability;
 
     public void Breakdown() {
         UnregisterEvents();
@@ -114,6 +119,7 @@ public class AbilityButton {
         cooldown.gameObject.SetActive(false);
     }
 
+    //  TODO: [Rock]: We now have access to the ability, just get the max Cooldown from it
     public void UpdateMaxCooldown(int param) {
         maxCooldown = param / 1000f;
     }

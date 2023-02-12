@@ -19,6 +19,8 @@ public class AbilityManager {
         abilities[(int) abilityNum] = (AbilityBase) Activator.CreateInstance(ability, owner, abilityNum);
     }
 
+    public AbilityBase GetAbility(AbilityNum abilityNum) => abilities[(int) abilityNum];
+
     public void Update() {
         foreach(AbilityBase ability in abilities) {
             if (ability is CastAbilityBase castAbility) {

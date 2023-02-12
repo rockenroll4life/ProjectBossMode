@@ -12,6 +12,8 @@ public class Player : LivingEntity {
 
     static readonly Color PLAYER_COLOR = new(1f, 0.8431f, 0f);
 
+    public GameObject UIPrefab;
+
     GameplayUI ui;
     AbilityManager abilities;
     SpellIndicators spellIndicators;
@@ -42,9 +44,6 @@ public class Player : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
-        ui = FindObjectOfType<GameplayUI>();
-        ui.Setup(this, abilities);
-
         abilities = new AbilityManager(this);
         targeter = new PlayerTargeter(this);
         spellIndicators = new SpellIndicators(this);
@@ -54,6 +53,9 @@ public class Player : LivingEntity {
         abilities.SetAbility(AbilityNum.Ability3, typeof(TestAOEAbility));
         abilities.SetAbility(AbilityNum.Ability4, typeof(TestAreaTargetAbility));
         abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
+
+        ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();
+        ui.Setup(this, abilities);
 
         animator = new LivingEntityAnimator(this);
     }

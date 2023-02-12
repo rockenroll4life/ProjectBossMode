@@ -8,7 +8,7 @@ public class TestAreaTargetAbility : AreaTargetAbility {
 
     protected override string GetName() => "TestAreaTargetAbility";
     protected override bool InterruptsMovement() => true;
-    protected override int GetManaCost() => 10;
+    public override int GetManaCost() => 50;
     protected override float GetSpellRadius() => 2;
     protected override float GetRangeRadius() => 10;
 

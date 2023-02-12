@@ -1204,6 +1204,8 @@ MonoBehaviour:
     type: 3}
   handAttachRight: {fileID: 0}
   handAttachLeft: {fileID: 0}
+  UIPrefab: {fileID: 8359263236729140038, guid: f0ebfabb57cff5b4faf47a07860f6737,
+    type: 3}
   spellIndicatorConePrefab: {fileID: 7735685148325701978, guid: b1fa7e9cb8fa4b0488f5635fa1118b10,
     type: 3}
   spellIndicatorAOEPrefab: {fileID: 7735685148325701978, guid: 52ff90b484e3ce949800e061d0a1a0c5,

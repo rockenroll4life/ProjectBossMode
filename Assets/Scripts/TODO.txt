@@ -1,4 +1,3 @@
-- Add some type of overlay on abilities you don't have enough mana to cast
 - Implement Wave Spawner system
 - Implement Player Spawner, that way we don't need to have the player in the scene and we can have the spawner instantiate the correct player prefab character
 - Implement Descructable Objects. Main Tower, Spawners, etc
@@ -17,3 +16,7 @@
 - Multiplayer Integration
 - Multiplayer difficulty scaling
 - Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
+
+
+BUGS
+- Spell Indicators won't disappear for an ability if we go to press another ability that we don't have enough mana to cast

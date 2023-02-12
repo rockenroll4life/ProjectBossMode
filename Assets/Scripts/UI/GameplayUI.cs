@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using RockUtils.GameEvents;
+using System;
 
 public class GameplayUI : MonoBehaviour {
     const float AURA_ROTATION_SPEED = 90f;
@@ -20,6 +21,8 @@ public class GameplayUI : MonoBehaviour {
 
     Player owner;
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
+
+    //  TODO: [Rock]: Make the ability Buttons a prefab that we instantiate for each button
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
 
     public static Vector3 auraRotation;
@@ -27,12 +30,12 @@ public class GameplayUI : MonoBehaviour {
     //  TODO: [Rock]: Support rebinding keys
     readonly KeyCode[] defaultKeybindings = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T };
 
-    //  TODO: [Rock]: I don't think we should be passing the ability manager to the UI. Figure out a way to update the ability max cooldown without it needing to know about this
     public void Setup(Player owner, AbilityManager abilityManager) {
         this.owner = owner;
 
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
-            abilities[i].Setup(owner, (AbilityNum) i, defaultKeybindings[i]);
+            AbilityNum abilityNum = (AbilityNum) i;
+            abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum, defaultKeybindings[i]);
         }
 
         int healthMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
@@ -89,5 +92,15 @@ public class GameplayUI : MonoBehaviour {
         float maxMana = owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
 
         UpdateBar(ResourceType.Mana, currentMana, maxMana);
+
+        foreach_AbilityButton(button => {
+            button.notEnoughMana.gameObject.SetActive(currentMana < button.GetAbility().GetManaCost());
+        });
+    }
+
+    void foreach_AbilityButton(Action<AbilityButton> lambda) {
+        foreach (AbilityButton ability in abilities) {
+            lambda(ability);
+        }
     }
 }

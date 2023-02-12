@@ -11,7 +11,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Cast;
-    protected virtual int GetManaCost() => 10;
+    public override int GetManaCost() => 10;
 
     protected override void RegisterEvents() {
         base.RegisterEvents();
