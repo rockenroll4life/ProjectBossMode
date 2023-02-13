@@ -21,7 +21,7 @@ public abstract class CastAbilityBase : AbilityBase {
         EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
-            if (i == (int) abilityID) {
+            if (i == GetAbilityID()) {
                 EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, AttemptUseAbility);
             } else {
                 EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, OtherAbilityPressed);
@@ -37,7 +37,7 @@ public abstract class CastAbilityBase : AbilityBase {
         EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
-            if (i == (int) abilityID) {
+            if (i == GetAbilityID()) {
                 EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, AttemptUseAbility);
             } else {
                 EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, OtherAbilityPressed);
@@ -70,12 +70,12 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected virtual void CastAbility() {
-        cooldown = owner.GetAttribute(Player.ABILITY_COOLDOWNS[(int) abilityID]).GetValue();
+        cooldown = owner.GetAttribute(Player.ABILITY_COOLDOWNS[GetAbilityID()]).GetValue();
         owner.UseMana(GetManaCost());
     }
 
     public virtual void CooldownAttributeChanged(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, param);
+        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + GetAbilityID(), param);
     }
 
     protected abstract void ShowSpellIndicator();
@@ -103,12 +103,12 @@ public abstract class CastAbilityBase : AbilityBase {
             cooldown = Mathf.Max(cooldown - Time.deltaTime, 0);
 
             int percent = (int) (cooldown * 1000);
-            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + (int) abilityID, percent);
+            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + GetAbilityID(), percent);
         }
     }
 
     AttributeInstance GetCooldownAttribute () {
-        return owner.GetAttribute(Player.ABILITY_COOLDOWNS[(int) abilityID]);
+        return owner.GetAttribute(Player.ABILITY_COOLDOWNS[GetAbilityID()]);
     }
 
     protected abstract List<Entity> GetEntitiesHitByAbility(int layerMask);

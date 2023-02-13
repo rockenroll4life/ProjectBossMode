@@ -12,7 +12,7 @@ public abstract class AbilityBase {
     }
     
     protected Player owner;
-    protected AbilityNum abilityID = AbilityNum.NONE;
+    AbilityNum abilityID = AbilityNum.NONE;
 
     public AbilityBase(Player owner, AbilityNum abilityNum) {
         this.owner = owner;
@@ -26,6 +26,7 @@ public abstract class AbilityBase {
 
     protected virtual bool InterruptsMovement() => false;
     public virtual int GetManaCost() => 0;
+    public int GetAbilityID() => (int) abilityID;
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
