@@ -27,6 +27,7 @@ public abstract class AbilityBase {
     protected virtual bool InterruptsMovement() => false;
     public virtual int GetManaCost() => 0;
     public int GetAbilityID() => (int) abilityID;
+    public AbilityNum GetAbilityNum() => abilityID;
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -12,28 +13,26 @@ public struct AbilityTextures {
 
 public class AbilityManager {
     readonly Player owner;
-
-    //  TOOD: [Rock]: I think I want to change this to a dictionary...
-    public AbilityBase[] abilities = new AbilityBase[(int) AbilityNum._COUNT];
+    readonly Dictionary<AbilityNum, AbilityBase> abilities = new();
 
     public AbilityManager(Player owner) {
         this.owner = owner;
     }
 
     public void Breakdown() {
-        foreach (AbilityBase ability in abilities) {
+        foreach (AbilityBase ability in abilities.Values) {
             ability.Breakdown();
         }
     }
 
-    public void SetAbility(AbilityNum abilityNum, Type ability) {
-        abilities[(int) abilityNum] = (AbilityBase) Activator.CreateInstance(ability, owner, abilityNum);
+    public void RegisterAbility(AbilityBase ability) {
+        abilities.Add(ability.GetAbilityNum(), ability);
     }
 
-    public AbilityBase GetAbility(AbilityNum abilityNum) => abilities[(int) abilityNum];
+    public AbilityBase GetAbility(AbilityNum abilityNum) => abilities.GetValueOrDefault(abilityNum);
 
     public void Update() {
-        foreach(AbilityBase ability in abilities) {
+        foreach(AbilityBase ability in abilities.Values) {
             if (ability is CastAbilityBase castAbility) {
                 castAbility.Update();
             }

@@ -1,11 +1,20 @@
-using UnityEngine;
-
 public class TestCharacter1 : Player {
     protected override void RegisterAbilities() {
-        abilities.SetAbility(AbilityNum.Ability1, typeof(TestNoStopAbility));
-        abilities.SetAbility(AbilityNum.Ability2, typeof(TestConeAbility));
-        abilities.SetAbility(AbilityNum.Ability3, typeof(TestAOEAbility));
-        abilities.SetAbility(AbilityNum.Ability4, typeof(TestAreaTargetAbility));
-        abilities.SetAbility(AbilityNum.Ultimate, typeof(TestChannelAbility));
+        GetAbilities().RegisterAbility(new TestNoStopAbility(this, AbilityNum.Ability1));
+        GetAbilities().RegisterAbility(new TestConeAbility(this, AbilityNum.Ability2));
+        GetAbilities().RegisterAbility(new TestAOEAbility(this, AbilityNum.Ability3));
+        GetAbilities().RegisterAbility(new TestAreaTargetAbility(this, AbilityNum.Ability4));
+        GetAbilities().RegisterAbility(new TestChannelAbility(this, AbilityNum.Ultimate));
+    }
+
+    protected override void RegisterAttributes() {
+        base.RegisterAttributes();
+
+        //  Update any of the base attribute values for this character
+        GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).SetBaseValue(500);
+        health = GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
+
+        GetAttribute(LivingEntitySharedAttributes.MANA_MAX).SetBaseValue(100);
+        mana = GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
     }
 }

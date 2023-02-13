@@ -15,7 +15,7 @@ public abstract class Player : LivingEntity {
     public GameObject UIPrefab;
 
     GameplayUI ui;
-    protected AbilityManager abilities;
+    AbilityManager abilities;
     SpellIndicators spellIndicators;
 
     //  Character related Prefabs and Textures
@@ -26,11 +26,11 @@ public abstract class Player : LivingEntity {
 
     public override EntityType GetEntityType() => EntityType.Player;
     public SpellIndicators GetSpellIndicators() => spellIndicators;
+    protected AbilityManager GetAbilities() => abilities;
     public float GetMana() => mana;
 
     protected override Color? GetHighlightColor() => PLAYER_COLOR;
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
-
 
     public void UseMana(float mana) {
         this.mana = Mathf.Max(this.mana - mana, 0);
@@ -71,15 +71,6 @@ public abstract class Player : LivingEntity {
         GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY4_COOLDOWN);
         GetAttributes().RegisterAttribute(ULTIMATE_COOLDOWN);
-
-        //  Update any of the base attribute values for this entity
-        GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).SetBaseValue(500);
-        health = GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
-
-        GetAttribute(LivingEntitySharedAttributes.MANA_MAX).SetBaseValue(100);
-        mana = GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
-
-        //  TODO: [Rock]: We need to add an attribute listener for the max health changing so we can update the UI
     }
 
     protected override void UpdateStep() {
