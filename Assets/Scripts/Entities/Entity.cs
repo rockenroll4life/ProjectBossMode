@@ -3,12 +3,14 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public abstract class Entity : MonoBehaviour {
+    //  TODO: [Rock]: Implement the Entity Types as a bit flag so we can have things of multiple types
     public enum EntityType {
         Undefined,
         LivingEntity,
         Player,
         Mob,
         Interactable,
+        Destructable,
     }
 
     public Renderer rendererToOutline;

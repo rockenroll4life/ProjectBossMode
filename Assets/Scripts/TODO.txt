@@ -1,5 +1,5 @@
-- Implement Descructable Objects. Main Tower, Spawners, etc
 - We should pass damage around as a struct so we can specify the types of damage it is
+- Update the outline shader to be a toon shader, hopefully this will make the outline better
 - Implement Wave Spawner system
 - Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
 - Implement World Event System. These are global events that can happen either at interval times or when a wave spawns
