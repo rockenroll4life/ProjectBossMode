@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 1090262248949449546}
   m_Layer: 12
   m_Name: Mob
-  m_TagString: Untagged
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,8 +119,6 @@ MonoBehaviour:
   rendererToOutline: {fileID: 6912939704322768947}
   attackProjectilePrefab: {fileID: 2020115621512650537, guid: 14c1567b31c97c24682d56b097a7e0b1,
     type: 3}
-  handAttachRight: {fileID: 0}
-  handAttachLeft: {fileID: 0}
 --- !u!54 &1090262248949449544
 Rigidbody:
   m_ObjectHideFlags: 0

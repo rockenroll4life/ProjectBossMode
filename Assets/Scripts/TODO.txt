@@ -1,11 +1,10 @@
-- We should pass damage around as a struct so we can specify the types of damage it is
-- Update the outline shader to be a toon shader, hopefully this will make the outline better
-- Implement Wave Spawner system
 - Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
 - Implement World Event System. These are global events that can happen either at interval times or when a wave spawns
 - Implement Pet AI (Totems, Golems, etc)
 - Player Level System for stats and abilities
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
+- We should pass damage around as a struct so we can specify the types of damage it is
+- Update the outline shader to be a toon shader, hopefully this will make the outline better
 - Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
 - Add Support for Input Chords (A use case will be for Smart Casting)
 - Controller Support
