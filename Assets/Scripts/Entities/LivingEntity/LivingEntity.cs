@@ -1,7 +1,7 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public abstract class LivingEntity : Entity {
+public abstract class LivingEntity : Entity, Damageable {
     public GameObject attackProjectilePrefab;
 
     protected StatusEffectManager statusEffects;
@@ -18,6 +18,7 @@ public abstract class LivingEntity : Entity {
     //  NOTE: [Rock]: This is LivingEntity for now...but not sure if we need to change this to Entity instead...
     LivingEntity lastDamager = null;
 
+    public Entity GetEntity() => this;
     public override EntityType GetEntityType() { return EntityType.LivingEntity; }
 
     public Targeter GetTargeter() { return targeter; }
@@ -107,10 +108,10 @@ public abstract class LivingEntity : Entity {
 
     protected virtual bool CanAttack() {
         if (attackTimer <= 0) {
-            LivingEntity target = targeter.GetTargetedEntity();
+            Damageable target = targeter.GetTargetedEntity();
             if (target != null) {
                 float attackRange = GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
-                return (target.transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);
+                return (target.GetEntity().transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);
             }
         }
 
@@ -125,11 +126,15 @@ public abstract class LivingEntity : Entity {
         proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE).GetValue());
     }
 
-    public virtual void Hurt(LivingEntity damager, float damage) {
+    public void DealDamage(Entity damager, float damage) {
         health -= damage;
-        lastDamager = damager;
+
+        if (damager is LivingEntity livingEntity) {
+            lastDamager = livingEntity;
+        }
+
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
-        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int)(health * 1000));
+        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
 
         if (health <= 0) {
             Destroy(gameObject);

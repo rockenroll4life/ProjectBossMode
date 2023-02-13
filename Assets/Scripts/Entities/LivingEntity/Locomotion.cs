@@ -10,7 +10,7 @@ public class Locomotion {
     protected LivingEntity owner;
     protected NavMeshAgent agent;
 
-    protected LivingEntity targetedEntity = null;
+    protected Entity targetedEntity = null;
     protected Vector3? targetedLocation = null;
 
     public Locomotion(LivingEntity owner) {
@@ -72,7 +72,7 @@ public class Locomotion {
         }
     }
     protected virtual void TargetedEntity(int param) {
-        targetedEntity = owner.GetTargeter().GetTargetedEntity();
+        targetedEntity = owner.GetTargeter().GetTargetedEntity().GetEntity();
 
         agent.stoppingDistance = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
         MoveToLocation(targetedEntity.transform.position);

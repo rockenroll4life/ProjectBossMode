@@ -1032,7 +1032,7 @@ GameObject:
   - component: {fileID: 1854690992}
   - component: {fileID: 1854690991}
   m_Layer: 0
-  m_Name: Obstacle Model
+  m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1

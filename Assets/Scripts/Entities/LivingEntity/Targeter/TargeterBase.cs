@@ -11,7 +11,7 @@ public class TargeterBase : Targeter {
         Interactable,
     }
 
-    protected LivingEntity targetedEntity = null;
+    protected Damageable targetedEntity = null;
     protected Vector3? targetedLocation = null;
 
     protected static readonly int RAYCAST_DISTANCE = 100;
@@ -22,10 +22,10 @@ public class TargeterBase : Targeter {
         this.owner = owner;
     }
 
-    public void SetTargetedEntity(LivingEntity entity) {
+    public void SetTargetedEntity(Damageable entity) {
         targetedEntity = entity;
 
-        if (entity) {
+        if (entity != null) {
             EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
         }
     }
@@ -37,7 +37,7 @@ public class TargeterBase : Targeter {
         }
     }
 
-    public LivingEntity GetTargetedEntity() { return targetedEntity; }
+    public Damageable GetTargetedEntity() { return targetedEntity; }
     public Vector3? GetTargetedLocation() { return targetedLocation; }
     
     public virtual void Update() { }

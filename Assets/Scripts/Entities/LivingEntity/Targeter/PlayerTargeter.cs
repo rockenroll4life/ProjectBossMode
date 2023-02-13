@@ -17,15 +17,15 @@ public class PlayerTargeter : TargeterBase {
     }
 
     void SelectTarget(int param) {
-        LivingEntity prevTargetedEntity = targetedEntity;
-        LivingEntity hitEntity = null;
+        Damageable prevTargetedEntity = targetedEntity;
+        Damageable hitEntity = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
-            hitEntity = hit.collider.gameObject.GetComponentInParent<LivingEntity>();
+            hitEntity = hit.collider.gameObject.GetComponentInParent<Damageable>();
             targetedLocation = null;
 
             if (hitEntity != null) {
-                hitType = EntityTypeToTargetType(hitEntity.GetEntityType());
+                hitType = EntityTypeToTargetType(hitEntity.GetEntity().GetEntityType());
                 targetedEntity = hitEntity;
                 targetedLocation = null;
                 EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
@@ -40,8 +40,8 @@ public class PlayerTargeter : TargeterBase {
             hitType = TargetType.None;
             targetedLocation = null;
 
-            if (targetedEntity) {
-                targetedEntity.OnDeselected();
+            if (targetedEntity != null) {
+                targetedEntity.GetEntity().OnDeselected();
                 targetedEntity = null;
             }
         }
@@ -49,16 +49,16 @@ public class PlayerTargeter : TargeterBase {
         //  We either selected or unselected an entity
         if (hitEntity != prevTargetedEntity) {
             if (prevTargetedEntity == null) {
-                if (hitEntity != owner) {
-                    hitEntity.OnSelected();
+                if (hitEntity.GetEntity() != owner) {
+                    hitEntity.GetEntity().OnSelected();
                 }
             } else if (hitEntity == null) {
-                if (prevTargetedEntity != owner) {
-                    prevTargetedEntity.OnDeselected();
+                if (prevTargetedEntity.GetEntity() != owner) {
+                    prevTargetedEntity.GetEntity().OnDeselected();
                 }
             } else {
-                prevTargetedEntity.OnDeselected();
-                hitEntity.OnSelected();
+                prevTargetedEntity.GetEntity().OnDeselected();
+                hitEntity.GetEntity().OnSelected();
             }
         }
     }
