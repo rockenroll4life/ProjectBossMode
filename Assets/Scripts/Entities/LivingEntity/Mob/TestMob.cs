@@ -2,7 +2,8 @@ public class TestMob : Mob {
     protected override void RegisterGoals() {
         base.RegisterGoals();
 
-        goalSelector.AddGoal(4, new PatrolGoal(this));
+        goalSelector.AddGoal(6, new PatrolGoal(this));
+        goalSelector.AddGoal(4, new AttackTower(this));
         goalSelector.AddGoal(2, new AttackAggressorGoal(this));
     }
 

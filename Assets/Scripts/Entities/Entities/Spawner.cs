@@ -15,7 +15,7 @@ public class Spawner : Entity, Damageable {
         Debug.Log(name + " Health: " + health);
 
         if (health <= 0) {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

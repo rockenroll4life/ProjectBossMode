@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
     public float speed = 5;
-    public float collisionDistance = 1f;
+    public float collisionDistance = 0.5f;
 
     LivingEntity owner;
     Damageable target;

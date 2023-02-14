@@ -1,4 +1,5 @@
 - Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
+- Make the gamemode track all the entities in the level so we can more easily find entities of the type(s) we want
 - Implement World Event System. These are global events that can happen either at interval times or when a wave spawns
 - Implement Pet AI (Totems, Golems, etc)
 - Player Level System for stats and abilities

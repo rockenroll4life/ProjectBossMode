@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Tower : Entity, Damageable {
-    float health = 1000;
+    float health = 25;
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
@@ -15,7 +15,7 @@ public class Tower : Entity, Damageable {
         Debug.Log(name + " Health: " + health);
 
         if (health <= 0) {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

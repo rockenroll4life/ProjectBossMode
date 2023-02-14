@@ -8,15 +8,13 @@ public class PatrolGoal : Goal {
 
     public PatrolGoal(LivingEntity owner) {
         this.owner = owner;
-        randPos[0] = new Vector3(-5, 0, 6);
-        randPos[1] = new Vector3(5, 0, 6);
+        randPos[0] = new Vector3(-5, 0, 20);
+        randPos[1] = new Vector3(5, 0, 20);
 
         SetFlags(new HashSet<Flag>() { Flag.MOVE });
     }
 
-    public override bool CanUse() {
-        return true;
-    }
+    public override bool CanUse() => true;
 
     public override void Start() {
         base.Start();
