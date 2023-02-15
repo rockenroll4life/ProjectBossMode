@@ -85,7 +85,7 @@ public abstract class Entity : MonoBehaviour {
     }
 
     public virtual void OnDeselected() {
-        if (HasHighlightColor()) {
+        if (rendererToOutline && HasHighlightColor()) {
             rendererToOutline.material.shader = previousShader;
         }
     }

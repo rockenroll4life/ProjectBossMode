@@ -10,4 +10,9 @@ public class PlayerSpawner : MonoBehaviour {
         Instantiate(character, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawIcon(transform.position + Vector3.up * 2, "Player");
+        Gizmos.DrawIcon(transform.position + Vector3.up * 2, "Spawner");
+    }
 }
