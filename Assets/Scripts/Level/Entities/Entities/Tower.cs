@@ -5,6 +5,7 @@ public class Tower : Entity, Damageable {
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
+    public override bool IsDead() => health <= 0;
 
     protected override Color? GetHighlightColor() => Color.yellow;
     protected override Color? GetHighlightOutlineColor() => Color.yellow;
@@ -13,9 +14,5 @@ public class Tower : Entity, Damageable {
         health -= damage;
 
         Debug.Log(name + " Health: " + health);
-
-        if (health <= 0) {
-            Destroy(gameObject);
-        }
     }
 }

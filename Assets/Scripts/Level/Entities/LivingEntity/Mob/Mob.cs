@@ -7,8 +7,8 @@ public abstract class Mob : LivingEntity {
     protected override Color? GetHighlightColor() { return Color.red; }
     protected override Color? GetHighlightOutlineColor() { return Color.red; }
 
-    protected override void Setup() {
-        base.Setup();
+    public override void Setup(Level level) {
+        base.Setup(level);
 
         RegisterGoals();
     }

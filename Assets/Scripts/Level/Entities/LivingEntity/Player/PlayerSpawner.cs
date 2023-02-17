@@ -2,12 +2,16 @@ using UnityEngine;
 
 //  NOTE: [Rock] Primarily used for Testing purposes
 public class PlayerSpawner : MonoBehaviour {
-    public Player character;
+    public GameObject characterPrefab;
     
     void Start() {
-        Debug.Assert(character, "NO CHARACTER SET ON PLAYER SPAWNER!");
+        Debug.Assert(characterPrefab, "NO CHARACTER SET ON PLAYER SPAWNER!");
 
-        Instantiate(character, transform.position, Quaternion.identity);
+        Level level = FindObjectOfType<Level>();
+        Debug.Assert(level, "LEVEL NO FOUND IN PLAYER SPAWNER!");
+
+        level.SpawnEntity(characterPrefab, transform.position, Quaternion.identity);
+
         Destroy(gameObject);
     }
 

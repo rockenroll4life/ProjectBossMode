@@ -17,6 +17,7 @@
 - Multiplayer Integration
 - Multiplayer difficulty scaling
 - Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
+- Decouple Entities from GameObjects
 
 
 BUGS

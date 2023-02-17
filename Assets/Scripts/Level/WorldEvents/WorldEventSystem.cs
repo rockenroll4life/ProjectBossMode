@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class WorldEventSystem {
     readonly Level level;
 

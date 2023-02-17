@@ -13,32 +13,29 @@ public abstract class Entity : MonoBehaviour {
         Destructable,
     }
 
+    Level level;
     public Renderer rendererToOutline;
     Shader previousShader;
     Shader highlightShader;
     protected Guid entityID;
 
     public abstract EntityType GetEntityType();
+    public abstract bool IsDead();
 
     public Guid GetEntityID() { return entityID; }
+    protected Level GetLevel() => level;
 
     protected virtual Color? GetHighlightColor() { return null; }
     protected virtual Color? GetHighlightOutlineColor() { return null; }
     protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
 
-    void Start() {
-        Setup();
-    }
-    void OnDisable() {
-        Breakdown();
-    }
-
-    protected virtual void Setup() {
+    public virtual void Setup(Level level) {
+        this.level = level;
         entityID = Guid.NewGuid();
 
         highlightShader = Shader.Find("Custom/Entity_Outline");
     }
-    protected virtual void Breakdown() { }
+    public virtual void Breakdown() { }
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
@@ -61,7 +58,7 @@ public abstract class Entity : MonoBehaviour {
     //  Post-Update - This is where we can handle any last minute things before we're done for this tick with the entity
     protected virtual void PostUpdateStep() { }
 
-    void Update() {
+    public void Tick() {
         PreUpdateStep();
         UpdateStep();
         PostUpdateStep();

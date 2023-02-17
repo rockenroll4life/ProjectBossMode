@@ -19,22 +19,22 @@ public abstract class LivingEntity : Entity, Damageable {
     LivingEntity lastDamager = null;
 
     public Entity GetEntity() => this;
-    public override EntityType GetEntityType() { return EntityType.LivingEntity; }
+    public override EntityType GetEntityType() => EntityType.LivingEntity;
+    public override bool IsDead() => health <= 0;
+    public LivingEntity GetLastDamager() => lastDamager;
 
-    public Targeter GetTargeter() { return targeter; }
-    public Locomotion GetLocomotion() { return locomotion; }
+    public Targeter GetTargeter() => targeter;
+    public Locomotion GetLocomotion() => locomotion;
 
-    public LivingEntity GetLastDamager() { return lastDamager; }
-
-    protected override void Setup() {
-        base.Setup();
+    public override void Setup(Level level) {
+        base.Setup(level);
 
         RegisterEvents();
         RegisterAttributes();
         RegisterComponents();
     }
 
-    protected override void Breakdown() {
+    public override void Breakdown() {
         base.Breakdown();
 
         UnregisterEvents();
@@ -109,7 +109,7 @@ public abstract class LivingEntity : Entity, Damageable {
     protected virtual bool CanAttack() {
         if (attackTimer <= 0) {
             Damageable target = targeter.GetTargetedEntity();
-            if (target != null) {
+            if (target != null && target.GetEntity() != null) {
                 float attackRange = GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
                 return (target.GetEntity().transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);
             }
@@ -135,9 +135,5 @@ public abstract class LivingEntity : Entity, Damageable {
 
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
-
-        if (health <= 0) {
-            Destroy(gameObject);
-        }
     }
 }

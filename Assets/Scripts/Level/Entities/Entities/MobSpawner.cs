@@ -5,28 +5,40 @@ public class MobSpawner : Entity, Damageable {
 
     float health = 25;
 
+    //  TEMP test variable
+    bool hasSpawner = false;
+
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
+
+    public override bool IsDead() => health <= 0;
 
     protected override Color? GetHighlightColor() => Color.black;
     protected override Color? GetHighlightOutlineColor() => Color.black;
 
-    protected override void Setup() {
-        base.Setup();
+    private void Start() {
+        Setup(FindObjectOfType<Level>());
+    }
+
+    public override void Setup(Level level) {
+        base.Setup(level);
 
         Debug.Assert(MobPrefab, "NO MOB SET ON MOB SPAWNER!");
+    }
 
-        Instantiate(MobPrefab, transform.position, transform.rotation);
+    protected override void UpdateStep() {
+        base.UpdateStep();
+
+        if (!hasSpawner) {
+            hasSpawner = true;
+            GetLevel().SpawnEntity(MobPrefab, transform.position, transform.rotation);
+        }
     }
 
     public void DealDamage(Entity damager, float damage) {
         health -= damage;
 
         Debug.Log(name + " Health: " + health);
-
-        if (health <= 0) {
-            Destroy(gameObject);
-        }
     }
 
     private void OnDrawGizmos() {
