@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface Targeter {
+public interface ITargeter {
     public IDamageable GetTargetedEntity();
 
     public Vector3? GetTargetedLocation();

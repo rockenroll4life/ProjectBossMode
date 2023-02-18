@@ -1,7 +1,7 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public class TargeterBase : Targeter {
+public class TargeterBase : ITargeter {
     public enum TargetType {
         None,
         World,

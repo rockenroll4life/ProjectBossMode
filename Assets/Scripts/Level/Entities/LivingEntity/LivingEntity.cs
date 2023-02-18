@@ -7,7 +7,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected StatusEffectManager statusEffects;
     protected Locomotion locomotion;
     protected EntityAnimator animator;
-    protected Targeter targeter;
+    protected ITargeter targeter;
     AttributeDictionary attributes;
 
     float attackTimer = 0;
@@ -24,7 +24,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public override bool IsDead() => health <= 0;
     public LivingEntity GetLastDamager() => lastDamager;
 
-    public Targeter GetTargeter() => targeter;
+    public ITargeter GetTargeter() => targeter;
     public Locomotion GetLocomotion() => locomotion;
 
     public override void Setup(Level level) {
