@@ -15,6 +15,11 @@ public class Projectile : MonoBehaviour {
     }
 
     void Update() {
+        if (target == null || target.GetEntity() == null) {
+            Destroy(gameObject);
+            return;
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, target.GetEntity().transform.position + Vector3.up, speed * Time.deltaTime);
 
         float distance = Vector3.Distance(transform.position, target.GetEntity().transform.position);

@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Linq;
-using System.Collections.Generic;
+using RockUtils.GameEvents;
 
 public class Level : MonoBehaviour {
     EntityManager entities;
     WorldEventSystem worldEvents;
 
     public EntityManager GetEntityManager() => entities;
+    public WorldEventSystem GetWorldEvents() => worldEvents;
 
     private void Start() {
         worldEvents = new WorldEventSystem(this);
@@ -16,7 +17,10 @@ public class Level : MonoBehaviour {
         //List<PlayerSpawner> playerSpawners = FindObjectsOfType<PlayerSpawner>().ToList();
 
         //  Register Entities
-        entities.RegisterEntity(FindObjectOfType<Tower>());
+        Tower tower = FindObjectOfType<Tower>();
+        tower.Setup(this);
+
+        entities.RegisterEntity(tower);
         entities.RegisterEntities(FindObjectsOfType<MobSpawner>().Cast<Entity>().ToList());
     }
 

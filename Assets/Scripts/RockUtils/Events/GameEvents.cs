@@ -16,7 +16,6 @@
             //  Just for safety we'll resume the values at 1800
             KeyboardButton_Held = 1200,
             
-
             //  Mouse Actions
             Mouse_Left_Press = 1800,
             Mouse_Right_Press = 1801,

@@ -35,8 +35,12 @@ public abstract class Entity : MonoBehaviour {
         entityID = Guid.NewGuid();
 
         highlightShader = Shader.Find("Custom/Entity_Outline");
+
+        level.GetWorldEvents().onEntitySpawned?.Invoke(this);
     }
-    public virtual void Breakdown() { }
+    public virtual void Breakdown() {
+        level.GetWorldEvents().onEntityKilled?.Invoke(this);
+    }
 
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
