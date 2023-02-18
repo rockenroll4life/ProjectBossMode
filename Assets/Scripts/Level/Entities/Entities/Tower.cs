@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Tower : Entity, Damageable {
+public class Tower : Entity, IDamageable {
     float health = 25;
 
     public Entity GetEntity() => this;

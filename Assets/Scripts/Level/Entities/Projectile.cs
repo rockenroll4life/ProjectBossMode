@@ -5,10 +5,10 @@ public class Projectile : MonoBehaviour {
     public float collisionDistance = 0.5f;
 
     LivingEntity owner;
-    Damageable target;
+    IDamageable target;
     float damage;
 
-    public void Setup(LivingEntity owner, Damageable target, float damage) {
+    public void Setup(LivingEntity owner, IDamageable target, float damage) {
         this.owner = owner;
         this.target = target;
         this.damage = damage;

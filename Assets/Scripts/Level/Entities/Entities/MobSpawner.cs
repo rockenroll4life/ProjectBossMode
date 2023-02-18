@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class MobSpawner : Entity, Damageable {
+public class MobSpawner : Entity, IDamageable {
     public GameObject MobPrefab;
 
     float health = 25;

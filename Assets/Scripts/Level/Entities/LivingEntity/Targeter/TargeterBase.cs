@@ -11,7 +11,7 @@ public class TargeterBase : Targeter {
         Interactable,
     }
 
-    protected Damageable targetedEntity = null;
+    protected IDamageable targetedEntity = null;
     protected Vector3? targetedLocation = null;
 
     protected static readonly int RAYCAST_DISTANCE = 100;
@@ -22,7 +22,7 @@ public class TargeterBase : Targeter {
         this.owner = owner;
     }
 
-    public void SetTargetedEntity(Damageable entity) {
+    public void SetTargetedEntity(IDamageable entity) {
         targetedEntity = entity;
 
         if (entity != null) {
@@ -37,7 +37,7 @@ public class TargeterBase : Targeter {
         }
     }
 
-    public Damageable GetTargetedEntity() { return targetedEntity; }
+    public IDamageable GetTargetedEntity() { return targetedEntity; }
     public Vector3? GetTargetedLocation() { return targetedLocation; }
     
     public virtual void Update() { }

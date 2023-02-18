@@ -1,7 +1,7 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public abstract class LivingEntity : Entity, Damageable {
+public abstract class LivingEntity : Entity, IDamageable {
     public GameObject attackProjectilePrefab;
 
     protected StatusEffectManager statusEffects;
@@ -109,7 +109,7 @@ public abstract class LivingEntity : Entity, Damageable {
 
     protected virtual bool CanAttack() {
         if (attackTimer <= 0) {
-            Damageable target = targeter.GetTargetedEntity();
+            IDamageable target = targeter.GetTargetedEntity();
             if (target != null && target.GetEntity() != null) {
                 float attackRange = GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
                 return (target.GetEntity().transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);

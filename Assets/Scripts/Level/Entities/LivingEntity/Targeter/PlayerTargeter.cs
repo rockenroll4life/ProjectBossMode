@@ -17,11 +17,11 @@ public class PlayerTargeter : TargeterBase {
     }
 
     void SelectTarget(int param) {
-        Damageable prevTargetedEntity = targetedEntity;
-        Damageable hitEntity = null;
+        IDamageable prevTargetedEntity = targetedEntity;
+        IDamageable hitEntity = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
-            hitEntity = hit.collider.gameObject.GetComponentInParent<Damageable>();
+            hitEntity = hit.collider.gameObject.GetComponentInParent<IDamageable>();
             targetedLocation = null;
 
             if (hitEntity != null) {
