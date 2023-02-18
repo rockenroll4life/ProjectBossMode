@@ -1,5 +1,5 @@
 public interface AttributeInstance {
-    public Attribute GetAttribute();
+    public IAttribute GetAttribute();
     
     public float GetBaseValue();
 

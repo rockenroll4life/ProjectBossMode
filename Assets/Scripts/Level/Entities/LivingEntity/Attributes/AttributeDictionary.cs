@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AttributeDictionary {
     readonly LivingEntity owner;
-    readonly Dictionary<Attribute, AttributeInstance> attributeDictionary = new Dictionary<Attribute, AttributeInstance>();
-    readonly Dictionary<Attribute, Action<int>> attributeListeners = new Dictionary<Attribute, Action<int>>();
+    readonly Dictionary<IAttribute, AttributeInstance> attributeDictionary = new Dictionary<IAttribute, AttributeInstance>();
+    readonly Dictionary<IAttribute, Action<int>> attributeListeners = new Dictionary<IAttribute, Action<int>>();
 
     public AttributeDictionary(LivingEntity owner) {
         this.owner = owner;
     }
 
-    public AttributeInstance RegisterAttribute(Attribute attribute) {
+    public AttributeInstance RegisterAttribute(IAttribute attribute) {
         if (attributeDictionary.ContainsKey(attribute)) {
             Debug.LogError(attribute.GetName() + " is already registered!");
         }
@@ -22,7 +22,7 @@ public class AttributeDictionary {
         return instance;
     }
 
-    public void RegisterListener(Attribute attribute, Action<int> listener) {
+    public void RegisterListener(IAttribute attribute, Action<int> listener) {
         if (attributeListeners.TryGetValue(attribute, out Action<int> listeners)) {
             listeners += listener;
             attributeListeners[attribute] = listeners;
@@ -32,11 +32,11 @@ public class AttributeDictionary {
         }
     }
 
-    public AttributeInstance CreateAttributeInstance(Attribute attribute) {
+    public AttributeInstance CreateAttributeInstance(IAttribute attribute) {
         return new ModifiableAttributeInstance(this, attribute);
     }
 
-    public AttributeInstance GetInstance(Attribute attribute) {
+    public AttributeInstance GetInstance(IAttribute attribute) {
         return attributeDictionary.GetValueOrDefault(attribute);
     }
 

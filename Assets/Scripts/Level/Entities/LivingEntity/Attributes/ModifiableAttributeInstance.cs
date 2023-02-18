@@ -5,12 +5,12 @@ using UnityEngine;
 public class ModifiableAttributeInstance : AttributeInstance {
     readonly AttributeDictionary attributeDictionary;
     readonly Dictionary<AttributeModifier.Operation, Dictionary<Guid, AttributeModifier>> modifiers = new Dictionary<AttributeModifier.Operation, Dictionary<Guid, AttributeModifier>>();
-    readonly Attribute attribute;
+    readonly IAttribute attribute;
     float baseValue;
     float cachedValue;
     bool dirty = true;
 
-    public ModifiableAttributeInstance(AttributeDictionary attributeDictionary, Attribute attribute) {
+    public ModifiableAttributeInstance(AttributeDictionary attributeDictionary, IAttribute attribute) {
         this.attributeDictionary = attributeDictionary;
         this.attribute = attribute;
 
@@ -21,7 +21,7 @@ public class ModifiableAttributeInstance : AttributeInstance {
         }
     }
 
-    public Attribute GetAttribute() {
+    public IAttribute GetAttribute() {
         return attribute;
     }
 

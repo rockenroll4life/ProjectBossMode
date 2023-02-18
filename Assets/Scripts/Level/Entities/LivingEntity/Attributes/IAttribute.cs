@@ -1,4 +1,4 @@
-public interface Attribute {
+public interface IAttribute {
     string GetName();
 
     float GetDefaultValue();

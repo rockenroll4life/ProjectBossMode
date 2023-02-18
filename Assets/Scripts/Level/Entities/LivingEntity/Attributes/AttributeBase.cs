@@ -1,4 +1,4 @@
-public abstract class AttributeBase : Attribute {
+public abstract class AttributeBase : IAttribute {
     readonly string name;
     readonly float defaultValue;
 
@@ -20,7 +20,7 @@ public abstract class AttributeBase : Attribute {
     }
 
     public override bool Equals(object obj) {
-        return obj is Attribute attribute && name.Equals(attribute.GetName());
+        return obj is IAttribute attribute && name.Equals(attribute.GetName());
     }
 
     public abstract float CleanupValue(float value);
