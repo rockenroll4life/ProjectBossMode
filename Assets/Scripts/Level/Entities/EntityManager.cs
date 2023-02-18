@@ -4,18 +4,12 @@ using UnityEngine;
 public class EntityManager {
     static readonly List<Entity> NO_ENTITIES = new();
 
-    readonly Level level;
-
     readonly List<Entity> entities = new();
     //  NOTE: [Rock]: We may want to support storing an entity in multiple types in the future
     readonly Dictionary<System.Type, List<Entity>> entityDictionary = new();
     
     readonly List<Entity> toRemove = new();
     readonly List<Entity> toAdd = new();
-
-    public EntityManager(Level level) {
-        this.level = level;
-    }
 
     public void Update() {
         //  Add any new entities
