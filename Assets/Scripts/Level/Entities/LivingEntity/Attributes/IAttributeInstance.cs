@@ -1,4 +1,4 @@
-public interface AttributeInstance {
+public interface IAttributeInstance {
     public IAttribute GetAttribute();
     
     public float GetBaseValue();

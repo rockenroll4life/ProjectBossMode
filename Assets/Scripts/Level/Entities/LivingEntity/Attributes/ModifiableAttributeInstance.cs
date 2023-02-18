@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModifiableAttributeInstance : AttributeInstance {
+public class ModifiableAttributeInstance : IAttributeInstance {
     readonly AttributeDictionary attributeDictionary;
     readonly Dictionary<AttributeModifier.Operation, Dictionary<Guid, AttributeModifier>> modifiers = new Dictionary<AttributeModifier.Operation, Dictionary<Guid, AttributeModifier>>();
     readonly IAttribute attribute;

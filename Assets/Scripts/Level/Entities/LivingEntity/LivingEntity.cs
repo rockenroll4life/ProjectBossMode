@@ -101,7 +101,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         return attributes;
     }
 
-    public AttributeInstance GetAttribute(IAttribute attribute) {
+    public IAttributeInstance GetAttribute(IAttribute attribute) {
         return GetAttributes().GetInstance(attribute);
     }
 

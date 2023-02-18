@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class AttributeDictionary {
     readonly LivingEntity owner;
-    readonly Dictionary<IAttribute, AttributeInstance> attributeDictionary = new Dictionary<IAttribute, AttributeInstance>();
+    readonly Dictionary<IAttribute, IAttributeInstance> attributeDictionary = new Dictionary<IAttribute, IAttributeInstance>();
     readonly Dictionary<IAttribute, Action<int>> attributeListeners = new Dictionary<IAttribute, Action<int>>();
 
     public AttributeDictionary(LivingEntity owner) {
         this.owner = owner;
     }
 
-    public AttributeInstance RegisterAttribute(IAttribute attribute) {
+    public IAttributeInstance RegisterAttribute(IAttribute attribute) {
         if (attributeDictionary.ContainsKey(attribute)) {
             Debug.LogError(attribute.GetName() + " is already registered!");
         }
         
-        AttributeInstance instance = CreateAttributeInstance(attribute);
+        IAttributeInstance instance = CreateAttributeInstance(attribute);
         attributeDictionary.Add(attribute, instance);
 
         return instance;
@@ -32,19 +32,19 @@ public class AttributeDictionary {
         }
     }
 
-    public AttributeInstance CreateAttributeInstance(IAttribute attribute) {
+    public IAttributeInstance CreateAttributeInstance(IAttribute attribute) {
         return new ModifiableAttributeInstance(this, attribute);
     }
 
-    public AttributeInstance GetInstance(IAttribute attribute) {
+    public IAttributeInstance GetInstance(IAttribute attribute) {
         return attributeDictionary.GetValueOrDefault(attribute);
     }
 
-    public IEnumerable<AttributeInstance> GetAttributes() {
+    public IEnumerable<IAttributeInstance> GetAttributes() {
         return attributeDictionary.Values;
     }
 
-    public void OnAttributeModified(AttributeInstance attributeInstance) {
+    public void OnAttributeModified(IAttributeInstance attributeInstance) {
         if (attributeListeners.TryGetValue(attributeInstance.GetAttribute(), out Action<int> listeners)) {
             int param = (int) (attributeInstance.GetValue() * 1000);
 

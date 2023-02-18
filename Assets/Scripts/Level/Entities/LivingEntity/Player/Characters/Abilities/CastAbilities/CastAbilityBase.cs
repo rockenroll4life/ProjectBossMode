@@ -107,7 +107,7 @@ public abstract class CastAbilityBase : AbilityBase {
         }
     }
 
-    AttributeInstance GetCooldownAttribute () {
+    IAttributeInstance GetCooldownAttribute () {
         return owner.GetAttribute(Player.ABILITY_COOLDOWNS[GetAbilityID()]);
     }
 
