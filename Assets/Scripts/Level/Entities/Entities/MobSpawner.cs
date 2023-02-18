@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MobSpawner : Entity, Damageable {
@@ -10,6 +11,7 @@ public class MobSpawner : Entity, Damageable {
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
+    public override Type GetSystemType() => typeof(MobSpawner);
 
     public override bool IsDead() => health <= 0;
 

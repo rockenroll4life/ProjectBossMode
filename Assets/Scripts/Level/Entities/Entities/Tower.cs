@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Tower : Entity, Damageable {
@@ -5,6 +6,7 @@ public class Tower : Entity, Damageable {
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
+    public override Type GetSystemType() => typeof(Tower);
     public override bool IsDead() => health <= 0;
 
     protected override Color? GetHighlightColor() => Color.yellow;

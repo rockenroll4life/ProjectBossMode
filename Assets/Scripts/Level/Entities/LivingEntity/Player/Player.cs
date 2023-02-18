@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using RockUtils.GameEvents;
+using System;
 
 public abstract class Player : LivingEntity {
     public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
@@ -25,6 +26,8 @@ public abstract class Player : LivingEntity {
     protected float mana;
 
     public override EntityType GetEntityType() => EntityType.Player;
+    public override Type GetSystemType() => typeof(Player);
+
     public SpellIndicators GetSpellIndicators() => spellIndicators;
     protected AbilityManager GetAbilities() => abilities;
     public float GetMana() => mana;

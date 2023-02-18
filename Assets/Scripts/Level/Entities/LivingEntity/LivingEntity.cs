@@ -20,6 +20,7 @@ public abstract class LivingEntity : Entity, Damageable {
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.LivingEntity;
+    public override System.Type GetSystemType() => typeof(LivingEntity);
     public override bool IsDead() => health <= 0;
     public LivingEntity GetLastDamager() => lastDamager;
 

@@ -20,6 +20,7 @@ public abstract class Entity : MonoBehaviour {
     protected Guid entityID;
 
     public abstract EntityType GetEntityType();
+    public abstract Type GetSystemType();
     public abstract bool IsDead();
 
     public Guid GetEntityID() { return entityID; }

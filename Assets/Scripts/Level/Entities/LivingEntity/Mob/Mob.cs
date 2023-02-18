@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract class Mob : LivingEntity {
     protected GoalSelector goalSelector;
     public override EntityType GetEntityType() { return EntityType.Mob; }
+    public override Type GetSystemType() => typeof(Mob);
 
     protected override Color? GetHighlightColor() { return Color.red; }
     protected override Color? GetHighlightOutlineColor() { return Color.red; }
