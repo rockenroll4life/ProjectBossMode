@@ -48,11 +48,10 @@ public class EntityManager {
 
     void RemoveDeadEntities() {
         toRemove.ForEach(entity => {
-            entity.Breakdown();
-            
             entities.Remove(entity);
             entityDictionary[entity.GetSystemType()].Remove(entity);
 
+            entity.Breakdown();
             Object.Destroy(entity.gameObject);
         });
 

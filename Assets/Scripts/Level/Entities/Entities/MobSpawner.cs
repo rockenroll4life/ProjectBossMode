@@ -18,10 +18,6 @@ public class MobSpawner : Entity, IDamageable {
     protected override Color? GetHighlightColor() => Color.black;
     protected override Color? GetHighlightOutlineColor() => Color.black;
 
-    private void Start() {
-        Setup(FindObjectOfType<Level>());
-    }
-
     public override void Setup(Level level) {
         base.Setup(level);
 

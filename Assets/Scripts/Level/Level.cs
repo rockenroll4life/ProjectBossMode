@@ -7,6 +7,7 @@ public class Level : MonoBehaviour {
     //  TODO: [Rock]: We should make some type of data struct for holding important game objects for a given gamemode, probably a Scriptable Object
     public GameObject characterPrefab;
     public GameObject towerPrefab;
+    public GameObject mobSpawnerPrefab;
 
     public EntityManager GetEntityManager() => entities;
     public IGamemode GetGamemode() => gamemode;
