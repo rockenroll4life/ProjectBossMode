@@ -1,9 +1,13 @@
 public abstract class WorldEventBase : IWorldEvent {
-    readonly WorldEventSystem worldEventSystem;
+    readonly Level level;
 
-    public WorldEventBase(WorldEventSystem worldEventSystem) {
-        this.worldEventSystem = worldEventSystem;
+    public virtual bool TriggersOnStart() => false;
+
+    public WorldEventBase(Level level) {
+        this.level = level;
     }
 
     public abstract void TriggerEvent();
+
+    
 }

@@ -1,6 +1,5 @@
-- Implement World Event System. These are global events that can happen either at interval times or when a wave spawns
-- Implement Global Gamemode System. This system will house our wave spawning stuff, the global timer, and anything we need to know about the game we're playing
-- Make the gamemode track all the entities in the level so we can more easily find entities of the type(s) we want
+TODO
+- Enum Factories for Goals, and World Events
 - Implement Pet AI (Totems, Golems, etc)
 - Player Level System for stats and abilities
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
@@ -18,7 +17,6 @@
 - Multiplayer difficulty scaling
 - Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
 - Decouple Entities from GameObjects
-
 
 BUGS
 - Spell Indicators won't disappear for an ability if we go to press another ability that we don't have enough mana to cast

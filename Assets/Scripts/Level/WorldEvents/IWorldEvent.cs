@@ -1,3 +1,4 @@
 public interface IWorldEvent {
-    public abstract void TriggerEvent();
+    public bool TriggersOnStart();
+    public void TriggerEvent();
 }

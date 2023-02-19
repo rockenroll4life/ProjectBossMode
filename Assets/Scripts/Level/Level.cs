@@ -1,27 +1,26 @@
 using UnityEngine;
-using System.Linq;
-using RockUtils.GameEvents;
 
 public class Level : MonoBehaviour {
+    IGamemode gamemode;
     EntityManager entities;
-    WorldEventSystem worldEvents;
+
+    //  TODO: [Rock]: We should make some type of data struct for holding important game objects for a given gamemode, probably a Scriptable Object
+    public GameObject characterPrefab;
+    public GameObject towerPrefab;
 
     public EntityManager GetEntityManager() => entities;
-    public WorldEventSystem GetWorldEvents() => worldEvents;
+    public IGamemode GetGamemode() => gamemode;
+    public WorldEventSystem GetWorldEvents() => gamemode.GetWorldEvents();
 
     private void Start() {
-        worldEvents = new WorldEventSystem(this);
         entities = new EntityManager();
+        
+        gamemode = new HeroDefenseGamemode(this);
+        gamemode.Setup();
+    }
 
-        //  TODO: [Rock]: We'll want to setup the player spawning in the level and not in the player spawner. We probably don't even need it really...
-        //List<PlayerSpawner> playerSpawners = FindObjectsOfType<PlayerSpawner>().ToList();
-
-        //  Register Entities
-        Tower tower = FindObjectOfType<Tower>();
-        tower.Setup(this);
-
-        entities.RegisterEntity(tower);
-        entities.RegisterEntities(FindObjectsOfType<MobSpawner>().Cast<Entity>().ToList());
+    private void OnDisable() {
+        gamemode.Breakdown();
     }
 
     //  NOTE: [Rock]: We may want to move the spawning of entities into the EntityManager...hmmmm
