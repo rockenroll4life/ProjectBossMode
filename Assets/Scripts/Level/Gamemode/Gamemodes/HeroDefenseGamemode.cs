@@ -11,11 +11,10 @@ public class HeroDefenseGamemode : GamemodeBase {
         Level level = GetLevel();
 
         //  TODO: [Rock]: Eventually this will be multiplayer and we'll have to get this data from somewhere else...not sure where at the moment...
-        level.SpawnEntity(level.characterPrefab, Vector3.zero, Quaternion.identity);
-        level.SpawnEntity(level.towerPrefab, new Vector3(0, 1.73f, 4), Quaternion.identity);
+        PopulateNodes(GameplayNode.Type.PlayerSpawn, level.characterPrefab, Vector3.zero);
 
-        level.SpawnEntity(level.mobSpawnerPrefab, new Vector3(-5, 0, 20), Quaternion.identity);
-        level.SpawnEntity(level.mobSpawnerPrefab, new Vector3(5, 0, 20), Quaternion.identity);
+        PopulateNodes(GameplayNode.Type.Tower, level.towerPrefab, new Vector3(0, 1.73f, 4));
+        PopulateNodes(GameplayNode.Type.MobSpawner, level.mobSpawnerPrefab, Vector3.zero);
 
         GetWorldEvents().onEntityKilled += EntityDestroyed;
     }

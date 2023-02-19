@@ -1,5 +1,4 @@
 TODO
-- Enum Factories for Goals, and World Events
 - Implement Pet AI (Totems, Golems, etc)
 - Player Level System for stats and abilities
 - Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
@@ -20,6 +19,7 @@ TODO
 
 MAYBE
 - Investigate into how to best take advantage of Scriptable Object variables to decouple our classes some
+- Enum Factories for Goals, and World Events
 
 BUGS
 - Spell Indicators won't disappear for an ability if we go to press another ability that we don't have enough mana to cast

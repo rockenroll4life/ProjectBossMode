@@ -3,6 +3,7 @@ using UnityEngine;
 public class Level : MonoBehaviour {
     IGamemode gamemode;
     EntityManager entities;
+    GameplayNodeManager gameplayNodes;
 
     //  TODO: [Rock]: We should make some type of data struct for holding important game objects for a given gamemode, probably a Scriptable Object
     public GameObject characterPrefab;
@@ -12,10 +13,14 @@ public class Level : MonoBehaviour {
     public EntityManager GetEntityManager() => entities;
     public IGamemode GetGamemode() => gamemode;
     public WorldEventSystem GetWorldEvents() => gamemode.GetWorldEvents();
+    public GameplayNodeManager GetGameplayNodes() => gameplayNodes;
 
     private void Start() {
         entities = new EntityManager();
-        
+
+        gameplayNodes = new GameplayNodeManager();
+        gameplayNodes.Setup();
+
         gamemode = new HeroDefenseGamemode(this);
         gamemode.Setup();
     }
