@@ -18,6 +18,9 @@ TODO
 - Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
 - Decouple Entities from GameObjects
 
+MAYBE
+- Investigate into how to best take advantage of Scriptable Object variables to decouple our classes some
+
 BUGS
 - Spell Indicators won't disappear for an ability if we go to press another ability that we don't have enough mana to cast
 - Spell Indicators won't disappear when Channel or Toggle abilities are pressed

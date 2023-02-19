@@ -12,7 +12,7 @@ public class GameplayUI : MonoBehaviour {
         _COUNT = 2
     }
     
-    [System.Serializable]
+    [Serializable]
     public class ResourceBar {
         public Image barFill;
         public Text currentText;
