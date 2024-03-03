@@ -44,7 +44,6 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     protected virtual void RegisterComponents() {
         statusEffects = new StatusEffectManager(this);
-        locomotion = new Locomotion(this);
     }
 
     protected virtual void UnregisterComponents() { }

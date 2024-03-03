@@ -45,8 +45,11 @@ public abstract class Player : LivingEntity {
 
         abilities = new AbilityManager(this);
         RegisterAbilities();
-        
-        targeter = new PlayerTargeter(this);
+
+        //locomotion = new MouseLocomotion(this);
+        locomotion = new KeyboardLocomotion(this);
+
+        targeter = new PlayerMouseTargeter(this);
         spellIndicators = new SpellIndicators(this);
 
         ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();

@@ -161,11 +161,11 @@ public class InputManager : MonoBehaviour {
         //  Keyboard Input
         foreach (KeyValuePair<KeyCode, int> key in instance.inputDictionary) {
             if (Input.GetKeyDown(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key);
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key, (int) key.Key);
             } else if (Input.GetKeyUp(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Released + (int) key.Key);
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Released + (int) key.Key, (int) key.Key);
             } else if (Input.GetKey(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Held + (int) key.Key);
+                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Held + (int) key.Key, (int) key.Key);
             }
         }
 

@@ -1,17 +1,17 @@
 using UnityEngine;
 using RockUtils.GameEvents;
 
-public class PlayerTargeter : TargeterBase {
+public class PlayerMouseTargeter : TargeterBase {
     RaycastHit hit;
     TargetType hitType = TargetType.None;
 
-    public PlayerTargeter(LivingEntity owner)
+    public PlayerMouseTargeter(LivingEntity owner)
         : base(owner) {
         EventManager.StartListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
         EventManager.StartListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
     }
 
-    ~PlayerTargeter() {
+    ~PlayerMouseTargeter() {
         EventManager.StopListening((int) GameEvents.Mouse_Left_Press, SelectTarget);
         EventManager.StopListening((int) GameEvents.Mouse_Left_Held, UpdateMoveLocation);
     }

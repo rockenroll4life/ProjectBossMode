@@ -28,7 +28,7 @@ public class GameplayUI : MonoBehaviour {
     public static Vector3 auraRotation;
 
     //  TODO: [Rock]: Support rebinding keys
-    readonly KeyCode[] defaultKeybindings = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.T };
+    readonly KeyCode[] defaultKeybindings = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
 
     public void Setup(Player owner, AbilityManager abilityManager) {
         this.owner = owner;
