@@ -58,8 +58,6 @@ public class KeyboardLocomotion : Locomotion {
         if (key == KeyCode.D) {
             horizontalInput.y = 1;
         }
-
-        Debug.Log("Input Key: " + ((KeyCode) param).ToString());
     }
 
     void InputReleased(int param) {
@@ -80,6 +78,15 @@ public class KeyboardLocomotion : Locomotion {
         }
     }
 
+    protected override void UpdateRotation() {
+        base.UpdateRotation();
+
+        Vector3 lookDir = GetLookingDirection();
+        if (lookDir != Vector3.zero) {
+            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(GetLookingDirection()), ROTATION_SPEED * Time.deltaTime);
+        }
+    }
+
     protected override void UpdateMovement() {
         base.UpdateMovement();
 
@@ -88,6 +95,10 @@ public class KeyboardLocomotion : Locomotion {
     }
 
     protected override Vector3 GetLookingDirection() {
-        return Vector3.up;
+        if (IsMoving()) {
+            return new Vector3(horizontalInput.x + horizontalInput.y, 0, verticalInput.x + verticalInput.y);
+        } else {
+            return owner.transform.forward;
+        }
     }
 }

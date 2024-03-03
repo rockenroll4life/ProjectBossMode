@@ -63,7 +63,6 @@ namespace RockUtils {
                 //  If it's a keyboard button, we want to then add a dictionary entry into the input
                 int keyID = InputManager.GameEventToKeyCode(eventID);
                 if (keyID != -1) {
-                    Debug.Log(keyID);
                     InputManager.AddInputListener((KeyCode) keyID, listener);
                 }
             }
