@@ -3,16 +3,12 @@ using System;
 using RockUtils.GameEvents;
 
 public class GameplayUI : MonoBehaviour {
-    const float AURA_ROTATION_SPEED = 90f;
-
     private Player owner;
 
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
 
     //  TODO: [Rock]: Make the ability Buttons a prefab that we instantiate for each button
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
-
-    public static Vector3 auraRotation;
 
     //  TODO: [Rock]: Support rebinding keys
     readonly KeyCode[] defaultKeybindings = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
@@ -37,10 +33,6 @@ public class GameplayUI : MonoBehaviour {
        foreach(ResourceBar bar in bars) {
             bar.Breakdown();
         }
-    }
-
-    void Update() {
-        auraRotation.z -= AURA_ROTATION_SPEED * Time.deltaTime;
     }
 
     //  Abilities

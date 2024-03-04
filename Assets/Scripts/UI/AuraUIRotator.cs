@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AuraUIRotator : MonoBehaviour {
+    static readonly float AURA_ROTATION_SPEED = -90f;
+
     RectTransform rectTransform;
 
     void Awake() {
         rectTransform = GetComponent<RectTransform>();
-        rectTransform.rotation = Quaternion.Euler(GameplayUI.auraRotation);
     }
 
     void Update() {
-        rectTransform.rotation = Quaternion.Euler(GameplayUI.auraRotation);
+        rectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, AURA_ROTATION_SPEED * Time.realtimeSinceStartup));
     }
 }
