@@ -90,7 +90,18 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     protected virtual void RegisterAbilities() { }
 
-    //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails
+    public virtual bool CanApplyStatusEffect(StatusEffect effect) => true;
+
+    public void AddStatusEffect(StatusEffect effect) {
+        if (CanApplyStatusEffect(effect)) {
+            statusEffects.AddStatusEffect(effect);
+        }
+    }
+
+    public void RemoveStatusEffect(StatusEffect effect) {
+        statusEffects.RemoveStatusEffect(effect);
+    }
+
     public virtual void OnStatusEffectApplied(StatusEffect effect) { }
 
     public virtual void OnStatusEffectRemoved(StatusEffect effect) { }
