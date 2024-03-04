@@ -2,6 +2,14 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public abstract class LivingEntity : Entity, IDamageable {
+    public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY2_COOLDOWN = new("generic.ability2", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY3_COOLDOWN = new("generic.ability3", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ABILITY4_COOLDOWN = new("generic.ability4", 5, 0, float.MaxValue);
+    public static readonly RangedAttribute ULTIMATE_COOLDOWN = new("generic.ultimate", 5, 0, float.MaxValue);
+
+    public static readonly RangedAttribute[] ABILITY_COOLDOWNS = { ABILITY1_COOLDOWN, ABILITY2_COOLDOWN, ABILITY3_COOLDOWN, ABILITY4_COOLDOWN, ULTIMATE_COOLDOWN };
+
     public GameObject attackProjectilePrefab;
 
     protected StatusEffectManager statusEffects;
@@ -70,6 +78,12 @@ public abstract class LivingEntity : Entity, IDamageable {
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_SPEED);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_RANGE);
+
+        GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
+        GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
+        GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);
+        GetAttributes().RegisterAttribute(ABILITY4_COOLDOWN);
+        GetAttributes().RegisterAttribute(ULTIMATE_COOLDOWN);
 
         SetResource(ResourceType.Health, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
     }
