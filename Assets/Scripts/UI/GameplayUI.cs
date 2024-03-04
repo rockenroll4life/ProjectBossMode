@@ -26,14 +26,8 @@ public class GameplayUI : MonoBehaviour {
             abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum, defaultKeybindings[i]);
         }
 
-        bars[(int) ResourceType.Health].Setup(owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
-        bars[(int) ResourceType.Mana].Setup(owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
-
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Health_Changed, HealthChanged);
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.HEALTH_MAX, MaxHealthChanged);
-
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Mana_Changed, ManaChanged);
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MANA_MAX, MaxManaChanged);
+        bars[(int) ResourceType.Health].Setup(owner, LivingEntitySharedAttributes.HEALTH_MAX, GameEvents.Health_Changed, null);
+        bars[(int) ResourceType.Mana].Setup(owner, LivingEntitySharedAttributes.MANA_MAX, GameEvents.Mana_Changed, ManaValueChanged);
     }
 
     public void Breakdown() {
@@ -41,8 +35,9 @@ public class GameplayUI : MonoBehaviour {
             button.Breakdown();
         }
 
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Health_Changed, HealthChanged);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Mana_Changed, ManaChanged);
+       foreach(ResourceBar bar in bars) {
+            bar.Breakdown();
+        }
     }
 
     void Update() {
@@ -58,30 +53,7 @@ public class GameplayUI : MonoBehaviour {
         abilities[(int) buttonNum].keybindText.text = keybind;
     }
 
-    void HealthChanged(int param) {
-        bars[(int) ResourceType.Health].UpdateCurrentValue(owner.GetHealth());
-    }
-
-    void MaxHealthChanged(int param) {
-        float maxHealth = (int) (param / 1000f);
-        bars[(int) ResourceType.Health].UpdateMaxValue(maxHealth);
-    }
-
-    void ManaChanged(int param) {
-        float currentMana = owner.GetMana();
-        bars[(int) ResourceType.Mana].UpdateCurrentValue(currentMana);
-
-        foreach_AbilityButton(button => {
-            //  TODO: At the moment Abilities only accept mana...but we should make them able to consume any Resource (Mana, Health, etc)
-            button.notEnoughMana.gameObject.SetActive(currentMana < button.GetAbility().GetManaCost());
-        });
-    }
-
-    void MaxManaChanged(int param) {
-        float maxMana = (int) (param / 1000f);
-        bars[(int) ResourceType.Mana].UpdateMaxValue(maxMana);
-        float currentMana = bars[(int) ResourceType.Mana].Current();
-
+    void ManaValueChanged(float currentMana) {
         foreach_AbilityButton(button => {
             //  TODO: At the moment Abilities only accept mana...but we should make them able to consume any Resource (Mana, Health, etc)
             button.notEnoughMana.gameObject.SetActive(currentMana < button.GetAbility().GetManaCost());
