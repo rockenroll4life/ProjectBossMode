@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using RockUtils.GameEvents;
+using RockUtils.KeyCodeUtils;
 
 public class AbilityButton : MonoBehaviour {
     public Image icon;
@@ -63,6 +64,7 @@ public class AbilityButton : MonoBehaviour {
         //  Then, if we have a new keybind, update our kind and then start listening for it
         if (keybind != KeyCode.None) {
             this.keybind = keybind;
+            keybindText.text = KeyCodeUtils.ToCharacter(keybind);
             EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) this.keybind, AbilityPressed);
             EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) this.keybind, AbilityReleased);
             EventManager.StartListening((int) GameEvents.KeyboardButton_Held + (int) this.keybind, AbilityHeld);
