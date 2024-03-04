@@ -77,6 +77,7 @@
             //  Global Game Events
             //========================================================
             Game_Paused = 2000,
+            Keybindings_Changed = 2001,
         }
     }
 }

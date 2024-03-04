@@ -37,6 +37,7 @@ public class Settings : MonoBehaviour {
 
     void Setup() {
         keyBindings.Setup();
+        gameplaySettings.Setup();
         //  TODO: [Rock]: Load the settings
     }
 }

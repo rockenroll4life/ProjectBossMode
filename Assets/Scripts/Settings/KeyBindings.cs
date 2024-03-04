@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using RockUtils.GameEvents;
 
 public enum KeyBindingKeys {
     MoveUp,
@@ -36,6 +37,8 @@ public class KeyBindings {
 
     public void Setup() {
         //  TODO: [Rock]: Load the keybindings from our config
+
+        EventManager.TriggerEvent((int) GameEvents.Keybindings_Changed);
     }
 
 }

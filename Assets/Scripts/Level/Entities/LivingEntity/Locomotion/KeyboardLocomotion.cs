@@ -13,7 +13,9 @@ public class KeyboardLocomotion : Locomotion {
 
     public KeyboardLocomotion(LivingEntity owner)
         : base (owner) {
-        
+
+        EventManager.StartListening((int) GameEvents.Keybindings_Changed, KeyBindingsChanged);
+
         speed = owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue();
 
         keyBindings = new KeyCode[] {
@@ -134,5 +136,9 @@ public class KeyboardLocomotion : Locomotion {
 
     protected override void SpeedChanged(int param) {
         speed = param / 1000f;
+    }
+
+    void KeyBindingsChanged(int param) {
+        rotateTowardsMouse = Settings.GetGameplaySetting(GameplayOptions.RotateTowardsMouse) > 0;
     }
 }

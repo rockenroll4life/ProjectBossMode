@@ -21,6 +21,8 @@ public class AbilityButton : MonoBehaviour {
     bool channeling = false;
 
     public void Setup(LivingEntity player, AbilityBase ability, AbilityNum abilityID) {
+        EventManager.StartListening((int) GameEvents.Keybindings_Changed, KeyBindingsChanged);
+
         this.owner = player;
         this.ability = ability;
         this.abilityID = abilityID;
@@ -123,5 +125,9 @@ public class AbilityButton : MonoBehaviour {
     //  TODO: [Rock]: We now have access to the ability, just get the max Cooldown from it
     public void UpdateMaxCooldown(int param) {
         maxCooldown = param / 1000f;
+    }
+
+    void KeyBindingsChanged(int param) {
+        UpdateAbilityKeybind();
     }
 }
