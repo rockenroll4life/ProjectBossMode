@@ -13,7 +13,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     float attackTimer = 0;
 
     //  TODO: [Rock]: Replace with EntityData
-    protected float health;
+    float[] resources = new float[(int) ResourceType._COUNT];
 
     //  NOTE: [Rock]: This is LivingEntity for now...but not sure if we need to change this to Entity instead...
     LivingEntity lastDamager = null;
@@ -21,11 +21,14 @@ public abstract class LivingEntity : Entity, IDamageable {
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.LivingEntity;
     public override System.Type GetSystemType() => typeof(LivingEntity);
-    public override bool IsDead() => health <= 0;
+    public override bool IsDead() => GetResource(ResourceType.Health) <= 0;
     public LivingEntity GetLastDamager() => lastDamager;
 
     public ITargeter GetTargeter() => targeter;
     public Locomotion GetLocomotion() => locomotion;
+
+    public float GetResource(ResourceType type) => resources[(int) type];
+    public void SetResource(ResourceType type, float value) => resources[(int) type] = value;
 
     public override void Setup(Level level) {
         base.Setup(level);
@@ -63,7 +66,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_SPEED);
         GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_RANGE);
 
-        health = GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
+        SetResource(ResourceType.Health, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
     }
 
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails
@@ -83,12 +86,36 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected override void UpdateStep() {
         base.UpdateStep();
 
+        UpdateResources();
+
         if (attackTimer > 0) {
             attackTimer -= Time.deltaTime;
         } else {
             if (CanAttack()) {
                 Attack();
             }
+        }
+    }
+
+    void UpdateResources() {
+        //  Update Health
+        float health = GetResource(ResourceType.Health);
+        float oldHealth = health;
+        health += GetAttribute(LivingEntitySharedAttributes.HEALTH_REGEN_RATE).GetValue() * Time.deltaTime;
+        health = Mathf.Clamp(health, 0, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
+        SetResource(ResourceType.Health, health);
+        if (health != oldHealth) {
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
+        }
+
+        //  Update Mana
+        float mana = GetResource(ResourceType.Mana);
+        float oldMana = mana;
+        mana += GetAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE).GetValue() * Time.deltaTime;
+        mana = Mathf.Clamp(mana, 0, GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
+        SetResource(ResourceType.Mana, mana);
+        if (mana != oldMana) {
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
         }
     }
 
@@ -103,8 +130,6 @@ public abstract class LivingEntity : Entity, IDamageable {
     public IAttributeInstance GetAttribute(IAttribute attribute) {
         return GetAttributes().GetInstance(attribute);
     }
-
-    public float GetHealth() { return health; }
 
     protected virtual bool CanAttack() {
         if (attackTimer <= 0) {
@@ -127,13 +152,13 @@ public abstract class LivingEntity : Entity, IDamageable {
     }
 
     public void DealDamage(Entity damager, float damage) {
-        health -= damage;
+        SetResource(ResourceType.Health, GetResource(ResourceType.Health) - damage);
 
         if (damager is LivingEntity livingEntity) {
             lastDamager = livingEntity;
         }
 
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
-        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
+        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (GetResource(ResourceType.Health) * 1000));
     }
 }

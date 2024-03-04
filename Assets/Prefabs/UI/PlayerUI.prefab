@@ -3937,12 +3937,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bars:
-  - barFill: {fileID: 8359263236403550276}
-    currentText: {fileID: 8359263235277948312}
-    maxText: {fileID: 8359263236041951819}
   - barFill: {fileID: 8359263235284457232}
     currentText: {fileID: 8359263237177566417}
     maxText: {fileID: 8359263235806251397}
+  - barFill: {fileID: 8359263236403550276}
+    currentText: {fileID: 8359263235277948312}
+    maxText: {fileID: 8359263236041951819}
   abilities:
   - icon: {fileID: 8359263236520204752}
     cooldown: {fileID: 8359263235234893832}

@@ -12,9 +12,9 @@ public class TestCharacter1 : Player {
 
         //  Update any of the base attribute values for this character
         GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).SetBaseValue(500);
-        health = GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
+        SetResource(ResourceType.Health, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
 
         GetAttribute(LivingEntitySharedAttributes.MANA_MAX).SetBaseValue(100);
-        mana = GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
+        SetResource(ResourceType.Mana, GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
     }
 }

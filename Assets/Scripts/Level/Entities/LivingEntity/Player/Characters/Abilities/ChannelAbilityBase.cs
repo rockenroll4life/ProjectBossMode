@@ -29,13 +29,7 @@ public abstract class ChannelAbilityBase : AbilityBase {
         ResourceCost resourceCost = GetResourceCost();
         ResourceType resourceType = resourceCost.GetResourceType();
 
-        if (resourceType == ResourceType.Mana) {
-            return owner.GetMana() > resourceCost.GetCost(owner) * Time.deltaTime;
-        } else if (resourceType == ResourceType.Health) {
-            return owner.GetHealth() > resourceCost.GetCost(owner) * Time.deltaTime;
-        }
-
-        return false;
+        return owner.GetResource(resourceType) > resourceCost.GetCost(owner) * Time.deltaTime;
     }
 
     protected override void UseAbility() {

@@ -23,14 +23,11 @@ public abstract class Player : LivingEntity {
     public SpellIndicatorPrefabs spellIndicatorPrefabs;
     public AbilityTextures abilityTextures;
 
-    protected float mana;
-
     public override EntityType GetEntityType() => EntityType.Player;
     public override Type GetSystemType() => typeof(Player);
 
     public SpellIndicators GetSpellIndicators() => spellIndicators;
     public AbilityManager GetAbilities() => abilities;
-    public float GetMana() => mana;
 
     protected override Color? GetHighlightColor() => PLAYER_COLOR;
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
@@ -45,12 +42,13 @@ public abstract class Player : LivingEntity {
     public void UseResource(ResourceCost cost, float scaler = 1f) {
         ResourceType resourceType = cost.GetResourceType();
 
+        float value = Mathf.Max(GetResource(resourceType) - (cost.GetCost(this) * scaler), 0);
+        SetResource(resourceType, value);
+
         if (resourceType == ResourceType.Mana) {
-            mana = Mathf.Max(mana - (cost.GetCost(this) * scaler), 0);
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (value * 1000));
         } else if (resourceType == ResourceType.Health) {
-            health = Mathf.Max(health - (cost.GetCost(this) * scaler), 0);
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (value * 1000));
         }
     }
 
@@ -98,12 +96,5 @@ public abstract class Player : LivingEntity {
 
         abilities.Update();
         spellIndicators.Update();
-
-        float oldMana = mana;
-        mana += Time.deltaTime * GetAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE).GetValue();
-        mana = Mathf.Clamp(mana, 0, GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
-        if (mana != oldMana) {
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
-        }
     }
 }

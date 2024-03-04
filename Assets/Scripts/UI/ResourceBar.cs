@@ -36,7 +36,7 @@ public class ResourceBar {
         this.valueChangedGameEvent = valueChangedGameEvent;
         this.currentValueChangedDelegate = currentValueChangedDelegate;
 
-        float valueMax = owner.GetAttribute(maxValueAttribute).GetValue();
+        float valueMax = owner.GetResource(resourceType);//  owner.GetAttribute(maxValueAttribute).GetValue();
         UpdateMaxValue(valueMax);
         UpdateCurrentValue(valueMax);
 
@@ -65,14 +65,8 @@ public class ResourceBar {
         barFill.fillAmount = currentValue / maxValue;
     }
 
-    //  TODO: [Rock]: We shouldn't be asking the owner directly for it's health and mana, it should be changed via something and passed as
-    //  the param to make it generic, specially if we add additional bars
     void CurrentValueChanged(int param) {
-        if (valueChangedGameEvent == GameEvents.Health_Changed) {
-            UpdateCurrentValue(owner.GetHealth());
-        } else if (valueChangedGameEvent == GameEvents.Mana_Changed) {
-            UpdateCurrentValue(owner.GetMana());
-        }
+        UpdateCurrentValue(owner.GetResource(resourceType));
 
         if (currentValueChangedDelegate != null) {
             currentValueChangedDelegate(resourceType, currentValue);

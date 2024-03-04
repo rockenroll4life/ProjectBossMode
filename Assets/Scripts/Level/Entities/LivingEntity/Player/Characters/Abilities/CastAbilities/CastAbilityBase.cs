@@ -59,12 +59,7 @@ public abstract class CastAbilityBase : AbilityBase {
             ResourceCost resourceCost = GetResourceCost();
             ResourceType resourceType = resourceCost.GetResourceType();
 
-            //  TODO: [Rock]: I don't like this blob...
-            if (resourceType == ResourceType.Mana) {
-                return owner.GetMana() >= resourceCost.GetCost(owner);
-            } else if (resourceType == ResourceType.Health) {
-                return owner.GetHealth() >= resourceCost.GetCost(owner);
-            }
+            return owner.GetResource(resourceType) >= resourceCost.GetCost(owner);
         }
 
         return false;
