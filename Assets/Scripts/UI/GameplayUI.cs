@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-
-using RockUtils.GameEvents;
 using System;
+using RockUtils.GameEvents;
 
 public class GameplayUI : MonoBehaviour {
     const float AURA_ROTATION_SPEED = 90f;
 
-    Player owner;
+    private Player owner;
+
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
 
     //  TODO: [Rock]: Make the ability Buttons a prefab that we instantiate for each button
@@ -19,15 +19,14 @@ public class GameplayUI : MonoBehaviour {
 
     public void Setup(Player owner) {
         this.owner = owner;
-
         AbilityManager abilityManager = owner.GetAbilities();
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             AbilityNum abilityNum = (AbilityNum) i;
             abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum, defaultKeybindings[i]);
         }
 
-        bars[(int) ResourceType.Health].Setup(owner, LivingEntitySharedAttributes.HEALTH_MAX, GameEvents.Health_Changed, null);
-        bars[(int) ResourceType.Mana].Setup(owner, LivingEntitySharedAttributes.MANA_MAX, GameEvents.Mana_Changed, ManaValueChanged);
+        bars[(int) ResourceType.Health].Setup(owner, ResourceType.Health, LivingEntitySharedAttributes.HEALTH_MAX, GameEvents.Health_Changed, ResourceValueChanged);
+        bars[(int) ResourceType.Mana].Setup(owner, ResourceType.Mana, LivingEntitySharedAttributes.MANA_MAX, GameEvents.Mana_Changed, ResourceValueChanged);
     }
 
     public void Breakdown() {
@@ -53,16 +52,14 @@ public class GameplayUI : MonoBehaviour {
         abilities[(int) buttonNum].keybindText.text = keybind;
     }
 
-    void ManaValueChanged(float currentMana) {
-        foreach_AbilityButton(button => {
-            //  TODO: At the moment Abilities only accept mana...but we should make them able to consume any Resource (Mana, Health, etc)
-            button.notEnoughMana.gameObject.SetActive(currentMana < button.GetAbility().GetManaCost());
-        });
-    }
+    void ResourceValueChanged(ResourceType type, float currentValue) {
+        foreach (AbilityButton button in abilities) {
+            ResourceCost resourceCost = button.GetAbility().GetResourceCost();
+            ResourceType resourceType = resourceCost.GetResourceType();
 
-    void foreach_AbilityButton(Action<AbilityButton> lambda) {
-        foreach (AbilityButton ability in abilities) {
-            lambda(ability);
+            if (type == resourceType) {
+                button.notEnoughResource.gameObject.SetActive(currentValue < resourceCost.GetCost(owner));
+            }
         }
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 public class TestAOEAbility : AOEAbility {
     public TestAOEAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
+        cost = new ResourceCost(ResourceType.Mana, 30);
     }
 
     protected override string GetName() => "TestAOEAbility";
-    public override int GetManaCost() => 30;
     protected override float GetSpellRadius() => 6;
 
     protected override void CastAbility() {

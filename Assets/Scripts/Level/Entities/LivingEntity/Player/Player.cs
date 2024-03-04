@@ -41,9 +41,17 @@ public abstract class Player : LivingEntity {
         CameraMovement.SetCameraTarget(this);
     }
 
-    public void UseMana(float mana) {
-        this.mana = Mathf.Max(this.mana - mana, 0);
-        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
+    //  TODO: [Rock]: Remove this scaler and have the ResourceCost know it should scale it's value
+    public void UseResource(ResourceCost cost, float scaler = 1f) {
+        ResourceType resourceType = cost.GetResourceType();
+
+        if (resourceType == ResourceType.Mana) {
+            mana = Mathf.Max(mana - (cost.GetCost(this) * scaler), 0);
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
+        } else if (resourceType == ResourceType.Health) {
+            health = Mathf.Max(health - (cost.GetCost(this) * scaler), 0);
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
+        }
     }
 
     protected override void RegisterComponents() {
@@ -95,7 +103,7 @@ public abstract class Player : LivingEntity {
         mana += Time.deltaTime * GetAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE).GetValue();
         mana = Mathf.Clamp(mana, 0, GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
         if (mana != oldMana) {
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed);
+            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
         }
     }
 }

@@ -11,7 +11,6 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Cast;
-    public override int GetManaCost() => 10;
 
     protected override void RegisterEvents() {
         base.RegisterEvents();
@@ -53,7 +52,22 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected override bool CanUseAbility() {
-        return (cooldown == 0 && owner.GetMana() >= GetManaCost()) || canBypassCooldown();
+        if (canBypassCooldown())
+            return true;
+
+        if (cooldown == 0) {
+            ResourceCost resourceCost = GetResourceCost();
+            ResourceType resourceType = resourceCost.GetResourceType();
+
+            //  TODO: [Rock]: I don't like this blob...
+            if (resourceType == ResourceType.Mana) {
+                return owner.GetMana() >= resourceCost.GetCost(owner);
+            } else if (resourceType == ResourceType.Health) {
+                return owner.GetHealth() >= resourceCost.GetCost(owner);
+            }
+        }
+
+        return false;
     }
     protected override void UseAbility() {
         base.UseAbility();
@@ -71,7 +85,7 @@ public abstract class CastAbilityBase : AbilityBase {
 
     protected virtual void CastAbility() {
         cooldown = owner.GetAttribute(Player.ABILITY_COOLDOWNS[GetAbilityID()]).GetValue();
-        owner.UseMana(GetManaCost());
+        owner.UseResource(GetResourceCost());
     }
 
     public virtual void CooldownAttributeChanged(int param) {

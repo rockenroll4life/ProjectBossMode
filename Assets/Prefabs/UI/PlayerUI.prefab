@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 156731465839266637}
   - component: {fileID: 1953497893845131189}
   m_Layer: 5
-  m_Name: Not Enough Mana
+  m_Name: Not Enough Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2374050453012987423}
   - component: {fileID: 828800677763158261}
   m_Layer: 5
-  m_Name: Not Enough Mana
+  m_Name: Not Enough Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 8324341071890054534}
   - component: {fileID: 9052438029920967731}
   m_Layer: 5
-  m_Name: Not Enough Mana
+  m_Name: Not Enough Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3949,31 +3949,31 @@ MonoBehaviour:
     cooldownTimeText: {fileID: 8359263237231974332}
     keybindText: {fileID: 8359263237043222490}
     auraIcon: {fileID: 8182958991364294576}
-    notEnoughMana: {fileID: 9052438029920967731}
+    notEnoughResource: {fileID: 9052438029920967731}
   - icon: {fileID: 8182958989748638016}
     cooldown: {fileID: 8182958990768550857}
     cooldownTimeText: {fileID: 8182958990085759120}
     keybindText: {fileID: 8182958990913854071}
     auraIcon: {fileID: 8182958991076514040}
-    notEnoughMana: {fileID: 828800677763158261}
+    notEnoughResource: {fileID: 828800677763158261}
   - icon: {fileID: 8182958991311145593}
     cooldown: {fileID: 8182958990126002467}
     cooldownTimeText: {fileID: 8182958989990445771}
     keybindText: {fileID: 8182958990973134124}
     auraIcon: {fileID: 8182958990639717667}
-    notEnoughMana: {fileID: 1953497893845131189}
+    notEnoughResource: {fileID: 1953497893845131189}
   - icon: {fileID: 8182958989954886415}
     cooldown: {fileID: 8182958990997395910}
     cooldownTimeText: {fileID: 8182958989821054042}
     keybindText: {fileID: 8182958989777167668}
     auraIcon: {fileID: 8182958989966853111}
-    notEnoughMana: {fileID: 5155501533134394305}
+    notEnoughResource: {fileID: 5155501533134394305}
   - icon: {fileID: 8182958989552722862}
     cooldown: {fileID: 8182958991518267491}
     cooldownTimeText: {fileID: 8182958990231465589}
     keybindText: {fileID: 8182958991182808327}
     auraIcon: {fileID: 8182958991373157481}
-    notEnoughMana: {fileID: 6079269948769513832}
+    notEnoughResource: {fileID: 6079269948769513832}
 --- !u!1 &8359263236758381221
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,7 +4541,7 @@ GameObject:
   - component: {fileID: 3533585073148780505}
   - component: {fileID: 5155501533134394305}
   m_Layer: 5
-  m_Name: Not Enough Mana
+  m_Name: Not Enough Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4616,7 +4616,7 @@ GameObject:
   - component: {fileID: 3471233034706378415}
   - component: {fileID: 6079269948769513832}
   m_Layer: 5
-  m_Name: Not Enough Mana
+  m_Name: Not Enough Resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

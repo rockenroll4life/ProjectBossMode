@@ -9,7 +9,7 @@ public class AbilityButton {
     public Text cooldownTimeText;
     public Text keybindText;
     public Image auraIcon;
-    public Image notEnoughMana;
+    public Image notEnoughResource;
 
     Player owner;
     AbilityBase ability;

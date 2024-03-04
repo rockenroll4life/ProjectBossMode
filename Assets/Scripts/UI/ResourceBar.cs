@@ -4,9 +4,9 @@ using UnityEngine.UI;
 using RockUtils.GameEvents;
 
 public enum ResourceType {
-    Health = 0,
-    Mana = 1,
-    _COUNT = 2
+    Mana,
+    Health,
+    _COUNT
 }
 
 [Serializable]
@@ -17,9 +17,10 @@ public class ResourceBar {
 
     //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
     Player owner;
+    ResourceType resourceType;
     IAttribute maxValueAttribute;
     GameEvents valueChangedGameEvent;
-    Action<float> currentValueChangedDelegate;
+    Action<ResourceType, float> currentValueChangedDelegate;
 
     float currentValue;
     float maxValue;
@@ -28,8 +29,9 @@ public class ResourceBar {
     public float Max() => maxValue;
 
     //  TODO: [Rock]: Owner should be able to be changed to LivingEntity, currently they don't have mana
-    public void Setup(Player owner, IAttribute maxValueAttribute, GameEvents valueChangedGameEvent, Action<float> currentValueChangedDelegate) {
+    public void Setup(Player owner, ResourceType resourceType, IAttribute maxValueAttribute, GameEvents valueChangedGameEvent, Action<ResourceType, float> currentValueChangedDelegate) {
         this.owner = owner;
+        this.resourceType = resourceType;
         this.maxValueAttribute = maxValueAttribute;
         this.valueChangedGameEvent = valueChangedGameEvent;
         this.currentValueChangedDelegate = currentValueChangedDelegate;
@@ -70,10 +72,10 @@ public class ResourceBar {
             UpdateCurrentValue(owner.GetHealth());
         } else if (valueChangedGameEvent == GameEvents.Mana_Changed) {
             UpdateCurrentValue(owner.GetMana());
-            
-            if (currentValueChangedDelegate != null) {
-                currentValueChangedDelegate(currentValue);
-            }
+        }
+
+        if (currentValueChangedDelegate != null) {
+            currentValueChangedDelegate(resourceType, currentValue);
         }
     }
 
@@ -82,7 +84,7 @@ public class ResourceBar {
         UpdateMaxValue(maxValue);
 
         if (currentValueChangedDelegate != null) {
-            currentValueChangedDelegate(currentValue);
+            currentValueChangedDelegate(resourceType, currentValue);
         }
     }
 }

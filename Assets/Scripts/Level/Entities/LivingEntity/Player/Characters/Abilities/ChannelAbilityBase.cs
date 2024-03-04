@@ -1,3 +1,4 @@
+using UnityEngine;
 using RockUtils.GameEvents;
 
 public abstract class ChannelAbilityBase : AbilityBase {
@@ -25,7 +26,22 @@ public abstract class ChannelAbilityBase : AbilityBase {
     }
 
     protected override bool CanUseAbility() {
-        return true;
+        ResourceCost resourceCost = GetResourceCost();
+        ResourceType resourceType = resourceCost.GetResourceType();
+
+        if (resourceType == ResourceType.Mana) {
+            return owner.GetMana() > resourceCost.GetCost(owner) * Time.deltaTime;
+        } else if (resourceType == ResourceType.Health) {
+            return owner.GetHealth() > resourceCost.GetCost(owner) * Time.deltaTime;
+        }
+
+        return false;
+    }
+
+    protected override void UseAbility() {
+        base.UseAbility();
+
+        owner.UseResource(GetResourceCost(), Time.deltaTime);
     }
 
     protected virtual void AbilityStart(int param) {

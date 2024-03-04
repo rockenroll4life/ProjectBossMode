@@ -4,11 +4,11 @@ using UnityEngine;
 public class TestConeAbility : ConeAbility {
     public TestConeAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
+        cost = new ResourceCost(ResourceType.Mana, 20);
     }
 
     protected override string GetName() =>"TestConeAbility";
     protected override bool InterruptsMovement() => true;
-    public override int GetManaCost() => 20;
     protected override float GetSpellAngle() => 180;
     protected override float GetSpellRadius() => 5;
 

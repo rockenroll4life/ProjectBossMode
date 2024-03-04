@@ -1,6 +1,7 @@
 ﻿public class TestAbility : ConeAbility {
     public TestAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
+        cost = new ResourceCost(ResourceType.Mana, 10);
     }
 
     protected override string GetName() =>"TestAbility";
