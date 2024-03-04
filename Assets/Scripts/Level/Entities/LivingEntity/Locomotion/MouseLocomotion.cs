@@ -8,6 +8,8 @@ public class MouseLocomotion : Locomotion {
     private Entity targetedEntity = null;
     private Vector3? targetedLocation = null;
 
+    public override MovementType GetMovementType() => MovementType.Mouse;
+
     public MouseLocomotion(LivingEntity owner)
         : base(owner) {
         agent = owner.GetComponent<NavMeshAgent>();

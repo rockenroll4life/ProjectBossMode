@@ -17,11 +17,14 @@ public abstract class Locomotion {
         this.owner = owner;
     }
 
+    public abstract MovementType GetMovementType();
+
     public abstract bool IsMoving();
 
     protected abstract Vector3 GetLookingDirection();
 
     public abstract void StopMovement();
+
 
     public virtual void Update() {
         UpdateRotation();

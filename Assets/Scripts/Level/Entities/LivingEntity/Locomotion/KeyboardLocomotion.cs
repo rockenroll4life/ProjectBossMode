@@ -5,7 +5,10 @@ public class KeyboardLocomotion : Locomotion {
     private Vector2 horizontalInput;
     private Vector2 verticalInput;
 
+    bool rotateTowardsMouse = true;
     float speed;
+
+    public override MovementType GetMovementType() => MovementType.Keyboard;
 
     public KeyboardLocomotion(LivingEntity owner)
         : base (owner) {
@@ -95,10 +98,28 @@ public class KeyboardLocomotion : Locomotion {
     }
 
     protected override Vector3 GetLookingDirection() {
-        if (IsMoving()) {
-            return new Vector3(horizontalInput.x + horizontalInput.y, 0, verticalInput.x + verticalInput.y);
+        if (rotateTowardsMouse) {
+            Vector3 mousePos = Input.mousePosition;
+            Plane plane = new Plane(Camera.main.transform.forward, owner.transform.position);
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            Vector3 direction = Vector3.forward;
+
+            float distance;
+            if (plane.Raycast(ray, out distance)) {
+                Vector3 worldPos = ray.GetPoint(distance);
+
+                direction = worldPos - owner.transform.position;
+                direction.y = 0;
+            }
+
+            return direction;
         } else {
-            return owner.transform.forward;
+            if (IsMoving()) {
+                return new Vector3(horizontalInput.x + horizontalInput.y, 0, verticalInput.x + verticalInput.y);
+            } else {
+                return owner.transform.forward;
+            }
         }
+
     }
 }

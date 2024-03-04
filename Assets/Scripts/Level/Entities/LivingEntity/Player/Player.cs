@@ -35,6 +35,12 @@ public abstract class Player : LivingEntity {
     protected override Color? GetHighlightColor() => PLAYER_COLOR;
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
 
+    public override void Setup(Level level) {
+        base.Setup(level);
+
+        CameraMovement.SetCameraTarget(this);
+    }
+
     public void UseMana(float mana) {
         this.mana = Mathf.Max(this.mana - mana, 0);
         EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
