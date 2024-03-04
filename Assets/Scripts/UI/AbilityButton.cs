@@ -2,8 +2,7 @@
 using UnityEngine.UI;
 using RockUtils.GameEvents;
 
-[System.Serializable]
-public class AbilityButton {
+public class AbilityButton : MonoBehaviour {
     public Image icon;
     public Image cooldown;
     public Text cooldownTimeText;

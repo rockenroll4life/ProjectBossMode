@@ -4,19 +4,18 @@ using UnityEngine.UI;
 using RockUtils.GameEvents;
 
 public enum ResourceType {
-    Mana,
     Health,
+    Mana,
     _COUNT
 }
 
-[Serializable]
-public class ResourceBar {
+public class ResourceBar : MonoBehaviour {
     public Image barFill;
     public Text currentText;
     public Text maxText;
 
     //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
-    Player owner;
+    LivingEntity owner;
     ResourceType resourceType;
     IAttribute maxValueAttribute;
     GameEvents valueChangedGameEvent;
@@ -28,8 +27,7 @@ public class ResourceBar {
     public float Current() => currentValue;
     public float Max() => maxValue;
 
-    //  TODO: [Rock]: Owner should be able to be changed to LivingEntity, currently they don't have mana
-    public void Setup(Player owner, ResourceType resourceType, IAttribute maxValueAttribute, GameEvents valueChangedGameEvent, Action<ResourceType, float> currentValueChangedDelegate) {
+    public void Setup(LivingEntity owner, ResourceType resourceType, IAttribute maxValueAttribute, GameEvents valueChangedGameEvent, Action<ResourceType, float> currentValueChangedDelegate) {
         this.owner = owner;
         this.resourceType = resourceType;
         this.maxValueAttribute = maxValueAttribute;
