@@ -78,6 +78,7 @@
             //========================================================
             Game_Paused = 2000,
             Keybindings_Changed = 2001,
+            GameplaySettings_Changed = 2002,
         }
     }
 }
