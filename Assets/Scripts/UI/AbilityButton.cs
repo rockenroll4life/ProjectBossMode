@@ -10,7 +10,7 @@ public class AbilityButton : MonoBehaviour {
     public Image auraIcon;
     public Image notEnoughResource;
 
-    Player owner;
+    LivingEntity owner;
     AbilityBase ability;
     AbilityNum abilityID = AbilityNum.NONE;
     KeyCode keybind = KeyCode.None;
@@ -18,7 +18,7 @@ public class AbilityButton : MonoBehaviour {
 
     bool channeling = false;
 
-    public void Setup(Player player, AbilityBase ability, AbilityNum abilityID, KeyCode keybind) {
+    public void Setup(LivingEntity player, AbilityBase ability, AbilityNum abilityID, KeyCode keybind) {
         this.owner = player;
         this.ability = ability;
         this.abilityID = abilityID;

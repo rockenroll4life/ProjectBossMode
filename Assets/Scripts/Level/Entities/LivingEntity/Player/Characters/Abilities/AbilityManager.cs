@@ -12,10 +12,10 @@ public struct AbilityTextures {
 }
 
 public class AbilityManager {
-    readonly Player owner;
+    readonly LivingEntity owner;
     readonly Dictionary<AbilityNum, AbilityBase> abilities = new();
 
-    public AbilityManager(Player owner) {
+    public AbilityManager(LivingEntity owner) {
         this.owner = owner;
     }
 

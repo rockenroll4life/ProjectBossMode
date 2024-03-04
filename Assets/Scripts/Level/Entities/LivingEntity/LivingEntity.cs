@@ -5,6 +5,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public GameObject attackProjectilePrefab;
 
     protected StatusEffectManager statusEffects;
+    protected AbilityManager abilities;
     protected Locomotion locomotion;
     protected EntityAnimator animator;
     protected ITargeter targeter;
@@ -26,6 +27,7 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     public ITargeter GetTargeter() => targeter;
     public Locomotion GetLocomotion() => locomotion;
+    public AbilityManager GetAbilities() => abilities;
 
     public float GetResource(ResourceType type) => resources[(int) type];
     public void SetResource(ResourceType type, float value) => resources[(int) type] = value;
@@ -47,6 +49,9 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     protected virtual void RegisterComponents() {
         statusEffects = new StatusEffectManager(this);
+
+        abilities = new AbilityManager(this);
+        RegisterAbilities();
     }
 
     protected virtual void UnregisterComponents() { }
@@ -69,6 +74,8 @@ public abstract class LivingEntity : Entity, IDamageable {
         SetResource(ResourceType.Health, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
     }
 
+    protected virtual void RegisterAbilities() { }
+
     //  TODO: [Rock]: We need support for entities to be able to say 'nah' to status effects and the applying fails
     public virtual void OnStatusEffectApplied(StatusEffect effect) { }
 
@@ -87,6 +94,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         base.UpdateStep();
 
         UpdateResources();
+        abilities.Update();
 
         if (attackTimer > 0) {
             attackTimer -= Time.deltaTime;

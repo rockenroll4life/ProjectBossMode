@@ -16,7 +16,6 @@ public abstract class Player : LivingEntity {
     public GameObject UIPrefab;
 
     GameplayUI ui;
-    AbilityManager abilities;
     SpellIndicators spellIndicators;
 
     //  Character related Prefabs and Textures
@@ -27,7 +26,6 @@ public abstract class Player : LivingEntity {
     public override Type GetSystemType() => typeof(Player);
 
     public SpellIndicators GetSpellIndicators() => spellIndicators;
-    public AbilityManager GetAbilities() => abilities;
 
     protected override Color? GetHighlightColor() => PLAYER_COLOR;
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
@@ -55,9 +53,6 @@ public abstract class Player : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
-        abilities = new AbilityManager(this);
-        RegisterAbilities();
-
         //locomotion = new MouseLocomotion(this);
         locomotion = new KeyboardLocomotion(this);
 
@@ -69,8 +64,6 @@ public abstract class Player : LivingEntity {
 
         animator = new LivingEntityAnimator(this);
     }
-
-    protected abstract void RegisterAbilities();
 
     protected override void UnregisterComponents() {
         base.UnregisterComponents();
@@ -94,7 +87,6 @@ public abstract class Player : LivingEntity {
     protected override void UpdateStep() {
         base.UpdateStep();
 
-        abilities.Update();
         spellIndicators.Update();
     }
 }

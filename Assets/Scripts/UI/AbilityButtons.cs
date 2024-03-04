@@ -1,12 +1,11 @@
 using UnityEngine;
 
 public class AbilityButtons : MonoBehaviour {
-    Player owner;
+    LivingEntity owner;
 
-    //  TODO: [Rock]: Make the ability Buttons a prefab that we instantiate for each button
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
 
-    public void Setup(Player owner, KeyCode[] defaultKeybindings) {
+    public void Setup(LivingEntity owner, KeyCode[] defaultKeybindings) {
         this.owner = owner;
 
         AbilityManager abilityManager = owner.GetAbilities();

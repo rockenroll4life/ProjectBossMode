@@ -11,7 +11,7 @@ public class ResourceCost {
         this.cost = cost;
     }
 
-    public int GetCost(Player owner) {
+    public int GetCost(LivingEntity owner) {
         //  TODO: [Rock]: Incorporate mana cost reduction from attributes
         return cost;
     }
