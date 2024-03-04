@@ -15,6 +15,8 @@ public abstract class Locomotion {
 
     public Locomotion(LivingEntity owner) {
         this.owner = owner;
+
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MOVEMENT_SPEED, SpeedChanged);
     }
 
     public abstract MovementType GetMovementType();
@@ -34,4 +36,6 @@ public abstract class Locomotion {
     protected virtual void UpdateRotation() { }
 
     protected virtual void UpdateMovement() { }
+
+    protected abstract void SpeedChanged(int param);
 }

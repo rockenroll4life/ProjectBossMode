@@ -79,6 +79,7 @@ public class GameplayUI : MonoBehaviour {
         abilities[(int) buttonNum].keybindText.text = keybind;
     }
 
+    //  TODO: [Rock]: Update the maxHealth to just use the param value instead of fetching the value (param / 1000)
     void HealthChanged(int param) {
         //  TODO: [Rock]: Once we have Entity Data to store things such as health we'll pull from that data.
         float currentHealth = owner.GetHealth();
@@ -87,6 +88,7 @@ public class GameplayUI : MonoBehaviour {
         UpdateBar(ResourceType.Health, currentHealth, maxHealth);
     }
 
+    //  TODO: [Rock]: Update the maxMana to just use the param value instead of fetching the value (param / 1000)
     void ManaChanged(int param) {
         float currentMana = owner.GetMana();
         float maxMana = owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();

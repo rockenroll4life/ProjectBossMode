@@ -15,27 +15,28 @@ public class KeyboardLocomotion : Locomotion {
 
         speed = owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue();
 
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.W, InputPressed);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.S, InputPressed);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.A, InputPressed);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.D, InputPressed);
-
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.W, InputReleased);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.S, InputReleased);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.A, InputReleased);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.D, InputReleased);
+        //  TODO: [Rock]: We will want to store these keys as an array eventually once we implement a keybinding system.
+        ButtonStartListening(KeyCode.W);
+        ButtonStartListening(KeyCode.S);
+        ButtonStartListening(KeyCode.A);
+        ButtonStartListening(KeyCode.D);
     }
 
     ~KeyboardLocomotion() {
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.W, InputPressed);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.S, InputPressed);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.A, InputPressed);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.D, InputPressed);
-        
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.W, InputReleased);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.S, InputReleased);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.A, InputReleased);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) KeyCode.D, InputReleased);
+        ButtonStopListening(KeyCode.W);
+        ButtonStopListening(KeyCode.S);
+        ButtonStopListening(KeyCode.A);
+        ButtonStopListening(KeyCode.D);
+    }
+
+    void ButtonStartListening(KeyCode key) {
+        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
+        EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) key, InputReleased);
+    }
+
+    void ButtonStopListening(KeyCode key) {
+        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
+        EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) key, InputReleased);
     }
 
     public override bool IsMoving() {
@@ -121,5 +122,9 @@ public class KeyboardLocomotion : Locomotion {
             }
         }
 
+    }
+
+    protected override void SpeedChanged(int param) {
+        speed = param / 1000f;
     }
 }

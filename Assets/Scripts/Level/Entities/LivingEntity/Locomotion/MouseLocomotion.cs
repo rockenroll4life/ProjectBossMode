@@ -80,4 +80,8 @@ public class MouseLocomotion : Locomotion {
         agent.stoppingDistance = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
         MoveToLocation(targetedEntity.transform.position);
     }
+
+    protected override void SpeedChanged(int param) {
+        agent.speed = param / 1000f;
+    }
 }
