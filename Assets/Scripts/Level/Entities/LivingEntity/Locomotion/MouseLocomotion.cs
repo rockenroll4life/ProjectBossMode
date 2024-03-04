@@ -3,15 +3,19 @@ using UnityEngine.AI;
 using RockUtils.GameEvents;
 
 public class MouseLocomotion : Locomotion {
-    private NavMeshAgent agent;
+    private readonly NavMeshAgent agent;
 
     private Entity targetedEntity = null;
     private Vector3? targetedLocation = null;
+    private float attackRange;
 
     public override MovementType GetMovementType() => MovementType.Mouse;
 
     public MouseLocomotion(LivingEntity owner)
         : base(owner) {
+        attackRange = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.ATTACK_RANGE, AttackRangeChanged);
+
         agent = owner.GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.speed = owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue();
@@ -55,9 +59,7 @@ public class MouseLocomotion : Locomotion {
     protected override void UpdateMovement() {
         base.UpdateMovement();
 
-        //  TODO: [Rock]: Think of a way we can optimize this instead of it checking every frame
         if (targetedEntity) {
-            float attackRange = owner.GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
             if ((targetedEntity.transform.position - owner.transform.position).sqrMagnitude > (attackRange * attackRange)) {
                 MoveToLocation(targetedEntity.transform.position);
             }
@@ -83,5 +85,9 @@ public class MouseLocomotion : Locomotion {
 
     protected override void SpeedChanged(int param) {
         agent.speed = param / 1000f;
+    }
+
+    void AttackRangeChanged(int param) {
+        attackRange = param / 1000f;
     }
 }
