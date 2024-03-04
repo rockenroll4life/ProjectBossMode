@@ -29,7 +29,7 @@ public abstract class Player : LivingEntity {
     public override Type GetSystemType() => typeof(Player);
 
     public SpellIndicators GetSpellIndicators() => spellIndicators;
-    protected AbilityManager GetAbilities() => abilities;
+    public AbilityManager GetAbilities() => abilities;
     public float GetMana() => mana;
 
     protected override Color? GetHighlightColor() => PLAYER_COLOR;
@@ -59,7 +59,7 @@ public abstract class Player : LivingEntity {
         spellIndicators = new SpellIndicators(this);
 
         ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();
-        ui.Setup(this, abilities);
+        ui.Setup(this);
 
         animator = new LivingEntityAnimator(this);
     }

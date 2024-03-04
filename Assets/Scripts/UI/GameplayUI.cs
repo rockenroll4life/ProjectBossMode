@@ -1,23 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+
 using RockUtils.GameEvents;
 using System;
 
 public class GameplayUI : MonoBehaviour {
     const float AURA_ROTATION_SPEED = 90f;
-
-    public enum ResourceType {
-        Health = 0,
-        Mana = 1,
-        _COUNT = 2
-    }
-    
-    [Serializable]
-    public class ResourceBar {
-        public Image barFill;
-        public Text currentText;
-        public Text maxText;
-    }
 
     Player owner;
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
@@ -30,25 +17,23 @@ public class GameplayUI : MonoBehaviour {
     //  TODO: [Rock]: Support rebinding keys
     readonly KeyCode[] defaultKeybindings = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5 };
 
-    public void Setup(Player owner, AbilityManager abilityManager) {
+    public void Setup(Player owner) {
         this.owner = owner;
 
+        AbilityManager abilityManager = owner.GetAbilities();
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             AbilityNum abilityNum = (AbilityNum) i;
             abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum, defaultKeybindings[i]);
         }
 
-        int healthMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
-        UpdateBar(ResourceType.Health, healthMax, healthMax);
-
-        int manaMax = (int) owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
-        UpdateBar(ResourceType.Mana, manaMax, manaMax);
+        bars[(int) ResourceType.Health].Setup(owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
+        bars[(int) ResourceType.Mana].Setup(owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
 
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Health_Changed, HealthChanged);
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.HEALTH_MAX, HealthChanged);
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.HEALTH_MAX, MaxHealthChanged);
 
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Mana_Changed, ManaChanged);
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MANA_MAX, ManaChanged);
+        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MANA_MAX, MaxManaChanged);
     }
 
     public void Breakdown() {
@@ -57,17 +42,11 @@ public class GameplayUI : MonoBehaviour {
         }
 
         EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Health_Changed, HealthChanged);
+        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Mana_Changed, ManaChanged);
     }
 
     void Update() {
         auraRotation.z -= AURA_ROTATION_SPEED * Time.deltaTime;
-    }
-
-    //  Health / Resource Bars
-    public void UpdateBar(ResourceType type, float current, float max) {
-        bars[(int) type].currentText.text = ((int) current).ToString();
-        bars[(int) type].maxText.text = ((int) max).ToString();
-        bars[(int) type].barFill.fillAmount = current / max;
     }
 
     //  Abilities
@@ -79,23 +58,32 @@ public class GameplayUI : MonoBehaviour {
         abilities[(int) buttonNum].keybindText.text = keybind;
     }
 
-    //  TODO: [Rock]: Update the maxHealth to just use the param value instead of fetching the value (param / 1000)
     void HealthChanged(int param) {
-        //  TODO: [Rock]: Once we have Entity Data to store things such as health we'll pull from that data.
-        float currentHealth = owner.GetHealth();
-        float maxHealth = owner.GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue();
-
-        UpdateBar(ResourceType.Health, currentHealth, maxHealth);
+        bars[(int) ResourceType.Health].UpdateCurrentValue(owner.GetHealth());
     }
 
-    //  TODO: [Rock]: Update the maxMana to just use the param value instead of fetching the value (param / 1000)
+    void MaxHealthChanged(int param) {
+        float maxHealth = (int) (param / 1000f);
+        bars[(int) ResourceType.Health].UpdateMaxValue(maxHealth);
+    }
+
     void ManaChanged(int param) {
         float currentMana = owner.GetMana();
-        float maxMana = owner.GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue();
-
-        UpdateBar(ResourceType.Mana, currentMana, maxMana);
+        bars[(int) ResourceType.Mana].UpdateCurrentValue(currentMana);
 
         foreach_AbilityButton(button => {
+            //  TODO: At the moment Abilities only accept mana...but we should make them able to consume any Resource (Mana, Health, etc)
+            button.notEnoughMana.gameObject.SetActive(currentMana < button.GetAbility().GetManaCost());
+        });
+    }
+
+    void MaxManaChanged(int param) {
+        float maxMana = (int) (param / 1000f);
+        bars[(int) ResourceType.Mana].UpdateMaxValue(maxMana);
+        float currentMana = bars[(int) ResourceType.Mana].Current();
+
+        foreach_AbilityButton(button => {
+            //  TODO: At the moment Abilities only accept mana...but we should make them able to consume any Resource (Mana, Health, etc)
             button.notEnoughMana.gameObject.SetActive(currentMana < button.GetAbility().GetManaCost());
         });
     }
