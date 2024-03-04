@@ -4,6 +4,7 @@ public class Settings : MonoBehaviour {
     static Settings instance;
 
     readonly KeyBindings keyBindings = new KeyBindings();
+    readonly GameplaySettings gameplaySettings = new GameplaySettings();
 
     public static Settings Instance {
         get {
@@ -20,6 +21,7 @@ public class Settings : MonoBehaviour {
     }
 
     public static KeyCode GetKeyBinding(KeyBindingKeys key) => Instance.keyBindings.GetKeyBinding(key);
+    public static int GetGameplaySetting(GameplayOptions option) => Instance.gameplaySettings.GetGameplaySetting(option);
 
     private void Awake() {
         if (instance == null) {

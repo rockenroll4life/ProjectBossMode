@@ -17,7 +17,7 @@ public enum KeyBindingKeys {
 }
 
 public class KeyBindings {
-    static readonly Dictionary<KeyBindingKeys, KeyCode> DEFAULT_BINDINGS = new Dictionary<KeyBindingKeys, KeyCode>() {
+    static readonly Dictionary<KeyBindingKeys, KeyCode> DEFAULT_BINDINGS = new() {
         { KeyBindingKeys.MoveUp, KeyCode.W },
         { KeyBindingKeys.MoveDown, KeyCode.S },
         { KeyBindingKeys.MoveLeft, KeyCode.A },
@@ -31,12 +31,11 @@ public class KeyBindings {
     };
 
     readonly Dictionary<KeyBindingKeys, KeyCode> bindings = new(DEFAULT_BINDINGS);
+    
+    public KeyCode GetKeyBinding(KeyBindingKeys keyBindingKey) => bindings[keyBindingKey];
 
     public void Setup() {
         //  TODO: [Rock]: Load the keybindings from our config
     }
 
-    public KeyCode GetKeyBinding(KeyBindingKeys keyBindingKey) {
-        return bindings[keyBindingKey];
-    }
 }

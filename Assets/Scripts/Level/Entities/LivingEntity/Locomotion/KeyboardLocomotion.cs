@@ -5,8 +5,8 @@ public class KeyboardLocomotion : Locomotion {
     private Vector2 horizontalInput;
     private Vector2 verticalInput;
 
-    KeyCode[] keyBindings;
-    bool rotateTowardsMouse = true;
+    readonly KeyCode[] keyBindings;
+    bool rotateTowardsMouse;
     float speed;
 
     public override MovementType GetMovementType() => MovementType.Keyboard;
@@ -22,6 +22,8 @@ public class KeyboardLocomotion : Locomotion {
             Settings.GetKeyBinding(KeyBindingKeys.MoveLeft),
             Settings.GetKeyBinding(KeyBindingKeys.MoveRight)
         };
+
+        rotateTowardsMouse = Settings.GetGameplaySetting(GameplayOptions.RotateTowardsMouse) > 0;
 
         foreach (KeyCode key in keyBindings) {
             ButtonStartListening(key);
