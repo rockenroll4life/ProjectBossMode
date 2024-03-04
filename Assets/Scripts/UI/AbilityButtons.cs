@@ -5,13 +5,13 @@ public class AbilityButtons : MonoBehaviour {
 
     public AbilityButton[] abilities = new AbilityButton[(int) AbilityNum._COUNT];
 
-    public void Setup(LivingEntity owner, KeyCode[] defaultKeybindings) {
+    public void Setup(LivingEntity owner) {
         this.owner = owner;
 
         AbilityManager abilityManager = owner.GetAbilities();
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             AbilityNum abilityNum = (AbilityNum) i;
-            abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum, defaultKeybindings[i]);
+            abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum);
         }
     }
 

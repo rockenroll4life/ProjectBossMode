@@ -475,6 +475,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8359263236350629992}
     m_Modifications:
+    - target: {fileID: 4260673806268866964, guid: a71c16ee58a99ee49833c31bc094dcbf,
+        type: 3}
+      propertyPath: bindingKey
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5886631573670406060, guid: a71c16ee58a99ee49833c31bc094dcbf,
         type: 3}
       propertyPath: m_Name
@@ -611,6 +616,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8359263236350629992}
     m_Modifications:
+    - target: {fileID: 4260673806268866964, guid: a71c16ee58a99ee49833c31bc094dcbf,
+        type: 3}
+      propertyPath: bindingKey
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5886631573670406060, guid: a71c16ee58a99ee49833c31bc094dcbf,
         type: 3}
       propertyPath: m_Name
@@ -903,6 +913,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8359263236350629992}
     m_Modifications:
+    - target: {fileID: 4260673806268866964, guid: a71c16ee58a99ee49833c31bc094dcbf,
+        type: 3}
+      propertyPath: bindingKey
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5886631573670406060, guid: a71c16ee58a99ee49833c31bc094dcbf,
         type: 3}
       propertyPath: m_Name
@@ -1039,6 +1054,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8359263236350629992}
     m_Modifications:
+    - target: {fileID: 4260673806268866964, guid: a71c16ee58a99ee49833c31bc094dcbf,
+        type: 3}
+      propertyPath: bindingKey
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5886631573670406060, guid: a71c16ee58a99ee49833c31bc094dcbf,
         type: 3}
       propertyPath: m_Name
@@ -1175,6 +1195,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8359263236350629992}
     m_Modifications:
+    - target: {fileID: 4260673806268866964, guid: a71c16ee58a99ee49833c31bc094dcbf,
+        type: 3}
+      propertyPath: bindingKey
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5886631573670406060, guid: a71c16ee58a99ee49833c31bc094dcbf,
         type: 3}
       propertyPath: m_Name

@@ -4,6 +4,7 @@ using RockUtils.GameEvents;
 using RockUtils.KeyCodeUtils;
 
 public class AbilityButton : MonoBehaviour {
+    public KeyBindingKeys bindingKey;
     public Image icon;
     public Image cooldown;
     public Text cooldownTimeText;
@@ -19,19 +20,19 @@ public class AbilityButton : MonoBehaviour {
 
     bool channeling = false;
 
-    public void Setup(LivingEntity player, AbilityBase ability, AbilityNum abilityID, KeyCode keybind) {
+    public void Setup(LivingEntity player, AbilityBase ability, AbilityNum abilityID) {
         this.owner = player;
         this.ability = ability;
         this.abilityID = abilityID;
         RegisterEvents();
-        UpdateAbilityKeybind(keybind);
+        UpdateAbilityKeybind();
     }
 
     public AbilityBase GetAbility() => ability;
 
     public void Breakdown() {
         UnregisterEvents();
-        UpdateAbilityKeybind(KeyCode.None);
+        UpdateAbilityKeybind();
     }
 
     void RegisterEvents() {
@@ -50,24 +51,23 @@ public class AbilityButton : MonoBehaviour {
         EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
-    void UpdateAbilityKeybind(KeyCode keybind) {
-        //  TODO: [Rock]: When we add support for Release and Held for buttons, add support for ability to listen for that as well
-
+    void UpdateAbilityKeybind() {
         //  If we have a previous Keybind, stop listening for it
-        if (this.keybind != KeyCode.None) {
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) this.keybind, AbilityPressed);
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) this.keybind, AbilityReleased);
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Held + (int) this.keybind, AbilityHeld);
-            this.keybind = KeyCode.None;
+        if (keybind != KeyCode.None) {
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
+            EventManager.StopListening((int) GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
+            keybind = KeyCode.None;
+            keybindText.text = "";
         }
 
         //  Then, if we have a new keybind, update our kind and then start listening for it
+        keybind = Settings.GetKeyBinding(bindingKey);
         if (keybind != KeyCode.None) {
-            this.keybind = keybind;
             keybindText.text = KeyCodeUtils.ToCharacter(keybind);
-            EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) this.keybind, AbilityPressed);
-            EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) this.keybind, AbilityReleased);
-            EventManager.StartListening((int) GameEvents.KeyboardButton_Held + (int) this.keybind, AbilityHeld);
+            EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
+            EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
+            EventManager.StartListening((int) GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
         }
     }
 

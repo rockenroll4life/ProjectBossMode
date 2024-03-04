@@ -5,6 +5,7 @@ public class KeyboardLocomotion : Locomotion {
     private Vector2 horizontalInput;
     private Vector2 verticalInput;
 
+    KeyCode[] keyBindings;
     bool rotateTowardsMouse = true;
     float speed;
 
@@ -12,21 +13,25 @@ public class KeyboardLocomotion : Locomotion {
 
     public KeyboardLocomotion(LivingEntity owner)
         : base (owner) {
-
+        
         speed = owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue();
 
-        //  TODO: [Rock]: We will want to store these keys as an array eventually once we implement a keybinding system.
-        ButtonStartListening(KeyCode.W);
-        ButtonStartListening(KeyCode.S);
-        ButtonStartListening(KeyCode.A);
-        ButtonStartListening(KeyCode.D);
+        keyBindings = new KeyCode[] {
+            Settings.GetKeyBinding(KeyBindingKeys.MoveUp),
+            Settings.GetKeyBinding(KeyBindingKeys.MoveDown),
+            Settings.GetKeyBinding(KeyBindingKeys.MoveLeft),
+            Settings.GetKeyBinding(KeyBindingKeys.MoveRight)
+        };
+
+        foreach (KeyCode key in keyBindings) {
+            ButtonStartListening(key);
+        }
     }
 
     ~KeyboardLocomotion() {
-        ButtonStopListening(KeyCode.W);
-        ButtonStopListening(KeyCode.S);
-        ButtonStopListening(KeyCode.A);
-        ButtonStopListening(KeyCode.D);
+        foreach (KeyCode key in keyBindings) {
+            ButtonStopListening(key);
+        }
     }
 
     void ButtonStartListening(KeyCode key) {
@@ -50,16 +55,17 @@ public class KeyboardLocomotion : Locomotion {
     void InputPressed(int param) {
         KeyCode key = (KeyCode) param;
 
-        if (key == KeyCode.W) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveUp]) {
             verticalInput.x = 1;
-        } if (key == KeyCode.S) {
+        }
+        if (key == keyBindings[(int) KeyBindingKeys.MoveDown]) {
             verticalInput.y = -1;
         }
 
-        if (key == KeyCode.A) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveLeft]) {
             horizontalInput.x = -1;
         }
-        if (key == KeyCode.D) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveRight]) {
             horizontalInput.y = 1;
         }
     }
@@ -67,17 +73,17 @@ public class KeyboardLocomotion : Locomotion {
     void InputReleased(int param) {
         KeyCode key = (KeyCode) param;
 
-        if (key == KeyCode.W) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveUp]) {
             verticalInput.x = 0;
         }
-        if (key == KeyCode.S) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveDown]) {
             verticalInput.y = 0;
         }
 
-        if (key == KeyCode.A) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveLeft]) {
             horizontalInput.x = 0;
         }
-        if (key == KeyCode.D) {
+        if (key == keyBindings[(int) KeyBindingKeys.MoveRight]) {
             horizontalInput.y = 0;
         }
     }

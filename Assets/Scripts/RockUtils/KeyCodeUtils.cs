@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -299,6 +299,11 @@ namespace RockUtils {
                     case KeyCode.Alpha8:
                     case KeyCode.Alpha9:
                         return $"{key - KeyCode.Alpha0}";
+
+                    case KeyCode.UpArrow:       return "↑";
+                    case KeyCode.DownArrow:     return "↓";
+                    case KeyCode.LeftArrow:     return "←";
+                    case KeyCode.RightArrow:    return "→";
                     default:
                         return key.ToString();
                 }
