@@ -64,7 +64,8 @@ public class InputManager : MonoBehaviour {
             _instance = this;
             _instance.Init();
             DontDestroyOnLoad(gameObject);
-        } else {
+        } else if (_instance != this) {
+            Debug.LogWarning("Duplicate instance of InputManager found. Destroying this instance.");
             Destroy(gameObject);
         }
     }
