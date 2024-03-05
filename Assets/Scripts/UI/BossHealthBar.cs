@@ -3,22 +3,26 @@ using UnityEngine.UI;
 using RockUtils.GameEvents;
 
 public class BossHealthBar : MonoBehaviour {
-    public TMPro.TextMeshProUGUI name;
+    public TMPro.TextMeshProUGUI entityName;
     public Image fillBar;
     
-    LivingEntity target = null;
+    System.Guid entityID;
 
     float currentHealth, maxHealth;
 
     public void Setup(LivingEntity target) {
         EventManager.StartListening(target.GetEntityID(), GameEvents.Health_Changed, HealthChanged);
 
-        this.target = target;
+        entityID = target.GetEntityID();
 
-        name.text = target.name;
+        entityName.text = target.name;
 
         currentHealth = target.GetResource(ResourceType.Health);
         maxHealth = target.GetAttribute(AttributeTypes.HealthMax).GetValue();
+    }
+
+    private void OnDestroy() {
+        EventManager.StopListening(entityID, GameEvents.Health_Changed, HealthChanged);
     }
 
     void HealthChanged(int param) {
