@@ -6,8 +6,9 @@ public class ResourceBars : MonoBehaviour {
     public ResourceBar[] bars = new ResourceBar[(int) ResourceType._COUNT];
 
     public void Setup(LivingEntity owner, Action<ResourceType, float> resourceValueChangedDelegate) {
-        bars[(int) ResourceType.Health].Setup(owner, ResourceType.Health, LivingEntitySharedAttributes.HEALTH_MAX, GameEvents.Health_Changed, resourceValueChangedDelegate);
-        bars[(int) ResourceType.Mana].Setup(owner, ResourceType.Mana, LivingEntitySharedAttributes.MANA_MAX, GameEvents.Mana_Changed, resourceValueChangedDelegate);
+        //  TODO: [Rock]: Update Setup to just take in the attribute enum instead of the attribute
+        bars[(int) ResourceType.Health].Setup(owner, ResourceType.Health, Attributes.Get(AttributeTypes.HealthMax), GameEvents.Health_Changed, resourceValueChangedDelegate);
+        bars[(int) ResourceType.Mana].Setup(owner, ResourceType.Mana, Attributes.Get(AttributeTypes.ManaMax), GameEvents.Mana_Changed, resourceValueChangedDelegate);
     }
 
     public void Breakdown() {

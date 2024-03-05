@@ -39,7 +39,7 @@ public class ResourceBar : MonoBehaviour {
         UpdateCurrentValue(valueMax);
 
         EventManager.StartListening(owner.GetEntityID(), (int) valueChangedGameEvent, CurrentValueChanged);
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.HEALTH_MAX, MaxValueChanged);
+        owner.GetAttributes().RegisterListener(Attributes.Get(AttributeTypes.HealthMax), MaxValueChanged);
     }
 
     public void Breakdown() {

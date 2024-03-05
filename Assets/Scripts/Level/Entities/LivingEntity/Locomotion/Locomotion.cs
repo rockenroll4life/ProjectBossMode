@@ -16,7 +16,7 @@ public abstract class Locomotion {
     public Locomotion(LivingEntity owner) {
         this.owner = owner;
 
-        owner.GetAttributes().RegisterListener(LivingEntitySharedAttributes.MOVEMENT_SPEED, SpeedChanged);
+        owner.GetAttributes().RegisterListener(Attributes.Get(AttributeTypes.MovementSpeed), SpeedChanged);
     }
 
     public abstract MovementType GetMovementType();

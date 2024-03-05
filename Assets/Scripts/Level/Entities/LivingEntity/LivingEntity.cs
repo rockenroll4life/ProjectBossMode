@@ -67,17 +67,17 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected virtual void RegisterAttributes() {
         //  These are the base attributes that every entity has, only register attributes here that everyone will have (Even if we set them to a value
         //  of 0 in the actual entity themselves.
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.HEALTH_MAX);
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.HEALTH_REGEN_RATE);
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.HealthMax));
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.HealthRegenRate));
 
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MANA_MAX);
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE);
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.ManaMax));
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.ManaRegenRate));
 
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED);
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.MovementSpeed));
 
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE);
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_SPEED);
-        GetAttributes().RegisterAttribute(LivingEntitySharedAttributes.ATTACK_RANGE);
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.AttackDamage));
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.AttackSpeed));
+        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.AttackRange));
 
         GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
         GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
@@ -85,7 +85,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         GetAttributes().RegisterAttribute(ABILITY4_COOLDOWN);
         GetAttributes().RegisterAttribute(ULTIMATE_COOLDOWN);
 
-        SetResource(ResourceType.Health, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
+        SetResource(ResourceType.Health, GetAttribute(Attributes.Get(AttributeTypes.HealthMax)).GetValue());
     }
 
     protected virtual void RegisterAbilities() { }
@@ -134,8 +134,8 @@ public abstract class LivingEntity : Entity, IDamageable {
         //  Update Health
         float health = GetResource(ResourceType.Health);
         float oldHealth = health;
-        health += GetAttribute(LivingEntitySharedAttributes.HEALTH_REGEN_RATE).GetValue() * Time.deltaTime;
-        health = Mathf.Clamp(health, 0, GetAttribute(LivingEntitySharedAttributes.HEALTH_MAX).GetValue());
+        health += GetAttribute(Attributes.Get(AttributeTypes.HealthRegenRate)).GetValue() * Time.deltaTime;
+        health = Mathf.Clamp(health, 0, GetAttribute(Attributes.Get(AttributeTypes.HealthMax)).GetValue());
         SetResource(ResourceType.Health, health);
         if (health != oldHealth) {
             EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
@@ -144,8 +144,8 @@ public abstract class LivingEntity : Entity, IDamageable {
         //  Update Mana
         float mana = GetResource(ResourceType.Mana);
         float oldMana = mana;
-        mana += GetAttribute(LivingEntitySharedAttributes.MANA_REGEN_RATE).GetValue() * Time.deltaTime;
-        mana = Mathf.Clamp(mana, 0, GetAttribute(LivingEntitySharedAttributes.MANA_MAX).GetValue());
+        mana += GetAttribute(Attributes.Get(AttributeTypes.HealthRegenRate)).GetValue() * Time.deltaTime;
+        mana = Mathf.Clamp(mana, 0, GetAttribute(Attributes.Get(AttributeTypes.ManaMax)).GetValue());
         SetResource(ResourceType.Mana, mana);
         if (mana != oldMana) {
             EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
@@ -168,7 +168,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         if (attackTimer <= 0) {
             IDamageable target = targeter.GetTargetedEntity();
             if (target != null && target.GetEntity() != null) {
-                float attackRange = GetAttribute(LivingEntitySharedAttributes.ATTACK_RANGE).GetValue();
+                float attackRange = GetAttribute(Attributes.Get(AttributeTypes.AttackRange)).GetValue();
                 return (target.GetEntity().transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);
             }
         }
@@ -177,11 +177,11 @@ public abstract class LivingEntity : Entity, IDamageable {
     }
 
     protected virtual void Attack() {
-        attackTimer = GetAttribute(LivingEntitySharedAttributes.ATTACK_SPEED).GetValue();
+        attackTimer = GetAttribute(Attributes.Get(AttributeTypes.AttackSpeed)).GetValue();
 
         Vector3 offset = (transform.forward * 1) + Vector3.up;
         Projectile proj = Instantiate(attackProjectilePrefab, transform.position + offset, transform.rotation).GetComponent<Projectile>();
-        proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(LivingEntitySharedAttributes.ATTACK_DAMAGE).GetValue());
+        proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(Attributes.Get(AttributeTypes.AttackDamage)).GetValue());
     }
 
     public void DealDamage(Entity damager, float damage) {
