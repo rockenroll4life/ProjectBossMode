@@ -12,6 +12,12 @@ public enum AttributeTypes {
     AttackDamage,
     AttackSpeed,
     AttackRange,
+
+    Ability1Cooldown,
+    Ability2Cooldown,
+    Ability3Cooldown,
+    Ability4Cooldown,
+    UltimateCooldown,
 }
 
 public class Attributes {
@@ -27,7 +33,13 @@ public class Attributes {
 
         { AttributeTypes.AttackDamage, new("generic.attackDamage", 25, 0, float.MaxValue) },
         { AttributeTypes.AttackSpeed, new("generic.attackSpeed", 3, 0, float.MaxValue) },
-        { AttributeTypes.AttackRange, new("generic.attackRange", 5, 0, float.MaxValue) }
+        { AttributeTypes.AttackRange, new("generic.attackRange", 5, 0, float.MaxValue) },
+
+        { AttributeTypes.Ability1Cooldown, new("generic.ability1", 5, 0, float.MaxValue) },
+        { AttributeTypes.Ability2Cooldown, new("generic.ability2", 5, 0, float.MaxValue) },
+        { AttributeTypes.Ability3Cooldown, new("generic.ability3", 5, 0, float.MaxValue) },
+        { AttributeTypes.Ability4Cooldown, new("generic.ability4", 5, 0, float.MaxValue) },
+        { AttributeTypes.UltimateCooldown, new("generic.ultimate", 5, 0, float.MaxValue) },
     };
 
     public static RangedAttribute Get(AttributeTypes type) => attribute[type];

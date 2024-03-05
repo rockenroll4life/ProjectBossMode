@@ -11,10 +11,10 @@ public class TestCharacter1 : Player {
         base.RegisterAttributes();
 
         //  Update any of the base attribute values for this character
-        GetAttribute(Attributes.Get(AttributeTypes.HealthMax)).SetBaseValue(500);
-        SetResource(ResourceType.Health, GetAttribute(Attributes.Get(AttributeTypes.HealthMax)).GetValue());
+        GetAttribute(AttributeTypes.HealthMax).SetBaseValue(500);
+        SetResource(ResourceType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
 
-        GetAttribute(Attributes.Get(AttributeTypes.ManaMax)).SetBaseValue(100);
-        SetResource(ResourceType.Mana, GetAttribute(Attributes.Get(AttributeTypes.ManaMax)).GetValue());
+        GetAttribute(AttributeTypes.ManaMax).SetBaseValue(100);
+        SetResource(ResourceType.Mana, GetAttribute(AttributeTypes.ManaMax).GetValue());
     }
 }

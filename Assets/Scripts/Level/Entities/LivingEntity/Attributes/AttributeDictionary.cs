@@ -11,24 +11,27 @@ public class AttributeDictionary {
         this.owner = owner;
     }
 
-    public IAttributeInstance RegisterAttribute(IAttribute attribute) {
-        if (attributeDictionary.ContainsKey(attribute)) {
-            Debug.LogError(attribute.GetName() + " is already registered!");
+    public IAttributeInstance RegisterAttribute(AttributeTypes attribute) {
+        IAttribute iAttribute = Attributes.Get(attribute);
+        if (attributeDictionary.ContainsKey(iAttribute)) {
+            Debug.LogError(iAttribute.GetName() + " is already registered!");
         }
         
-        IAttributeInstance instance = CreateAttributeInstance(attribute);
-        attributeDictionary.Add(attribute, instance);
+        IAttributeInstance instance = CreateAttributeInstance(iAttribute);
+        attributeDictionary.Add(iAttribute, instance);
 
         return instance;
     }
 
-    public void RegisterListener(IAttribute attribute, Action<int> listener) {
-        if (attributeListeners.TryGetValue(attribute, out Action<int> listeners)) {
+    public void RegisterListener(AttributeTypes attribute, Action<int> listener) {
+        IAttribute iattribute = Attributes.Get(attribute);
+
+        if (attributeListeners.TryGetValue(iattribute, out Action<int> listeners)) {
             listeners += listener;
-            attributeListeners[attribute] = listeners;
+            attributeListeners[iattribute] = listeners;
         } else {
             listeners += listener;
-            attributeListeners.Add(attribute, listeners);
+            attributeListeners.Add(iattribute, listeners);
         }
     }
 

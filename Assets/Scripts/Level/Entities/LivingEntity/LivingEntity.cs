@@ -2,13 +2,8 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public abstract class LivingEntity : Entity, IDamageable {
-    public static readonly RangedAttribute ABILITY1_COOLDOWN = new("generic.ability1", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY2_COOLDOWN = new("generic.ability2", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY3_COOLDOWN = new("generic.ability3", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ABILITY4_COOLDOWN = new("generic.ability4", 5, 0, float.MaxValue);
-    public static readonly RangedAttribute ULTIMATE_COOLDOWN = new("generic.ultimate", 5, 0, float.MaxValue);
-
-    public static readonly RangedAttribute[] ABILITY_COOLDOWNS = { ABILITY1_COOLDOWN, ABILITY2_COOLDOWN, ABILITY3_COOLDOWN, ABILITY4_COOLDOWN, ULTIMATE_COOLDOWN };
+    public static readonly AttributeTypes[] ABILITY_COOLDOWNS =
+        { AttributeTypes.Ability1Cooldown, AttributeTypes.Ability2Cooldown, AttributeTypes.Ability3Cooldown, AttributeTypes.Ability4Cooldown, AttributeTypes.UltimateCooldown };
 
     public GameObject attackProjectilePrefab;
 
@@ -67,25 +62,25 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected virtual void RegisterAttributes() {
         //  These are the base attributes that every entity has, only register attributes here that everyone will have (Even if we set them to a value
         //  of 0 in the actual entity themselves.
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.HealthMax));
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.HealthRegenRate));
+        GetAttributes().RegisterAttribute(AttributeTypes.HealthMax);
+        GetAttributes().RegisterAttribute(AttributeTypes.HealthRegenRate);
 
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.ManaMax));
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.ManaRegenRate));
+        GetAttributes().RegisterAttribute(AttributeTypes.ManaMax);
+        GetAttributes().RegisterAttribute(AttributeTypes.ManaRegenRate);
 
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.MovementSpeed));
+        GetAttributes().RegisterAttribute(AttributeTypes.MovementSpeed);
 
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.AttackDamage));
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.AttackSpeed));
-        GetAttributes().RegisterAttribute(Attributes.Get(AttributeTypes.AttackRange));
+        GetAttributes().RegisterAttribute(AttributeTypes.AttackDamage);
+        GetAttributes().RegisterAttribute(AttributeTypes.AttackSpeed);
+        GetAttributes().RegisterAttribute(AttributeTypes.AttackRange);
 
-        GetAttributes().RegisterAttribute(ABILITY1_COOLDOWN);
-        GetAttributes().RegisterAttribute(ABILITY2_COOLDOWN);
-        GetAttributes().RegisterAttribute(ABILITY3_COOLDOWN);
-        GetAttributes().RegisterAttribute(ABILITY4_COOLDOWN);
-        GetAttributes().RegisterAttribute(ULTIMATE_COOLDOWN);
+        GetAttributes().RegisterAttribute(AttributeTypes.Ability1Cooldown);
+        GetAttributes().RegisterAttribute(AttributeTypes.Ability2Cooldown);
+        GetAttributes().RegisterAttribute(AttributeTypes.Ability3Cooldown);
+        GetAttributes().RegisterAttribute(AttributeTypes.Ability4Cooldown);
+        GetAttributes().RegisterAttribute(AttributeTypes.UltimateCooldown);
 
-        SetResource(ResourceType.Health, GetAttribute(Attributes.Get(AttributeTypes.HealthMax)).GetValue());
+        SetResource(ResourceType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
     }
 
     protected virtual void RegisterAbilities() { }
@@ -134,8 +129,8 @@ public abstract class LivingEntity : Entity, IDamageable {
         //  Update Health
         float health = GetResource(ResourceType.Health);
         float oldHealth = health;
-        health += GetAttribute(Attributes.Get(AttributeTypes.HealthRegenRate)).GetValue() * Time.deltaTime;
-        health = Mathf.Clamp(health, 0, GetAttribute(Attributes.Get(AttributeTypes.HealthMax)).GetValue());
+        health += GetAttribute(AttributeTypes.HealthRegenRate).GetValue() * Time.deltaTime;
+        health = Mathf.Clamp(health, 0, GetAttribute(AttributeTypes.HealthMax).GetValue());
         SetResource(ResourceType.Health, health);
         if (health != oldHealth) {
             EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
@@ -144,8 +139,8 @@ public abstract class LivingEntity : Entity, IDamageable {
         //  Update Mana
         float mana = GetResource(ResourceType.Mana);
         float oldMana = mana;
-        mana += GetAttribute(Attributes.Get(AttributeTypes.HealthRegenRate)).GetValue() * Time.deltaTime;
-        mana = Mathf.Clamp(mana, 0, GetAttribute(Attributes.Get(AttributeTypes.ManaMax)).GetValue());
+        mana += GetAttribute(AttributeTypes.HealthRegenRate).GetValue() * Time.deltaTime;
+        mana = Mathf.Clamp(mana, 0, GetAttribute(AttributeTypes.ManaMax).GetValue());
         SetResource(ResourceType.Mana, mana);
         if (mana != oldMana) {
             EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
@@ -160,15 +155,15 @@ public abstract class LivingEntity : Entity, IDamageable {
         return attributes;
     }
 
-    public IAttributeInstance GetAttribute(IAttribute attribute) {
-        return GetAttributes().GetInstance(attribute);
+    public IAttributeInstance GetAttribute(AttributeTypes attribute) {
+        return GetAttributes().GetInstance(Attributes.Get(attribute));
     }
 
     protected virtual bool CanAttack() {
         if (attackTimer <= 0) {
             IDamageable target = targeter.GetTargetedEntity();
             if (target != null && target.GetEntity() != null) {
-                float attackRange = GetAttribute(Attributes.Get(AttributeTypes.AttackRange)).GetValue();
+                float attackRange = GetAttribute(AttributeTypes.AttackRange).GetValue();
                 return (target.GetEntity().transform.position - transform.position).sqrMagnitude <= (attackRange * attackRange);
             }
         }
@@ -177,11 +172,11 @@ public abstract class LivingEntity : Entity, IDamageable {
     }
 
     protected virtual void Attack() {
-        attackTimer = GetAttribute(Attributes.Get(AttributeTypes.AttackSpeed)).GetValue();
+        attackTimer = GetAttribute(AttributeTypes.AttackSpeed).GetValue();
 
         Vector3 offset = (transform.forward * 1) + Vector3.up;
         Projectile proj = Instantiate(attackProjectilePrefab, transform.position + offset, transform.rotation).GetComponent<Projectile>();
-        proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(Attributes.Get(AttributeTypes.AttackDamage)).GetValue());
+        proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(AttributeTypes.AttackDamage).GetValue());
     }
 
     public void DealDamage(Entity damager, float damage) {

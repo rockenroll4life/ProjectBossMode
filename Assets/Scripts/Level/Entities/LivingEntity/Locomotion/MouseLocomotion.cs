@@ -13,12 +13,12 @@ public class MouseLocomotion : Locomotion {
 
     public MouseLocomotion(LivingEntity owner)
         : base(owner) {
-        attackRange = owner.GetAttribute(Attributes.Get(AttributeTypes.AttackRange)).GetValue();
-        owner.GetAttributes().RegisterListener(Attributes.Get(AttributeTypes.AttackRange), AttackRangeChanged);
+        attackRange = owner.GetAttribute(AttributeTypes.AttackRange).GetValue();
+        owner.GetAttributes().RegisterListener(AttributeTypes.AttackRange, AttackRangeChanged);
 
         agent = owner.GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
-        agent.speed = owner.GetAttribute(Attributes.Get(AttributeTypes.MovementSpeed)).GetValue();
+        agent.speed = owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue();
 
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, TargetedWorld);
         EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, TargetedEntity);
@@ -79,7 +79,7 @@ public class MouseLocomotion : Locomotion {
     protected virtual void TargetedEntity(int param) {
         targetedEntity = owner.GetTargeter().GetTargetedEntity().GetEntity();
 
-        agent.stoppingDistance = owner.GetAttribute(Attributes.Get(AttributeTypes.AttackRange)).GetValue();
+        agent.stoppingDistance = owner.GetAttribute(AttributeTypes.AttackRange).GetValue();
         MoveToLocation(targetedEntity.transform.position);
     }
 

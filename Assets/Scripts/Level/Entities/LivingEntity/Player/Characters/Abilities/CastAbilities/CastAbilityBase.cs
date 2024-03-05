@@ -47,8 +47,8 @@ public abstract class CastAbilityBase : AbilityBase {
     protected override void RegisterAttributes() {
         base.RegisterAttributes();
 
-        owner.GetAttributes().RegisterListener(GetCooldownAttribute().GetAttribute(), CooldownAttributeChanged);
-        CooldownAttributeChanged((int) (GetCooldownAttribute().GetValue() * 1000));
+        owner.GetAttributes().RegisterListener(GetCooldownAttribute(), CooldownAttributeChanged);
+        CooldownAttributeChanged((int) (owner.GetAttribute(GetCooldownAttribute()).GetValue() * 1000));
     }
 
     protected override bool CanUseAbility() {
@@ -116,8 +116,8 @@ public abstract class CastAbilityBase : AbilityBase {
         }
     }
 
-    IAttributeInstance GetCooldownAttribute () {
-        return owner.GetAttribute(Player.ABILITY_COOLDOWNS[GetAbilityID()]);
+    AttributeTypes GetCooldownAttribute () {
+        return Player.ABILITY_COOLDOWNS[GetAbilityID()];
     }
 
     protected abstract List<Entity> GetEntitiesHitByAbility(int layerMask);

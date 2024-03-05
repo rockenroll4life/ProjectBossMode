@@ -10,6 +10,6 @@ public class TestMob : Mob {
     protected override void RegisterAttributes() {
         base.RegisterAttributes();
 
-        GetAttribute(Attributes.Get(AttributeTypes.MovementSpeed)).SetBaseValue(3f);
+        GetAttribute(AttributeTypes.MovementSpeed).SetBaseValue(3f);
     }
 }

@@ -17,7 +17,7 @@ public class KeyboardLocomotion : Locomotion {
         EventManager.StartListening((int) GameEvents.Keybindings_Changed, KeyBindingsChanged);
         EventManager.StartListening((int) GameEvents.GameplaySettings_Changed, GameplaySettingsChanged);
 
-        speed = owner.GetAttribute(Attributes.Get(AttributeTypes.MovementSpeed)).GetValue();
+        speed = owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue();
 
         keyBindings[(int) KeyBindingKeys.MoveUp] = Settings.GetKeyBinding(KeyBindingKeys.MoveUp);
         keyBindings[(int) KeyBindingKeys.MoveDown] = Settings.GetKeyBinding(KeyBindingKeys.MoveDown);

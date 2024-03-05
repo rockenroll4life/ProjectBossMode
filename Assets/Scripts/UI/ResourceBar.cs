@@ -17,7 +17,6 @@ public class ResourceBar : MonoBehaviour {
     //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
     LivingEntity owner;
     ResourceType resourceType;
-    IAttribute maxValueAttribute;
     GameEvents valueChangedGameEvent;
     Action<ResourceType, float> currentValueChangedDelegate;
 
@@ -27,19 +26,18 @@ public class ResourceBar : MonoBehaviour {
     public float Current() => currentValue;
     public float Max() => maxValue;
 
-    public void Setup(LivingEntity owner, ResourceType resourceType, IAttribute maxValueAttribute, GameEvents valueChangedGameEvent, Action<ResourceType, float> currentValueChangedDelegate) {
+    public void Setup(LivingEntity owner, ResourceType resourceType, AttributeTypes maxValueAttribute, GameEvents valueChangedGameEvent, Action<ResourceType, float> currentValueChangedDelegate) {
         this.owner = owner;
         this.resourceType = resourceType;
-        this.maxValueAttribute = maxValueAttribute;
         this.valueChangedGameEvent = valueChangedGameEvent;
         this.currentValueChangedDelegate = currentValueChangedDelegate;
 
-        float valueMax = owner.GetResource(resourceType);//  owner.GetAttribute(maxValueAttribute).GetValue();
+        float valueMax = owner.GetAttribute(maxValueAttribute).GetValue();
         UpdateMaxValue(valueMax);
         UpdateCurrentValue(valueMax);
 
         EventManager.StartListening(owner.GetEntityID(), (int) valueChangedGameEvent, CurrentValueChanged);
-        owner.GetAttributes().RegisterListener(Attributes.Get(AttributeTypes.HealthMax), MaxValueChanged);
+        owner.GetAttributes().RegisterListener(AttributeTypes.HealthMax, MaxValueChanged);
     }
 
     public void Breakdown() {
