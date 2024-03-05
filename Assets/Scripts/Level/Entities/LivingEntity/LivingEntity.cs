@@ -133,7 +133,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         health = Mathf.Clamp(health, 0, GetAttribute(AttributeTypes.HealthMax).GetValue());
         SetResource(ResourceType.Health, health);
         if (health != oldHealth) {
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (health * 1000));
+            EventManager.TriggerEvent(GetEntityID(), GameEvents.Health_Changed, (int) (health * 1000));
         }
 
         //  Update Mana
@@ -143,7 +143,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         mana = Mathf.Clamp(mana, 0, GetAttribute(AttributeTypes.ManaMax).GetValue());
         SetResource(ResourceType.Mana, mana);
         if (mana != oldMana) {
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (mana * 1000));
+            EventManager.TriggerEvent(GetEntityID(), GameEvents.Mana_Changed, (int) (mana * 1000));
         }
     }
 
@@ -186,7 +186,7 @@ public abstract class LivingEntity : Entity, IDamageable {
             lastDamager = livingEntity;
         }
 
-        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
-        EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (GetResource(ResourceType.Health) * 1000));
+        EventManager.TriggerEvent(GetEntityID(), GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
+        EventManager.TriggerEvent(GetEntityID(), GameEvents.Health_Changed, (int) (GetResource(ResourceType.Health) * 1000));
     }
 }

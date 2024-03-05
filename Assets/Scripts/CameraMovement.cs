@@ -36,20 +36,20 @@ public class CameraMovement : MonoBehaviour {
     }
 
     void Start() {
-        EventManager.StartListening((int) GameEvents.Mouse_Right_Move_X, MouseRightMoveX);
-        EventManager.StartListening((int) GameEvents.Mouse_Right_Move_Y, MouseRightMoveY);
+        EventManager.StartListening(GameEvents.Mouse_Right_Move_X, MouseRightMoveX);
+        EventManager.StartListening(GameEvents.Mouse_Right_Move_Y, MouseRightMoveY);
 
         if (supportZoom) {
-            EventManager.StartListening((int) GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
+            EventManager.StartListening(GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
             InputManager.AddInputListener(KeyCode.Space, FocusOnTarget);
         }
     }
 
     void OnDisable() {
-        EventManager.StopListening((int) GameEvents.Mouse_Right_Move_X, MouseRightMoveX);
-        EventManager.StopListening((int) GameEvents.Mouse_Right_Move_Y, MouseRightMoveY);
+        EventManager.StopListening(GameEvents.Mouse_Right_Move_X, MouseRightMoveX);
+        EventManager.StopListening(GameEvents.Mouse_Right_Move_Y, MouseRightMoveY);
         if (supportZoom) {
-            EventManager.StopListening((int) GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
+            EventManager.StopListening(GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
             InputManager.RemoveInputListener(KeyCode.Space, FocusOnTarget);
         }
     }

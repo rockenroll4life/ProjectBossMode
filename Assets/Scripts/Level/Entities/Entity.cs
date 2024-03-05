@@ -45,14 +45,14 @@ public abstract class Entity : MonoBehaviour {
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
 
-    protected void AddGlobalEvent(int eventID, Action<int> listener) { AddEvent(null, eventID, listener); }
-    protected void AddOwnedEvent(int eventID, Action<int> listener) { AddEvent(entityID, eventID, listener); }
+    protected void AddGlobalEvent(GameEvents eventID, Action<int> listener) { AddEvent(null, eventID, listener); }
+    protected void AddOwnedEvent(GameEvents eventID, Action<int> listener) { AddEvent(entityID, eventID, listener); }
 
-    protected void RemoveGlobalEvent(int eventID, Action<int> listener) { RemoveEvent(null, eventID, listener); }
-    protected void RemoveOwnedEvent(int eventID, Action<int> listener) { RemoveEvent(entityID, eventID, listener); }
+    protected void RemoveGlobalEvent(GameEvents eventID, Action<int> listener) { RemoveEvent(null, eventID, listener); }
+    protected void RemoveOwnedEvent(GameEvents eventID, Action<int> listener) { RemoveEvent(entityID, eventID, listener); }
 
-    void AddEvent(Guid? owner, int eventID, Action<int> listener) { EventManager.StartListening(owner, eventID, listener); }
-    void RemoveEvent(Guid? owner, int eventID, Action<int> listener) { EventManager.StopListening(owner, eventID, listener); }
+    void AddEvent(Guid? owner, GameEvents eventID, Action<int> listener) { EventManager.StartListening(owner, eventID, listener); }
+    void RemoveEvent(Guid? owner, GameEvents eventID, Action<int> listener) { EventManager.StopListening(owner, eventID, listener); }
 
     //  Pre-Update - handle anything that needs to be done prior to the entity trying to act. For example, expiring status effects.
     protected virtual void PreUpdateStep() { }

@@ -14,8 +14,8 @@ public class KeyboardLocomotion : Locomotion {
     public KeyboardLocomotion(LivingEntity owner)
         : base (owner) {
 
-        EventManager.StartListening((int) GameEvents.Keybindings_Changed, KeyBindingsChanged);
-        EventManager.StartListening((int) GameEvents.GameplaySettings_Changed, GameplaySettingsChanged);
+        EventManager.StartListening(GameEvents.Keybindings_Changed, KeyBindingsChanged);
+        EventManager.StartListening(GameEvents.GameplaySettings_Changed, GameplaySettingsChanged);
 
         speed = owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue();
 
@@ -38,13 +38,13 @@ public class KeyboardLocomotion : Locomotion {
     }
 
     void ButtonStartListening(KeyCode key) {
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) key, InputReleased);
+        EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
+        EventManager.StartListening(GameEvents.KeyboardButton_Released + (int) key, InputReleased);
     }
 
     void ButtonStopListening(KeyCode key) {
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) key, InputReleased);
+        EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
+        EventManager.StopListening(GameEvents.KeyboardButton_Released + (int) key, InputReleased);
     }
 
     public override bool IsMoving() {

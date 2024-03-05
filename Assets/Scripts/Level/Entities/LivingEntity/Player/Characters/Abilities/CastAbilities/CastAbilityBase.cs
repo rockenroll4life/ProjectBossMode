@@ -15,15 +15,15 @@ public abstract class CastAbilityBase : AbilityBase {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, MoveCancelAbility);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, CancelAbility);
-        EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Targeted_World, MoveCancelAbility);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Targeted_Entity, CancelAbility);
+        EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             if (i == GetAbilityID()) {
-                EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, AttemptUseAbility);
+                EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + i, AttemptUseAbility);
             } else {
-                EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, OtherAbilityPressed);
+                EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + i, OtherAbilityPressed);
             }
         }
     }
@@ -31,15 +31,15 @@ public abstract class CastAbilityBase : AbilityBase {
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, MoveCancelAbility);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, CancelAbility);
-        EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Targeted_World, MoveCancelAbility);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Targeted_Entity, CancelAbility);
+        EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             if (i == GetAbilityID()) {
-                EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, AttemptUseAbility);
+                EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press + i, AttemptUseAbility);
             } else {
-                EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + i, OtherAbilityPressed);
+                EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press + i, OtherAbilityPressed);
             }
         }
     }
@@ -84,7 +84,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     public virtual void CooldownAttributeChanged(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + GetAbilityID(), param);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Cooldown_Max_Update + GetAbilityID(), param);
     }
 
     protected abstract void ShowSpellIndicator();
@@ -112,7 +112,7 @@ public abstract class CastAbilityBase : AbilityBase {
             cooldown = Mathf.Max(cooldown - Time.deltaTime, 0);
 
             int percent = (int) (cooldown * 1000);
-            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + GetAbilityID(), percent);
+            EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + GetAbilityID(), percent);
         }
     }
 

@@ -36,12 +36,12 @@ public class ResourceBar : MonoBehaviour {
         UpdateMaxValue(valueMax);
         UpdateCurrentValue(valueMax);
 
-        EventManager.StartListening(owner.GetEntityID(), (int) valueChangedGameEvent, CurrentValueChanged);
+        EventManager.StartListening(owner.GetEntityID(), valueChangedGameEvent, CurrentValueChanged);
         owner.GetAttributes().RegisterListener(AttributeTypes.HealthMax, MaxValueChanged);
     }
 
     public void Breakdown() {
-        EventManager.StopListening(owner.GetEntityID(), (int) valueChangedGameEvent, CurrentValueChanged);
+        EventManager.StopListening(owner.GetEntityID(), valueChangedGameEvent, CurrentValueChanged);
     }
 
     public void UpdateCurrentValue(float value) {

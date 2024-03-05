@@ -20,13 +20,13 @@ public class MouseLocomotion : Locomotion {
         agent.updateRotation = false;
         agent.speed = owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue();
 
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, TargetedWorld);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, TargetedEntity);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Targeted_World, TargetedWorld);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Targeted_Entity, TargetedEntity);
     }
 
     ~MouseLocomotion() {
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Targeted_World, TargetedWorld);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Targeted_Entity, TargetedEntity);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Targeted_World, TargetedWorld);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Targeted_Entity, TargetedEntity);
     }
 
     public override bool IsMoving() {

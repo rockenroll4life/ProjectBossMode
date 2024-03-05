@@ -42,13 +42,13 @@ public class KeyBindings {
             bindings[key] = DEFAULT_BINDINGS[key];
         }
 
-        EventManager.TriggerEvent((int) GameEvents.Keybindings_Changed);
+        EventManager.TriggerEvent(GameEvents.Keybindings_Changed);
     }
 
     public void Setup() {
         //  TODO: [Rock]: Load the keybindings from our config
 
-        EventManager.TriggerEvent((int) GameEvents.Keybindings_Changed);
+        EventManager.TriggerEvent(GameEvents.Keybindings_Changed);
     }
 
 }

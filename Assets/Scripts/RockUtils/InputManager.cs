@@ -132,23 +132,23 @@ public class InputManager : MonoBehaviour {
         //  Mouse Button Input
         for (int i = 0; i < (int) MouseButtons.Total; i++) {
             if (Input.GetMouseButtonDown(i)) {
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Press + i, 0);
+                EventManager.TriggerEvent(GameEvents.Mouse_Left_Press + i, 0);
             } else if (Input.GetMouseButtonUp(i)) {
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Release + i, 0);
+                EventManager.TriggerEvent(GameEvents.Mouse_Left_Release + i, 0);
             } else if (Input.GetMouseButton(i)) {
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Held + i, 0);
+                EventManager.TriggerEvent(GameEvents.Mouse_Left_Held + i, 0);
 
                 //  TODO: [Rock]: We should look into packing the X and Y movement into a single game event and value
                 float mouseX = Input.GetAxisRaw("Mouse X");
                 if (mouseX != 0) {
                     int param = (int) (mouseX * 1000);
-                    EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Move_X + i, param);
+                    EventManager.TriggerEvent(GameEvents.Mouse_Left_Move_X + i, param);
                 }
 
                 float mouseY = Input.GetAxisRaw("Mouse Y");
                 if (mouseY != 0) {
                     int param = (int) (mouseY * 1000);
-                    EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Move_Y + i, param);
+                    EventManager.TriggerEvent(GameEvents.Mouse_Left_Move_Y + i, param);
                 }
             }
         }
@@ -156,17 +156,17 @@ public class InputManager : MonoBehaviour {
         //  Mouse Wheel Input
         if (Input.mouseScrollDelta != Vector2.zero) {
             int param = (int) (Input.mouseScrollDelta.y * 1000);
-            EventManager.TriggerEvent((int) GameEvents.Mouse_Scroll_Wheel, param);
+            EventManager.TriggerEvent(GameEvents.Mouse_Scroll_Wheel, param);
         }
 
         //  Keyboard Input
         foreach (KeyValuePair<KeyCode, int> key in instance.inputDictionary) {
             if (Input.GetKeyDown(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Pressed + (int) key.Key, (int) key.Key);
+                EventManager.TriggerEvent(GameEvents.KeyboardButton_Pressed + (int) key.Key, (int) key.Key);
             } else if (Input.GetKeyUp(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Released + (int) key.Key, (int) key.Key);
+                EventManager.TriggerEvent(GameEvents.KeyboardButton_Released + (int) key.Key, (int) key.Key);
             } else if (Input.GetKey(key.Key)) {
-                EventManager.TriggerEvent((int) GameEvents.KeyboardButton_Held + (int) key.Key, (int) key.Key);
+                EventManager.TriggerEvent(GameEvents.KeyboardButton_Held + (int) key.Key, (int) key.Key);
             }
         }
 
@@ -186,25 +186,25 @@ public class InputManager : MonoBehaviour {
             float leftXRot = getStick(ControllerStick.Left).x;
             if (Math.Abs(leftXRot) > Mathf.Epsilon) {
                 int param = (int) (leftXRot * 1000);
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Move_X, param);
+                EventManager.TriggerEvent(GameEvents.Mouse_Left_Move_X, param);
             }
 
             float rightXRot = getStick(ControllerStick.Right).x;
             if (Math.Abs(rightXRot) > Mathf.Epsilon) {
                 int param = (int) (rightXRot * 1000);
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Right_Move_X, param);
+                EventManager.TriggerEvent(GameEvents.Mouse_Right_Move_X, param);
             }
 
             float leftYRot = getStick(ControllerStick.Left).z;
             if (Math.Abs(leftYRot) > Mathf.Epsilon) {
                 int param = (int) (leftYRot * 1000);
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Left_Move_Y, param);
+                EventManager.TriggerEvent(GameEvents.Mouse_Left_Move_Y, param);
             }
 
             float rightYRot = getStick(ControllerStick.Right).z;
             if (Math.Abs(rightYRot) > Mathf.Epsilon) {
                 int param = (int) (rightYRot * 1000);
-                EventManager.TriggerEvent((int) GameEvents.Mouse_Right_Move_Y, param);
+                EventManager.TriggerEvent(GameEvents.Mouse_Right_Move_Y, param);
             }
         }
     }

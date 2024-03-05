@@ -19,12 +19,12 @@ public class GameplaySettings {
             bindings[option] = DEFAULT_BINDINGS[option];
         }
 
-        EventManager.TriggerEvent((int) GameEvents.GameplaySettings_Changed);
+        EventManager.TriggerEvent(GameEvents.GameplaySettings_Changed);
     }
 
     public void Setup() {
         //  TODO: [Rock]: Load the keybindings from our config
 
-        EventManager.TriggerEvent((int) GameEvents.GameplaySettings_Changed);
+        EventManager.TriggerEvent(GameEvents.GameplaySettings_Changed);
     }
 }

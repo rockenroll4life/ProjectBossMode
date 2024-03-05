@@ -14,15 +14,15 @@ public abstract class ChannelAbilityBase : AbilityBase {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Press + GetAbilityID(), AbilityStart);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Release + GetAbilityID(), AbilityStop);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Held + GetAbilityID(), AttemptUseAbility);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + GetAbilityID(), AbilityStart);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Release + GetAbilityID(), AbilityStop);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Held + GetAbilityID(), AttemptUseAbility);
     }
 
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Held + GetAbilityID(), AttemptUseAbility);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Held + GetAbilityID(), AttemptUseAbility);
     }
 
     protected override bool CanUseAbility() {
@@ -39,10 +39,10 @@ public abstract class ChannelAbilityBase : AbilityBase {
     }
 
     protected virtual void AbilityStart(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Start + GetAbilityID());
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Channel_Start + GetAbilityID());
     }
 
     protected virtual void AbilityStop(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Stop + GetAbilityID());
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Channel_Stop + GetAbilityID());
     }
 }

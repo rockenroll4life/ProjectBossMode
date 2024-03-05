@@ -21,7 +21,7 @@ public class AbilityButton : MonoBehaviour {
     bool channeling = false;
 
     public void Setup(LivingEntity player, AbilityBase ability, AbilityNum abilityID) {
-        EventManager.StartListening((int) GameEvents.Keybindings_Changed, KeyBindingsChanged);
+        EventManager.StartListening(GameEvents.Keybindings_Changed, KeyBindingsChanged);
 
         this.owner = player;
         this.ability = ability;
@@ -38,27 +38,27 @@ public class AbilityButton : MonoBehaviour {
     }
 
     void RegisterEvents() {
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
-        EventManager.StartListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
     void UnregisterEvents() {
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
-        EventManager.StopListening(owner.GetEntityID(), (int) GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Stop + (int) abilityID, AbilityChannelStop);
     }
 
     void UpdateAbilityKeybind() {
         //  If we have a previous Keybind, stop listening for it
         if (keybind != KeyCode.None) {
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
-            EventManager.StopListening((int) GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
+            EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
+            EventManager.StopListening(GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
+            EventManager.StopListening(GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
             keybind = KeyCode.None;
             keybindText.text = "";
         }
@@ -67,9 +67,9 @@ public class AbilityButton : MonoBehaviour {
         keybind = Settings.GetKeyBinding(bindingKey);
         if (keybind != KeyCode.None) {
             keybindText.text = KeyCodeUtils.ToCharacter(keybind);
-            EventManager.StartListening((int) GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
-            EventManager.StartListening((int) GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
-            EventManager.StartListening((int) GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
+            EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
+            EventManager.StartListening(GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
+            EventManager.StartListening(GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
         }
     }
 
@@ -96,15 +96,15 @@ public class AbilityButton : MonoBehaviour {
     }
 
     void AbilityPressed(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Press + (int) abilityID);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Press + (int) abilityID);
     }
 
     void AbilityReleased(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Release + (int) abilityID);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Release + (int) abilityID);
     }
 
     void AbilityHeld(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Ability_Held + (int) abilityID);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Held + (int) abilityID);
     }
 
     void AbilityToggled(int param) {

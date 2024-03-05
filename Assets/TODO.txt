@@ -3,4 +3,3 @@ TODO:
 	- Controller Support via ControllerLocomotion class
 - Settings
 	- Settings Menu (Audio/Video/Gameplay/etc)
-	- Key Rebinding system

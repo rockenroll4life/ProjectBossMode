@@ -26,14 +26,14 @@ public class TargeterBase : ITargeter {
         targetedEntity = entity;
 
         if (entity != null) {
-            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_Entity);
+            EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Targeted_Entity);
         }
     }
     public void SetTargetedLocation(Vector3? location) {
         targetedLocation = location;
 
         if (location.HasValue) {
-            EventManager.TriggerEvent(owner.GetEntityID(), (int) GameEvents.Targeted_World);
+            EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Targeted_World);
         }
     }
 

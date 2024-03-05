@@ -36,9 +36,9 @@ public abstract class Player : LivingEntity {
         SetResource(resourceType, value);
 
         if (resourceType == ResourceType.Mana) {
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Mana_Changed, (int) (value * 1000));
+            EventManager.TriggerEvent(GetEntityID(), GameEvents.Mana_Changed, (int) (value * 1000));
         } else if (resourceType == ResourceType.Health) {
-            EventManager.TriggerEvent(GetEntityID(), (int) GameEvents.Health_Changed, (int) (value * 1000));
+            EventManager.TriggerEvent(GetEntityID(), GameEvents.Health_Changed, (int) (value * 1000));
         }
     }
 
