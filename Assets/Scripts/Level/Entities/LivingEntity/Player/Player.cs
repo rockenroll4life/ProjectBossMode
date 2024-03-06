@@ -8,7 +8,6 @@ public abstract class Player : LivingEntity {
     public GameObject UIPrefab;
 
     GameplayUI ui;
-    SpellIndicators spellIndicators;
 
     //  Character related Prefabs and Textures
     public SpellIndicatorPrefabs spellIndicatorPrefabs;
@@ -17,8 +16,6 @@ public abstract class Player : LivingEntity {
     public override EntityType GetEntityType() => EntityType.Player;
     public override Type GetSystemType() => typeof(Player);
 
-    public SpellIndicators GetSpellIndicators() => spellIndicators;
-
     protected override Color? GetHighlightColor() => PLAYER_COLOR;
     protected override Color? GetHighlightOutlineColor() { return PLAYER_COLOR; }
 
@@ -26,16 +23,6 @@ public abstract class Player : LivingEntity {
         base.Setup(level);
 
         CameraMovement.SetCameraTarget(this);
-    }
-
-    //  TODO: [Rock]: Remove this scaler and have the ResourceCost know it should scale it's value
-    public void UseResource(ResourceCost cost, float scaler = 1f) {
-        EntityDataType resourceType = cost.GetResourceType();
-
-        float value = Mathf.Max(GetEntityData(resourceType) - (cost.GetCost(this) * scaler), 0);
-        SetEntityData(resourceType, value);
-
-        EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) resourceType, (int) (value * 1000));
     }
 
     protected override void RegisterComponents() {

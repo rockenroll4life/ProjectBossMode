@@ -6,7 +6,7 @@ public abstract class CastAbilityBase : AbilityBase {
     protected float cooldown = 0;
     bool isCasting = false;
 
-    public CastAbilityBase(Player owner, AbilityNum abilityNum)
+    public CastAbilityBase(LivingEntity owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 

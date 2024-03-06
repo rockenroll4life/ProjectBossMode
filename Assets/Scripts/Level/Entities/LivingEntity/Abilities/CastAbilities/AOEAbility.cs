@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AOEAbility : CastAbilityBase {
-    public AOEAbility(Player owner, AbilityNum abilityNum)
+    public AOEAbility(LivingEntity owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 

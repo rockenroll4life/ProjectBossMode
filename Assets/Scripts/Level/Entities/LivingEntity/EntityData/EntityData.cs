@@ -5,6 +5,12 @@ public enum EntityDataType {
     Health,
     Mana,
 
+    Ability1_Cooldown,
+    Ability2_Cooldown,
+    Ability3_Cooldown,
+    Ability4_Cooldown,
+    Ultimate_Cooldown,
+
     _COUNT,
 }
 

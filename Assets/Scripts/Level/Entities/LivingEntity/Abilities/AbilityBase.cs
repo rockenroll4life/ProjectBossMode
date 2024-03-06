@@ -29,11 +29,11 @@ public abstract class AbilityBase {
         Channel,
     }
     
-    protected Player owner;
+    protected LivingEntity owner;
     AbilityNum abilityID = AbilityNum.NONE;
     protected ResourceCost cost = FREE_RESOURCE_COST;
 
-    public AbilityBase(Player owner, AbilityNum abilityNum) {
+    public AbilityBase(LivingEntity owner, AbilityNum abilityNum) {
         this.owner = owner;
         SetAbilityID(abilityNum);
     }

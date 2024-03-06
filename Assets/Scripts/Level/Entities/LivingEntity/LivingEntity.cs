@@ -9,6 +9,7 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     protected StatusEffectManager statusEffects;
     protected AbilityManager abilities;
+    protected SpellIndicators spellIndicators;
     protected Locomotion locomotion;
     protected EntityAnimator animator;
     protected ITargeter targeter;
@@ -30,6 +31,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public ITargeter GetTargeter() => targeter;
     public Locomotion GetLocomotion() => locomotion;
     public AbilityManager GetAbilities() => abilities;
+    public SpellIndicators GetSpellIndicators() => spellIndicators;
 
     public float GetEntityData(EntityDataType type) => entityData.Get(type);
     public void SetEntityData(EntityDataType type, float value) => entityData.Set(type, value);
@@ -124,6 +126,16 @@ public abstract class LivingEntity : Entity, IDamageable {
                 Attack();
             }
         }
+    }
+
+    //  TODO: [Rock]: Remove this scaler and have the ResourceCost know it should scale it's value
+    public void UseResource(ResourceCost cost, float scaler = 1f) {
+        EntityDataType resourceType = cost.GetResourceType();
+
+        float value = Mathf.Max(GetEntityData(resourceType) - (cost.GetCost(this) * scaler), 0);
+        SetEntityData(resourceType, value);
+
+        EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) resourceType, (int) (value * 1000));
     }
 
     void UpdateResources() {
