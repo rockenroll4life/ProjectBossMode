@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using XInputDotNetPure;
-using RockUtils.GameEvents;
 
 //  TODO: [Rock]: Current this only supports 1 player, but it would be nice to upgrade this to support multiple players for future projects
-public class InputManager : MonoBehaviour {
+namespace RockUtils {
+    namespace GameEvents {
+        public class InputManager : MonoBehaviour {
     public enum ControllerButtons {
         A = 0,
         B,
@@ -345,5 +346,7 @@ public class InputManager : MonoBehaviour {
 
     private static bool isReleased(ButtonState state) {
         return instance.controllerEnabled && state == ButtonState.Released;
+    }
+}
     }
 }
