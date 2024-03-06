@@ -15,7 +15,7 @@ public class InGameUI : MonoBehaviour {
 
     public GameObject bossHealthBarPrefab;
 
-    BossHealthBar bossHealthBar;
+    BossHealthBar bossHealthBar = null;
 
     private void Awake() {
         if (instance == null) {
@@ -30,5 +30,10 @@ public class InGameUI : MonoBehaviour {
         GameObject obj = Instantiate(Instance.bossHealthBarPrefab, Instance.transform);
         Instance.bossHealthBar = obj.GetComponent<BossHealthBar>();
         Instance.bossHealthBar.Setup(target);
+    }
+
+    public static void DisableBossHealthBar() {
+        Destroy(Instance.bossHealthBar.gameObject);
+        Instance.bossHealthBar = null;
     }
 }
