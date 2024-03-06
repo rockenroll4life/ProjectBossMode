@@ -61,17 +61,18 @@
             Ability_Channel_Start = 1930,
             Ability_Channel_Stop = 1935,
 
-            //  TODO: [Rock]: We should change this to "Attribute_Changed" and generify this
-            Health_Changed = 1940,
-            Mana_Changed = 1941,
+            //  Entity Data Changed - 20 values reserved
+            Entity_Data_Changed = 1940,
+            //Health_Changed = 1941,
+            //Mana_Changed = 1942,
 
-            Entity_Stop_Movement = 1942,
+            Entity_Stop_Movement = 1960,
 
             //  Targeting Game Events
-            Targeted_Entity = 1943,
-            Targeted_World = 1944,
+            Targeted_Entity = 1961,
+            Targeted_World = 1962,
 
-            LivingEntity_Hurt = 1945,
+            LivingEntity_Hurt = 1963,
 
             //========================================================
             //  Global Game Events

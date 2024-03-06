@@ -11,18 +11,18 @@ public class BossHealthBar : MonoBehaviour {
     float currentHealth, maxHealth;
 
     public void Setup(LivingEntity target) {
-        EventManager.StartListening(target.GetEntityID(), GameEvents.Health_Changed, HealthChanged);
+        EventManager.StartListening(target.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Health, HealthChanged);
 
         entityID = target.GetEntityID();
         entityName.text = target.name;
 
-        currentHealth = target.GetResource(ResourceType.Health);
+        currentHealth = target.GetEntityData(EntityDataType.Health);
         maxHealth = target.GetAttribute(AttributeTypes.HealthMax).GetValue();
         fillBar.fillAmount = (currentHealth / maxHealth);
     }
 
     private void OnDestroy() {
-        EventManager.StopListening(entityID, GameEvents.Health_Changed, HealthChanged);
+        EventManager.StopListening(entityID, GameEvents.Entity_Data_Changed + (int) EntityDataType.Health, HealthChanged);
     }
 
     void HealthChanged(int param) {

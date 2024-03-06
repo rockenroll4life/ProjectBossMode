@@ -4,7 +4,7 @@ using UnityEngine;
 public class TestAreaTargetAbility : AreaTargetAbility {
     public TestAreaTargetAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
-        cost = new ResourceCost(ResourceType.Mana, 50);
+        cost = new ResourceCost(EntityDataType.Mana, 50);
     }
 
     protected override string GetName() => "TestAreaTargetAbility";

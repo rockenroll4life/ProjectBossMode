@@ -27,9 +27,9 @@ public abstract class ChannelAbilityBase : AbilityBase {
 
     protected override bool CanUseAbility() {
         ResourceCost resourceCost = GetResourceCost();
-        ResourceType resourceType = resourceCost.GetResourceType();
+        EntityDataType resourceType = resourceCost.GetResourceType();
 
-        return owner.GetResource(resourceType) > resourceCost.GetCost(owner) * Time.deltaTime;
+        return owner.GetEntityData(resourceType) > resourceCost.GetCost(owner) * Time.deltaTime;
     }
 
     protected override void UseAbility() {

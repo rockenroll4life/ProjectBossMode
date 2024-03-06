@@ -3,12 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using RockUtils.GameEvents;
 
-public enum ResourceType {
-    Health,
-    Mana,
-    _COUNT
-}
-
 public class ResourceBar : MonoBehaviour {
     public Image barFill;
     public Text currentText;
@@ -16,9 +10,8 @@ public class ResourceBar : MonoBehaviour {
 
     //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
     LivingEntity owner;
-    ResourceType resourceType;
-    GameEvents valueChangedGameEvent;
-    Action<ResourceType, float> currentValueChangedDelegate;
+    EntityDataType entityDataType;
+    Action<EntityDataType, float> currentValueChangedDelegate;
 
     float currentValue;
     float maxValue;
@@ -26,22 +19,21 @@ public class ResourceBar : MonoBehaviour {
     public float Current() => currentValue;
     public float Max() => maxValue;
 
-    public void Setup(LivingEntity owner, ResourceType resourceType, AttributeTypes maxValueAttribute, GameEvents valueChangedGameEvent, Action<ResourceType, float> currentValueChangedDelegate) {
+    public void Setup(LivingEntity owner, AttributeTypes maxValueAttribute, EntityDataType entityDataType, Action<EntityDataType, float> currentValueChangedDelegate) {
         this.owner = owner;
-        this.resourceType = resourceType;
-        this.valueChangedGameEvent = valueChangedGameEvent;
+        this.entityDataType = entityDataType;
         this.currentValueChangedDelegate = currentValueChangedDelegate;
 
         float valueMax = owner.GetAttribute(maxValueAttribute).GetValue();
         UpdateMaxValue(valueMax);
         UpdateCurrentValue(valueMax);
 
-        EventManager.StartListening(owner.GetEntityID(), valueChangedGameEvent, CurrentValueChanged);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) entityDataType, CurrentValueChanged);
         owner.GetAttributes().RegisterListener(AttributeTypes.HealthMax, MaxValueChanged);
     }
 
     public void Breakdown() {
-        EventManager.StopListening(owner.GetEntityID(), valueChangedGameEvent, CurrentValueChanged);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) entityDataType, CurrentValueChanged);
     }
 
     public void UpdateCurrentValue(float value) {
@@ -62,10 +54,10 @@ public class ResourceBar : MonoBehaviour {
     }
 
     void CurrentValueChanged(int param) {
-        UpdateCurrentValue(owner.GetResource(resourceType));
+        UpdateCurrentValue(owner.GetEntityData(entityDataType));
 
         if (currentValueChangedDelegate != null) {
-            currentValueChangedDelegate(resourceType, currentValue);
+            currentValueChangedDelegate(entityDataType, currentValue);
         }
     }
 
@@ -74,7 +66,7 @@ public class ResourceBar : MonoBehaviour {
         UpdateMaxValue(maxValue);
 
         if (currentValueChangedDelegate != null) {
-            currentValueChangedDelegate(resourceType, currentValue);
+            currentValueChangedDelegate(entityDataType, currentValue);
         }
     }
 }

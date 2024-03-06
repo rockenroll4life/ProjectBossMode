@@ -30,16 +30,12 @@ public abstract class Player : LivingEntity {
 
     //  TODO: [Rock]: Remove this scaler and have the ResourceCost know it should scale it's value
     public void UseResource(ResourceCost cost, float scaler = 1f) {
-        ResourceType resourceType = cost.GetResourceType();
+        EntityDataType resourceType = cost.GetResourceType();
 
-        float value = Mathf.Max(GetResource(resourceType) - (cost.GetCost(this) * scaler), 0);
-        SetResource(resourceType, value);
+        float value = Mathf.Max(GetEntityData(resourceType) - (cost.GetCost(this) * scaler), 0);
+        SetEntityData(resourceType, value);
 
-        if (resourceType == ResourceType.Mana) {
-            EventManager.TriggerEvent(GetEntityID(), GameEvents.Mana_Changed, (int) (value * 1000));
-        } else if (resourceType == ResourceType.Health) {
-            EventManager.TriggerEvent(GetEntityID(), GameEvents.Health_Changed, (int) (value * 1000));
-        }
+        EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) resourceType, (int) (value * 1000));
     }
 
     protected override void RegisterComponents() {

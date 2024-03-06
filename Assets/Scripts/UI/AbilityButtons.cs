@@ -29,10 +29,10 @@ public class AbilityButtons : MonoBehaviour {
         abilities[(int) buttonNum].keybindText.text = keybind;
     }
 
-    public void ResourceValueChanged(ResourceType type, float currentValue) {
+    public void ResourceValueChanged(EntityDataType type, float currentValue) {
         foreach (AbilityButton button in abilities) {
             ResourceCost resourceCost = button.GetAbility().GetResourceCost();
-            ResourceType resourceType = resourceCost.GetResourceType();
+            EntityDataType resourceType = resourceCost.GetResourceType();
 
             if (type == resourceType) {
                 button.notEnoughResource.gameObject.SetActive(currentValue < resourceCost.GetCost(owner));

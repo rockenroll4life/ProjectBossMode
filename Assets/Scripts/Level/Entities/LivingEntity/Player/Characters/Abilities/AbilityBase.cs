@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
 public class ResourceCost {
-    private readonly ResourceType costType;
+    private readonly EntityDataType costType;
     private readonly int cost;
 
-    public ResourceType GetResourceType() => costType;
+    public EntityDataType GetResourceType() => costType;
 
-    public ResourceCost(ResourceType costType, int cost) {
+    public ResourceCost(EntityDataType costType, int cost) {
         this.costType = costType;
         this.cost = cost;
     }
@@ -21,7 +21,7 @@ public abstract class AbilityBase {
     protected static readonly int LAYER_MASK_GROUND = LayerMask.GetMask("Ground");
     protected static readonly int LAYER_MASK_MOB = LayerMask.GetMask("Mob");
     protected static readonly int LAYER_MASK_PLAYER = LayerMask.GetMask("Player");
-    protected static readonly ResourceCost FREE_RESOURCE_COST = new ResourceCost(ResourceType.Mana, 0);
+    protected static readonly ResourceCost FREE_RESOURCE_COST = new ResourceCost(EntityDataType.Mana, 0);
 
     public enum TriggerType {
         Cast,

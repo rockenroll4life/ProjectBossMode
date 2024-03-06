@@ -4,7 +4,7 @@ using UnityEngine;
 public class TestAOEAbility : AOEAbility {
     public TestAOEAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
-        cost = new ResourceCost(ResourceType.Mana, 30);
+        cost = new ResourceCost(EntityDataType.Mana, 30);
     }
 
     protected override string GetName() => "TestAOEAbility";
