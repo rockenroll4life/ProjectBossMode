@@ -3,3 +3,9 @@ TODO:
 	- Controller Support via ControllerLocomotion class
 - Settings
 	- Settings Menu (Audio/Video/Gameplay/etc)
+- AI
+	- AI Behaviors
+	- AI Movement
+	- AI Using Abilities
+	- AI Ability indicators in the world for where attacks are going to be (Maybe?)
+		- This will typically be shown X amount of time prior to using the ability
