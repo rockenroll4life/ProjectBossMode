@@ -16,15 +16,32 @@ public enum EntityDataType {
 
 public class EntityData {
     System.Guid entityID;
-    readonly float[] data = new float[(int) EntityDataType._COUNT];
+    readonly IEntityData[] data;
 
-    public EntityData(System.Guid entityID) {
-        this.entityID = entityID;
+    public EntityData(LivingEntity owner) {
+        entityID = owner.GetEntityID();
+
+        data = new IEntityData[] {
+            new UpdatingEntityData(owner, EntityDataType.Health, owner.GetAttribute(AttributeTypes.HealthMax).GetValue(), AttributeTypes.HealthMax, AttributeTypes.HealthRegenRate),
+            new UpdatingEntityData(owner, EntityDataType.Mana, owner.GetAttribute(AttributeTypes.ManaMax).GetValue(), AttributeTypes.ManaMax, AttributeTypes.ManaRegenRate),
+
+            new UpdatingEntityData(owner, EntityDataType.Ability1_Cooldown, 0, AttributeTypes.Ability1Cooldown),
+            new UpdatingEntityData(owner, EntityDataType.Ability2_Cooldown, 0, AttributeTypes.Ability2Cooldown),
+            new UpdatingEntityData(owner, EntityDataType.Ability3_Cooldown, 0, AttributeTypes.Ability3Cooldown),
+            new UpdatingEntityData(owner, EntityDataType.Ability4_Cooldown, 0, AttributeTypes.Ability4Cooldown),
+            new UpdatingEntityData(owner, EntityDataType.Ultimate_Cooldown, 0, AttributeTypes.UltimateCooldown),
+        };
     }
 
-    public float Get(EntityDataType type) => data[(int) type];
+    public float Get(EntityDataType type) => data[(int) type].Get();
     public void Set(EntityDataType type, float value) {
-        data[(int) type] = value;
+        data[(int) type].Set(value);
         EventManager.TriggerEvent(entityID, GameEvents.Entity_Data_Changed + (int) type, (int) (value * 1000));
+    }
+
+    public void Update() {
+        foreach (IEntityData item in data) {
+            item.Update();
+        }
     }
 }

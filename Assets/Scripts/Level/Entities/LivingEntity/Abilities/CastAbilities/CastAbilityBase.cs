@@ -54,7 +54,7 @@ public abstract class CastAbilityBase : AbilityBase {
         if (canBypassCooldown())
             return true;
 
-        if (owner.GetEntityData(EntityDataType.Ability1_Cooldown + (int) GetAbilityID()) == 0) {
+        if (owner.GetEntityData(EntityDataType.Ability1_Cooldown + GetAbilityID()) <= 0) {
             ResourceCost resourceCost = GetResourceCost();
             EntityDataType resourceType = resourceCost.GetResourceType();
 
@@ -103,17 +103,6 @@ public abstract class CastAbilityBase : AbilityBase {
 
     void OtherAbilityPressed(int param) {
         isCasting = false;
-    }
-
-    public virtual void Update() {
-        float cooldown = owner.GetEntityData(EntityDataType.Ability1_Cooldown + GetAbilityID());
-        if (cooldown > 0) {
-            cooldown = Mathf.Max(cooldown - Time.deltaTime, 0);
-            owner.SetEntityData(EntityDataType.Ability1_Cooldown + GetAbilityID(), cooldown);
-
-            int percent = (int) (cooldown * 1000);
-            EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + GetAbilityID(), percent);
-        }
     }
 
     AttributeTypes GetCooldownAttribute () {

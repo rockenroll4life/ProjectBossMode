@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 public enum AttributeTypes {
+    None = -1,
     HealthMax,
     HealthRegenRate,
 

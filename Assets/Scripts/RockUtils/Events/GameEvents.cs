@@ -49,9 +49,6 @@
 
             Ability_Held = 1910,
 
-            //  Updating Ability Cooldowns - 5 values reserved for each (QWERT)
-            Ability_Cooldown_Update = 1915,
-
             //  Set Ability Max Cooldown - 5 values reserved for each (QWERT)
             Ability_Cooldown_Max_Update = 1920,
 
@@ -63,8 +60,6 @@
 
             //  Entity Data Changed - 20 values reserved
             Entity_Data_Changed = 1940,
-            //Health_Changed = 1941,
-            //Mana_Changed = 1942,
 
             Entity_Stop_Movement = 1960,
 

@@ -78,7 +78,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         GetAttributes().RegisterAttribute(AttributeTypes.Ability4Cooldown);
         GetAttributes().RegisterAttribute(AttributeTypes.UltimateCooldown);
 
-        entityData = new EntityData(entityID);
+        entityData = new EntityData(this);
 
         SetEntityData(EntityDataType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
     }
@@ -113,8 +113,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected override void UpdateStep() {
         base.UpdateStep();
 
-        UpdateResources();
-        abilities.Update();
+        entityData.Update();
 
         if (attackTimer > 0) {
             attackTimer -= Time.deltaTime;
@@ -133,28 +132,6 @@ public abstract class LivingEntity : Entity, IDamageable {
         SetEntityData(resourceType, value);
 
         EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) resourceType, (int) (value * 1000));
-    }
-
-    void UpdateResources() {
-        //  Update Health
-        float health = GetEntityData(EntityDataType.Health);
-        float oldHealth = health;
-        health += GetAttribute(AttributeTypes.HealthRegenRate).GetValue() * Time.deltaTime;
-        health = Mathf.Clamp(health, 0, GetAttribute(AttributeTypes.HealthMax).GetValue());
-        SetEntityData(EntityDataType.Health, health);
-        if (health != oldHealth) {
-            EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int)EntityDataType.Health, (int) (health * 1000));
-        }
-
-        //  Update Mana
-        float mana = GetEntityData(EntityDataType.Mana);
-        float oldMana = mana;
-        mana += GetAttribute(AttributeTypes.HealthRegenRate).GetValue() * Time.deltaTime;
-        mana = Mathf.Clamp(mana, 0, GetAttribute(AttributeTypes.ManaMax).GetValue());
-        SetEntityData(EntityDataType.Mana, mana);
-        if (mana != oldMana) {
-            EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Mana, (int) (mana * 1000));
-        }
     }
 
     public AttributeDictionary GetAttributes() {

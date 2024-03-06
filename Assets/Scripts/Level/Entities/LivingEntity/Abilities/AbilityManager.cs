@@ -30,12 +30,4 @@ public class AbilityManager {
     }
 
     public AbilityBase GetAbility(AbilityNum abilityNum) => abilities.GetValueOrDefault(abilityNum);
-
-    public void Update() {
-        foreach(AbilityBase ability in abilities.Values) {
-            if (ability is CastAbilityBase castAbility) {
-                castAbility.Update();
-            }
-        }
-    }
 }

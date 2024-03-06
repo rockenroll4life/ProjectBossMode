@@ -38,7 +38,7 @@ public class AbilityButton : MonoBehaviour {
     }
 
     void RegisterEvents() {
-        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Ability1_Cooldown + (int) abilityID, UpdateCooldown);
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
@@ -46,7 +46,7 @@ public class AbilityButton : MonoBehaviour {
     }
 
     void UnregisterEvents() {
-        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + (int) abilityID, UpdateCooldown);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Ability1_Cooldown + (int) abilityID, UpdateCooldown);
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Cooldown_Max_Update + (int) abilityID, UpdateMaxCooldown);
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);
