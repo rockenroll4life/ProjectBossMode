@@ -1,5 +1,3 @@
-using System;
-
 public class ResourceCost{
     private readonly EntityDataType costType;
     private readonly int cost;

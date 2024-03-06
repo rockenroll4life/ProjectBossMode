@@ -2,9 +2,6 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public abstract class LivingEntity : Entity, IDamageable {
-    public static readonly AttributeTypes[] ABILITY_COOLDOWNS =
-        { AttributeTypes.Ability1Cooldown, AttributeTypes.Ability2Cooldown, AttributeTypes.Ability3Cooldown, AttributeTypes.Ability4Cooldown, AttributeTypes.UltimateCooldown };
-
     public GameObject attackProjectilePrefab;
 
     protected StatusEffectManager statusEffects;

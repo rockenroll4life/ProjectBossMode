@@ -79,7 +79,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected virtual void CastAbility() {
-        cooldown = owner.GetAttribute(Player.ABILITY_COOLDOWNS[GetAbilityID()]).GetValue();
+        cooldown = owner.GetAttribute(AttributeTypes.Ability1Cooldown + (int) GetAbilityID()).GetValue();
         owner.UseResource(GetResourceCost());
     }
 
@@ -117,7 +117,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     AttributeTypes GetCooldownAttribute () {
-        return Player.ABILITY_COOLDOWNS[GetAbilityID()];
+        return AttributeTypes.Ability1Cooldown + (int) GetAbilityID();
     }
 
     protected abstract List<Entity> GetEntitiesHitByAbility(int layerMask);
