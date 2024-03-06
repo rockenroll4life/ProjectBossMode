@@ -79,7 +79,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected virtual void CastAbility() {
-        cooldown = owner.GetAttribute(AttributeTypes.Ability1Cooldown + (int) GetAbilityID()).GetValue();
+        cooldown = owner.GetAttribute(GetCooldownAttribute()).GetValue();
         owner.UseResource(GetResourceCost());
     }
 
