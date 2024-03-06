@@ -7,6 +7,7 @@ public class ResourceBar : MonoBehaviour {
     public Image barFill;
     public Text currentText;
     public Text maxText;
+    public Color barColor;
 
     //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
     LivingEntity owner;
@@ -23,6 +24,8 @@ public class ResourceBar : MonoBehaviour {
         this.owner = owner;
         this.entityDataType = entityDataType;
         this.currentValueChangedDelegate = currentValueChangedDelegate;
+
+        barFill.color = barColor;
 
         float valueMax = owner.GetAttribute(maxValueAttribute).GetValue();
         UpdateMaxValue(valueMax);
