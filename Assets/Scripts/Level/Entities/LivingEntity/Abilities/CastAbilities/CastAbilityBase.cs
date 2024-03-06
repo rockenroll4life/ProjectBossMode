@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class CastAbilityBase : AbilityBase {
-    protected float cooldown = 0;
     bool isCasting = false;
 
     public CastAbilityBase(LivingEntity owner, AbilityNum abilityNum)
@@ -55,7 +54,7 @@ public abstract class CastAbilityBase : AbilityBase {
         if (canBypassCooldown())
             return true;
 
-        if (cooldown == 0) {
+        if (owner.GetEntityData(EntityDataType.Ability1_Cooldown + (int) GetAbilityID()) == 0) {
             ResourceCost resourceCost = GetResourceCost();
             EntityDataType resourceType = resourceCost.GetResourceType();
 
@@ -79,7 +78,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected virtual void CastAbility() {
-        cooldown = owner.GetAttribute(GetCooldownAttribute()).GetValue();
+        owner.SetEntityData(EntityDataType.Ability1_Cooldown + (int) GetAbilityID(), owner.GetAttribute(GetCooldownAttribute()).GetValue());
         owner.UseResource(GetResourceCost());
     }
 
@@ -107,9 +106,10 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     public virtual void Update() {
-        //  TODO: [Rock]: We should not be updating the cooldown value in the Ability. Investigate into allowing the cooldown stat to update itself
+        float cooldown = owner.GetEntityData(EntityDataType.Ability1_Cooldown + GetAbilityID());
         if (cooldown > 0) {
             cooldown = Mathf.Max(cooldown - Time.deltaTime, 0);
+            owner.SetEntityData(EntityDataType.Ability1_Cooldown + GetAbilityID(), cooldown);
 
             int percent = (int) (cooldown * 1000);
             EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Cooldown_Update + GetAbilityID(), percent);
