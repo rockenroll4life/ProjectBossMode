@@ -1,22 +1,5 @@
 ﻿using UnityEngine;
 
-public class ResourceCost {
-    private readonly EntityDataType costType;
-    private readonly int cost;
-
-    public EntityDataType GetResourceType() => costType;
-
-    public ResourceCost(EntityDataType costType, int cost) {
-        this.costType = costType;
-        this.cost = cost;
-    }
-
-    public int GetCost(LivingEntity owner) {
-        //  TODO: [Rock]: Incorporate mana cost reduction from attributes
-        return cost;
-    }
-}
-
 public abstract class AbilityBase {
     protected static readonly int LAYER_MASK_GROUND = LayerMask.GetMask("Ground");
     protected static readonly int LAYER_MASK_MOB = LayerMask.GetMask("Mob");
