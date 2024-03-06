@@ -35,6 +35,15 @@ public class AttributeDictionary {
         }
     }
 
+    public void UnregisterListener(AttributeTypes attribute, Action<int> listener) {
+        IAttribute iattribute = Attributes.Get(attribute);
+
+        if (attributeListeners.TryGetValue(iattribute, out Action<int> listeners)) {
+            listeners -= listener;
+            attributeListeners[iattribute] = listeners;
+        }
+    }
+
     public IAttributeInstance CreateAttributeInstance(IAttribute attribute) {
         return new ModifiableAttributeInstance(this, attribute);
     }

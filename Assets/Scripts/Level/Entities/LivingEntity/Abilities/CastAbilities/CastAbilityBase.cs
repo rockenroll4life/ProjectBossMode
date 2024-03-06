@@ -43,13 +43,6 @@ public abstract class CastAbilityBase : AbilityBase {
         }
     }
 
-    protected override void RegisterAttributes() {
-        base.RegisterAttributes();
-
-        owner.GetAttributes().RegisterListener(GetCooldownAttribute(), CooldownAttributeChanged);
-        CooldownAttributeChanged((int) (owner.GetAttribute(GetCooldownAttribute()).GetValue() * 1000));
-    }
-
     protected override bool CanUseAbility() {
         if (canBypassCooldown())
             return true;
@@ -80,10 +73,6 @@ public abstract class CastAbilityBase : AbilityBase {
     protected virtual void CastAbility() {
         owner.SetEntityData(EntityDataType.Ability1_Cooldown + (int) GetAbilityID(), owner.GetAttribute(GetCooldownAttribute()).GetValue());
         owner.UseResource(GetResourceCost());
-    }
-
-    public virtual void CooldownAttributeChanged(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Cooldown_Max_Update + GetAbilityID(), param);
     }
 
     protected abstract void ShowSpellIndicator();

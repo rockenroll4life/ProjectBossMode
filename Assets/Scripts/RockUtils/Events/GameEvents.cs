@@ -49,9 +49,6 @@
 
             Ability_Held = 1910,
 
-            //  Set Ability Max Cooldown - 5 values reserved for each (QWERT)
-            Ability_Cooldown_Max_Update = 1920,
-
             //  NOTE: [Rock]: Currently used by the UI to set the toggle...however I don't like it...we should setup this as a generic
             //  Ability_Use event with a separate enum list of what the param id means
             Ability_Toggle = 1925,
