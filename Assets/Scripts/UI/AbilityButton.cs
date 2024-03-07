@@ -31,6 +31,8 @@ public class AbilityButton : MonoBehaviour {
         int cost = owner.GetAbilities().GetAbility(abilityID).GetResourceCost().GetCost();
         resourceCost.text = cost > 0 ? cost.ToString() : "";
 
+        maxCooldown = owner.GetAttribute(AttributeTypes.Ability1Cooldown + (int) abilityID).GetValue();
+
         RegisterEvents();
         UpdateAbilityKeybind();
     }
