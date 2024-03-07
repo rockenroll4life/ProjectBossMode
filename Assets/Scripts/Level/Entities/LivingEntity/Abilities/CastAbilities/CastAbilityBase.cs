@@ -51,7 +51,7 @@ public abstract class CastAbilityBase : AbilityBase {
             ResourceCost resourceCost = GetResourceCost();
             EntityDataType resourceType = resourceCost.GetResourceType();
 
-            return owner.GetEntityData(resourceType) >= resourceCost.GetCost(owner);
+            return owner.GetEntityData(resourceType) >= resourceCost.GetCost();
         }
 
         return false;

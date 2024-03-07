@@ -78,6 +78,9 @@ public abstract class LivingEntity : Entity, IDamageable {
         GetAttributes().RegisterAttribute(AttributeTypes.Ability4Cooldown);
         GetAttributes().RegisterAttribute(AttributeTypes.UltimateCooldown);
 
+        GetAttributes().RegisterAttribute(AttributeTypes.CooldownReduction);
+        GetAttributes().RegisterAttribute(AttributeTypes.ResourceCostReduction);
+
         entityData = new EntityData(this);
 
         SetEntityData(EntityDataType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
@@ -128,7 +131,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public void UseResource(ResourceCost cost, float scaler = 1f) {
         EntityDataType resourceType = cost.GetResourceType();
 
-        float value = Mathf.Max(GetEntityData(resourceType) - (cost.GetCost(this) * scaler), 0);
+        float value = Mathf.Max(GetEntityData(resourceType) - (cost.GetCost() * scaler), 0);
         SetEntityData(resourceType, value);
 
         EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) resourceType, (int) (value * 1000));

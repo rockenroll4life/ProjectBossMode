@@ -4,7 +4,7 @@ using UnityEngine;
 public class TestConeAbility : ConeAbility {
     public TestConeAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
-        cost = new ResourceCost(EntityDataType.Mana, 20);
+        cost = new ResourceCost(owner, EntityDataType.Mana, 20);
     }
 
     protected override string GetName() =>"TestConeAbility";

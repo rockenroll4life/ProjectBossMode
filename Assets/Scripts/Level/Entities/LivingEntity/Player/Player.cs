@@ -22,6 +22,9 @@ public abstract class Player : LivingEntity {
     public override void Setup(Level level) {
         base.Setup(level);
 
+        ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();
+        ui.Setup(this);
+
         CameraMovement.SetCameraTarget(this);
     }
 
@@ -33,9 +36,6 @@ public abstract class Player : LivingEntity {
 
         targeter = new PlayerMouseTargeter(this);
         spellIndicators = new SpellIndicators(this);
-
-        ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();
-        ui.Setup(this);
 
         animator = new LivingEntityAnimator(this);
 

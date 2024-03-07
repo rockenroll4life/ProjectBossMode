@@ -19,6 +19,9 @@ public enum AttributeTypes {
     Ability3Cooldown,
     Ability4Cooldown,
     UltimateCooldown,
+
+    CooldownReduction,
+    ResourceCostReduction,
 }
 
 public class Attributes {
@@ -41,6 +44,9 @@ public class Attributes {
         { AttributeTypes.Ability3Cooldown, new("generic.ability3", 5, 0, float.MaxValue) },
         { AttributeTypes.Ability4Cooldown, new("generic.ability4", 5, 0, float.MaxValue) },
         { AttributeTypes.UltimateCooldown, new("generic.ultimate", 5, 0, float.MaxValue) },
+
+        { AttributeTypes.CooldownReduction, new("generic.cooldownReduction", 0, float.MinValue, 100) },
+        { AttributeTypes.ResourceCostReduction, new("generic.resourceCostReduction", 0, float.MinValue, 100) },
     };
 
     public static RangedAttribute Get(AttributeTypes type) => attribute[type];

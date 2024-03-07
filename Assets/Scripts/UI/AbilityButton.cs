@@ -9,6 +9,7 @@ public class AbilityButton : MonoBehaviour {
     public Image cooldown;
     public Text cooldownTimeText;
     public Text keybindText;
+    public Text resourceCost;
     public Image auraIcon;
     public Image notEnoughResource;
 
@@ -20,12 +21,16 @@ public class AbilityButton : MonoBehaviour {
 
     bool channeling = false;
 
-    public void Setup(LivingEntity player, AbilityBase ability, AbilityNum abilityID) {
+    public void Setup(LivingEntity owner, AbilityBase ability, AbilityNum abilityID) {
         EventManager.StartListening(GameEvents.Keybindings_Changed, KeyBindingsChanged);
 
-        this.owner = player;
+        this.owner = owner;
         this.ability = ability;
         this.abilityID = abilityID;
+
+        int cost = owner.GetAbilities().GetAbility(abilityID).GetResourceCost().GetCost();
+        resourceCost.text = cost > 0 ? cost.ToString() : "";
+
         RegisterEvents();
         UpdateAbilityKeybind();
     }

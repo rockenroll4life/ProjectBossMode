@@ -35,7 +35,7 @@ public class AbilityButtons : MonoBehaviour {
             EntityDataType resourceType = resourceCost.GetResourceType();
 
             if (type == resourceType) {
-                button.notEnoughResource.gameObject.SetActive(currentValue < resourceCost.GetCost(owner));
+                button.notEnoughResource.gameObject.SetActive(currentValue < resourceCost.GetCost());
             }
         }
     }

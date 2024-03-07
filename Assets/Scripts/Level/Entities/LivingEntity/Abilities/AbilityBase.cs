@@ -4,7 +4,7 @@ public abstract class AbilityBase {
     protected static readonly int LAYER_MASK_GROUND = LayerMask.GetMask("Ground");
     protected static readonly int LAYER_MASK_MOB = LayerMask.GetMask("Mob");
     protected static readonly int LAYER_MASK_PLAYER = LayerMask.GetMask("Player");
-    protected static readonly ResourceCost FREE_RESOURCE_COST = new ResourceCost(EntityDataType.Mana, 0);
+    protected static readonly ResourceCost FREE_RESOURCE_COST = new ResourceCost(null, EntityDataType.Mana, 0);
 
     public enum TriggerType {
         Cast,
