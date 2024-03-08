@@ -71,7 +71,7 @@ public abstract class CastAbilityBase : AbilityBase {
     }
 
     protected virtual void CastAbility() {
-        owner.SetEntityData(EntityDataType.Ability1_Cooldown + (int) GetAbilityID(), owner.GetAttribute(GetCooldownAttribute()).GetValue());
+        PutOnCooldown();
         owner.UseResource(GetResourceCost());
     }
 
@@ -92,10 +92,6 @@ public abstract class CastAbilityBase : AbilityBase {
 
     void OtherAbilityPressed(int param) {
         isCasting = false;
-    }
-
-    AttributeTypes GetCooldownAttribute () {
-        return AttributeTypes.Ability1Cooldown + (int) GetAbilityID();
     }
 
     protected abstract List<Entity> GetEntitiesHitByAbility(int layerMask);

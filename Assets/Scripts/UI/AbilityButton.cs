@@ -17,7 +17,7 @@ public class AbilityButton : MonoBehaviour {
     AbilityBase ability;
     AbilityNum abilityID = AbilityNum.NONE;
     KeyCode keybind = KeyCode.None;
-    float maxCooldown = 3;
+    float maxCooldown;
 
     bool channeling = false;
 
@@ -46,6 +46,7 @@ public class AbilityButton : MonoBehaviour {
 
     void RegisterEvents() {
         owner.GetAttributes().RegisterListener(AttributeTypes.Ability1Cooldown + (int) abilityID, UpdateMaxCooldown);
+
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Ability1_Cooldown + (int) abilityID, UpdateCooldown);
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityID, AbilityToggled);
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityID, AbilityChannelStart);

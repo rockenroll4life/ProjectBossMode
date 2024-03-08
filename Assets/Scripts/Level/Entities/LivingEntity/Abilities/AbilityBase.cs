@@ -69,4 +69,16 @@ public abstract class AbilityBase {
     }
 
     protected virtual bool canBypassCooldown() => false;
+
+    protected void PutOnCooldown() {
+        float baseCooldown = owner.GetAttribute(GetCooldownAttribute()).GetValue();
+        float cooldownReduction = (owner.GetAttribute(AttributeTypes.CooldownReduction).GetValue() / 100f);
+
+        float value = Mathf.Max(baseCooldown - (baseCooldown * cooldownReduction), 0);
+        owner.SetEntityData(EntityDataType.Ability1_Cooldown + GetAbilityID(), value);
+    }
+
+    AttributeTypes GetCooldownAttribute() {
+        return AttributeTypes.Ability1Cooldown + GetAbilityID();
+    }
 }

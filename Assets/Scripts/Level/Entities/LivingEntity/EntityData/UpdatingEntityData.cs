@@ -13,11 +13,10 @@ public class UpdatingEntityData : IEntityData {
 
         value = startingValue;
         maxValue = owner.GetAttribute(maxAttributeValue).GetValue();
+        owner.GetAttributes().RegisterListener(maxAttributeValue, MaxAttributeChanged);
 
         if (updatingAttribute != AttributeTypes.None) {
             updateValue = owner.GetAttribute(updatingAttribute).GetValue();
-
-            owner.GetAttributes().RegisterListener(maxAttributeValue, MaxAttributeChanged);
             owner.GetAttributes().RegisterListener(updatingAttribute, UpdatingAttributeChanged);
         }
     }
@@ -29,9 +28,12 @@ public class UpdatingEntityData : IEntityData {
     }
 
     public void Update() {
+        float oldVal = value;
         value += (updateValue * Time.deltaTime);
         value = Mathf.Clamp(value, 0, maxValue);
-        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) type, (int) (value * 1000));
+        if (oldVal != value) {
+            EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) type, (int) (value * 1000));
+        }
     }
 
     void MaxAttributeChanged(int param) {
