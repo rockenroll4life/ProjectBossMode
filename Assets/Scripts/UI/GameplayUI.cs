@@ -8,9 +8,4 @@ public class GameplayUI : MonoBehaviour {
         abilityButtons.Setup(owner);
         resourceBars.Setup(owner, abilityButtons.ResourceValueChanged);
     }
-
-    public void Breakdown() {
-        abilityButtons.Breakdown();
-        resourceBars.Breakdown();
-    }
 }

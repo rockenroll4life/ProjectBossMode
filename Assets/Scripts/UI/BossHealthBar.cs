@@ -4,7 +4,7 @@ using RockUtils.GameEvents;
 
 public class BossHealthBar : MonoBehaviour {
     public TMPro.TextMeshProUGUI entityName;
-    public Image fillBar;
+    public Image barFill;
     
     System.Guid entityID;
 
@@ -18,7 +18,7 @@ public class BossHealthBar : MonoBehaviour {
 
         currentHealth = target.GetEntityData(EntityDataType.Health);
         maxHealth = target.GetAttribute(AttributeTypes.HealthMax).GetValue();
-        fillBar.fillAmount = (currentHealth / maxHealth);
+        barFill.fillAmount = (currentHealth / maxHealth);
     }
 
     private void OnDestroy() {
@@ -27,6 +27,6 @@ public class BossHealthBar : MonoBehaviour {
 
     void HealthChanged(int param) {
         currentHealth = (param / 1000f);
-        fillBar.fillAmount = (currentHealth / maxHealth);
+        barFill.fillAmount = (currentHealth / maxHealth);
     }
 }

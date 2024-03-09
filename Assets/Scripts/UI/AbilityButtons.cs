@@ -15,12 +15,6 @@ public class AbilityButtons : MonoBehaviour {
         }
     }
 
-    public void Breakdown() {
-        foreach (AbilityButton button in abilities) {
-            button.Breakdown();
-        }
-    }
-
     public void SetAbilityIcon(AbilityNum buttonNum, Sprite sprite) {
         abilities[(int) buttonNum].icon.sprite = sprite;
     }

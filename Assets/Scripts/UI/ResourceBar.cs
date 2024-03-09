@@ -35,7 +35,7 @@ public class ResourceBar : MonoBehaviour {
         owner.GetAttributes().RegisterListener(AttributeTypes.HealthMax, MaxValueChanged);
     }
 
-    public void Breakdown() {
+    private void OnDestroy() {
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) entityDataType, CurrentValueChanged);
     }
 

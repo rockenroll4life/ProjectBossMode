@@ -7,8 +7,6 @@ public abstract class Player : LivingEntity {
 
     public GameObject UIPrefab;
 
-    GameplayUI ui;
-
     //  Character related Prefabs and Textures
     public SpellIndicatorPrefabs spellIndicatorPrefabs;
     public AbilityTextures abilityTextures;
@@ -21,9 +19,6 @@ public abstract class Player : LivingEntity {
 
     public override void Setup(Level level) {
         base.Setup(level);
-
-        ui = Instantiate(UIPrefab).GetComponent<GameplayUI>();
-        ui.Setup(this);
 
         CameraMovement.SetCameraTarget(this);
     }
@@ -39,6 +34,7 @@ public abstract class Player : LivingEntity {
 
         animator = new LivingEntityAnimator(this);
 
+        InGameUI.EnablePlayerUI(UIPrefab, this);
         InGameUI.EnableBossHealthBar(this);
     }
 
@@ -46,8 +42,6 @@ public abstract class Player : LivingEntity {
         base.UnregisterComponents();
 
         abilities.Breakdown();
-
-        ui.Breakdown();
     }
 
     protected override void UpdateStep() {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InGameUI : MonoBehaviour {
@@ -13,8 +11,9 @@ public class InGameUI : MonoBehaviour {
         }
     }
 
-    public GameObject bossHealthBarPrefab;
+    public GameObject bossHealthBarCanvasPrefab;
 
+    GameplayUI ui = null;
     BossHealthBar bossHealthBar = null;
 
     private void Awake() {
@@ -26,8 +25,12 @@ public class InGameUI : MonoBehaviour {
         }
     }
 
+    private void OnDestroy() {
+        Destroy(gameObject);
+    }
+
     public static void EnableBossHealthBar(LivingEntity target) {
-        GameObject obj = Instantiate(Instance.bossHealthBarPrefab, Instance.transform);
+        GameObject obj = Instantiate(Instance.bossHealthBarCanvasPrefab, Instance.transform);
         Instance.bossHealthBar = obj.GetComponent<BossHealthBar>();
         Instance.bossHealthBar.Setup(target);
     }
@@ -35,5 +38,14 @@ public class InGameUI : MonoBehaviour {
     public static void DisableBossHealthBar() {
         Destroy(Instance.bossHealthBar.gameObject);
         Instance.bossHealthBar = null;
+    }
+
+    public static void EnablePlayerUI(GameObject playerUIPrefab, Player uiOwner) {
+        Instance.ui = Instantiate(playerUIPrefab, Instance.transform).GetComponent<GameplayUI>();
+        Instance.ui.Setup(uiOwner);
+    }
+
+    public static void DisablePlayerUI() {
+        Destroy(Instance.ui.gameObject);
     }
 }

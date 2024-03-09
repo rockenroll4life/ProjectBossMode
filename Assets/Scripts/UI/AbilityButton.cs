@@ -21,6 +21,10 @@ public class AbilityButton : MonoBehaviour {
 
     bool channeling = false;
 
+    bool destroying = false;
+
+    public AbilityBase GetAbility() => ability;
+
     public void Setup(LivingEntity owner, AbilityBase ability, AbilityNum abilityID) {
         EventManager.StartListening(GameEvents.Keybindings_Changed, KeyBindingsChanged);
 
@@ -37,9 +41,8 @@ public class AbilityButton : MonoBehaviour {
         UpdateAbilityKeybind();
     }
 
-    public AbilityBase GetAbility() => ability;
-
-    public void Breakdown() {
+    private void OnDestroy() {
+        destroying = true;
         UnregisterEvents();
         UpdateAbilityKeybind();
     }
@@ -73,7 +76,7 @@ public class AbilityButton : MonoBehaviour {
 
         //  Then, if we have a new keybind, update our kind and then start listening for it
         keybind = Settings.GetKeyBinding(bindingKey);
-        if (keybind != KeyCode.None) {
+        if (keybind != KeyCode.None && !destroying) {
             keybindText.text = KeyCodeUtils.ToCharacter(keybind);
             EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
             EventManager.StartListening(GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);

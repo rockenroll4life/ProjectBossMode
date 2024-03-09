@@ -10,10 +10,4 @@ public class ResourceBars : MonoBehaviour {
         bars[(int) EntityDataType.Health].Setup(owner, AttributeTypes.HealthMax, EntityDataType.Health, resourceValueChangedDelegate);
         bars[(int) EntityDataType.Mana].Setup(owner, AttributeTypes.ManaMax, EntityDataType.Mana, resourceValueChangedDelegate);
     }
-
-    public void Breakdown() {
-        foreach (ResourceBar bar in bars) {
-            bar.Breakdown();
-        }
-    }
 }
