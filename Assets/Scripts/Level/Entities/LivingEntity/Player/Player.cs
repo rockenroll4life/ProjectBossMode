@@ -9,7 +9,6 @@ public abstract class Player : LivingEntity {
 
     //  Character related Prefabs and Textures
     public SpellIndicatorPrefabs spellIndicatorPrefabs;
-    public AbilityTextures abilityTextures;
 
     public override EntityType GetEntityType() => EntityType.Player;
     public override Type GetSystemType() => typeof(Player);
