@@ -57,10 +57,10 @@
             Entity_Stop_Movement = 1930,
 
             //  Targeting Game Events
-            Targeted_Entity = 1950,
-            Targeted_World = 1951,
+            Targeted_Entity = 1940,
+            Targeted_World = 1941,
 
-            LivingEntity_Hurt = 1952,
+            LivingEntity_Hurt = 1942,
 
             //========================================================
             //  Global Game Events: 2000 - ???
