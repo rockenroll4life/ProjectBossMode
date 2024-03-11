@@ -123,6 +123,76 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &129984565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129984566}
+  - component: {fileID: 129984567}
+  m_Layer: 0
+  m_Name: AbilityManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &129984566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129984565}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1911391093}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &129984567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129984565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf6476b982376d41a4235a480899d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityData:
+  - displayName: Burning Passion
+    icon: {fileID: 21300000, guid: ce78874187bde5645a33a9198f211e1e, type: 3}
+    resourceCost:
+      costType: 1
+      cost: 0
+  - displayName: Fire Breath
+    icon: {fileID: 21300000, guid: ec4ddab9037306943be168b3db91c597, type: 3}
+    resourceCost:
+      costType: 1
+      cost: 20
+  - displayName: Ring of Fire
+    icon: {fileID: 21300000, guid: fd0015d52b0d28349ba423c29944142e, type: 3}
+    resourceCost:
+      costType: 1
+      cost: 30
+  - displayName: Meteor
+    icon: {fileID: 21300000, guid: d650bcb6204acf243978de2960caedd9, type: 3}
+    resourceCost:
+      costType: 1
+      cost: 50
+  - displayName: Burning Knowledge
+    icon: {fileID: 21300000, guid: 9dd59c211cbc74941bf59be30ac9c36e, type: 3}
+    resourceCost:
+      costType: 0
+      cost: 10
 --- !u!1 &136249395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,6 +1262,38 @@ Transform:
   - {fileID: 1158768848}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1911391092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1911391093}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1911391093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911391092}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 129984566}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5042250716343376558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1274,6 +1376,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1911391093}
   - {fileID: 877589763}
   - {fileID: 150543683}
   - {fileID: 963194228}
