@@ -1,13 +1,15 @@
 public class ResourceCost{
-    private readonly EntityDataType costType;
-    private readonly int cost;
+    private readonly ResourceCostData data;
     private float resourceCostReduction = 0;
 
-    public EntityDataType GetResourceType() => costType;
+    public EntityDataType GetResourceType() => data.costType;
 
-    public ResourceCost(LivingEntity owner, EntityDataType costType, int cost) {
-        this.costType = costType;
-        this.cost = cost;
+    public ResourceCost(LivingEntity owner, EntityDataType costType, int cost)
+        : this(owner, new ResourceCostData(costType, cost)) {
+    }
+
+    public ResourceCost(LivingEntity owner, ResourceCostData data) {
+        this.data = data;
 
         if (owner != null) {
             owner.GetAttributes().RegisterListener(AttributeTypes.ResourceCostReduction, ResourceCostReductionChanged);
@@ -16,8 +18,8 @@ public class ResourceCost{
     }
 
     public int GetCost() {
-        float reduction = cost * resourceCostReduction;
-        return (int) (cost - reduction);
+        float reduction = data.cost * resourceCostReduction;
+        return (int) (data.cost - reduction);
     }
 
     public void ResourceCostReductionChanged(int param) {

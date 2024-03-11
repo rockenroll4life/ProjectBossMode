@@ -11,11 +11,11 @@ public struct AbilityTextures {
     public Texture2D ability5Texture;
 }
 
-public class AbilityManager {
+public class Abilities {
     readonly LivingEntity owner;
     readonly Dictionary<AbilityNum, AbilityBase> abilities = new();
 
-    public AbilityManager(LivingEntity owner) {
+    public Abilities(LivingEntity owner) {
         this.owner = owner;
     }
 

@@ -5,7 +5,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public GameObject attackProjectilePrefab;
 
     protected StatusEffectManager statusEffects;
-    protected AbilityManager abilities;
+    protected Abilities abilities;
     protected SpellIndicators spellIndicators;
     protected Locomotion locomotion;
     protected EntityAnimator animator;
@@ -27,7 +27,7 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     public ITargeter GetTargeter() => targeter;
     public Locomotion GetLocomotion() => locomotion;
-    public AbilityManager GetAbilities() => abilities;
+    public Abilities GetAbilities() => abilities;
     public SpellIndicators GetSpellIndicators() => spellIndicators;
 
     public float GetEntityData(EntityDataType type) => entityData.Get(type);
@@ -51,7 +51,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected virtual void RegisterComponents() {
         statusEffects = new StatusEffectManager(this);
 
-        abilities = new AbilityManager(this);
+        abilities = new Abilities(this);
         RegisterAbilities();
     }
 
