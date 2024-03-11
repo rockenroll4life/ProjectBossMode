@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class CastAbilityBase : AbilityBase {
     bool isCasting = false;
 
-    public CastAbilityBase(LivingEntity owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public CastAbilityBase(LivingEntity owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Cast;
@@ -18,7 +18,7 @@ public abstract class CastAbilityBase : AbilityBase {
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Targeted_Entity, CancelAbility);
         EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
-        for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
+        for (int i = 0; i < Ability.Info.NUM_ABILITIES; i++) {
             if (i == GetAbilityID()) {
                 EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + i, AttemptUseAbility);
             } else {
@@ -34,7 +34,7 @@ public abstract class CastAbilityBase : AbilityBase {
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Targeted_Entity, CancelAbility);
         EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
-        for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
+        for (int i = 0; i < Ability.Info.NUM_ABILITIES; i++) {
             if (i == GetAbilityID()) {
                 EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press + i, AttemptUseAbility);
             } else {

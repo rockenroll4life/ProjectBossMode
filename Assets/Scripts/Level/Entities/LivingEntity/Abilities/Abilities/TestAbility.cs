@@ -1,6 +1,6 @@
 ﻿public class TestAbility : ConeAbilityBase {
-    public TestAbility(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public TestAbility(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
         cost = new ResourceCost(owner, EntityDataType.Mana, 10);
     }
 

@@ -2,7 +2,7 @@
 
 public class Abilities {
     readonly LivingEntity owner;
-    readonly Dictionary<AbilityNum, AbilityBase> abilities = new();
+    readonly Dictionary<Ability.Binding, AbilityBase> abilities = new();
 
     public Abilities(LivingEntity owner) {
         this.owner = owner;
@@ -15,8 +15,8 @@ public class Abilities {
     }
 
     public void RegisterAbility(AbilityBase ability) {
-        abilities.Add(ability.GetAbilityNum(), ability);
+        abilities.Add(ability.GetAbilityBinding(), ability);
     }
 
-    public AbilityBase GetAbility(AbilityNum abilityNum) => abilities.GetValueOrDefault(abilityNum);
+    public AbilityBase GetAbility(Ability.Binding abilityBinding) => abilities.GetValueOrDefault(abilityBinding);
 }

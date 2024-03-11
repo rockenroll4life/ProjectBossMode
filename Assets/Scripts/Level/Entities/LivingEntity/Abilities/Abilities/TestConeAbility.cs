@@ -2,8 +2,8 @@
 using UnityEngine;
 
 public class TestConeAbility : ConeAbilityBase {
-    public TestConeAbility(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public TestConeAbility(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
         cost = new ResourceCost(owner, EntityDataType.Mana, 20);
     }
 

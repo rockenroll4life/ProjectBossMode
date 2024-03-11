@@ -2,8 +2,8 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public abstract class ChannelAbilityBase : AbilityBase {
-    public ChannelAbilityBase(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public ChannelAbilityBase(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Channel;

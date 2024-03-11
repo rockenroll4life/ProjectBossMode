@@ -2,8 +2,8 @@ using RockUtils.GameEvents;
 
 public abstract class ToggleAbilityBase : AbilityBase {
     protected bool toggled = false;
-    public ToggleAbilityBase(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public ToggleAbilityBase(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Toggle;

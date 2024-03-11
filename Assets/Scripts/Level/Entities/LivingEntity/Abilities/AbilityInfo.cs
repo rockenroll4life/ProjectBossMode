@@ -4,19 +4,20 @@ namespace Ability {
         public static int NUM_ABILITIES = 5;
     }
 
-    public enum Input {
+    public enum Binding {
         NONE = -1,
         Ability1,
         Ability2,
         Ability3,
         Ability4,
         Ultimate,
-        _COUNT
     }
 
-    enum Type {
-
+    enum ID {
+        BurningPassion,
+        FireBreath,
+        RingOfFire,
+        BurningKnowledge,
+        Meteor,
     }
-
-    
 }

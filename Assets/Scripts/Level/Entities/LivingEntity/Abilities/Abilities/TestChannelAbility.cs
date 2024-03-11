@@ -1,6 +1,6 @@
 public class TestChannelAbility : ChannelAbilityBase {
-    public TestChannelAbility(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public TestChannelAbility(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
         cost = new ResourceCost(owner, EntityDataType.Health, 10);
     }
 

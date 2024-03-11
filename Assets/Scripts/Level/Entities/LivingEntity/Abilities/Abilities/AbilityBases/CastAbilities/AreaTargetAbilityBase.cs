@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AreaTargetAbilityBase : CastAbilityBase {
-    protected AreaTargetAbilityBase(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    protected AreaTargetAbilityBase(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
     }
 
     protected abstract float GetSpellRadius();

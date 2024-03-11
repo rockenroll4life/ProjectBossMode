@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AOEAbilityBase : CastAbilityBase {
-    public AOEAbilityBase(LivingEntity owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public AOEAbilityBase(LivingEntity owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
     }
 
     protected abstract float GetSpellRadius();

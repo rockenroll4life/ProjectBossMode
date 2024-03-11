@@ -13,12 +13,12 @@ public abstract class AbilityBase {
     }
     
     protected LivingEntity owner;
-    AbilityNum abilityID = AbilityNum.NONE;
+    Ability.Binding abilityBinding = Ability.Binding.NONE;
     protected ResourceCost cost = FREE_RESOURCE_COST;
 
-    public AbilityBase(LivingEntity owner, AbilityNum abilityNum) {
+    public AbilityBase(LivingEntity owner, Ability.Binding abilityBinding) {
         this.owner = owner;
-        SetAbilityID(abilityNum);
+        SetAbilityID(abilityBinding);
     }
 
     protected abstract string GetName();
@@ -27,8 +27,8 @@ public abstract class AbilityBase {
     protected abstract TriggerType GetTriggerType();
 
     protected virtual bool InterruptsMovement() => false;
-    public int GetAbilityID() => (int) abilityID;
-    public AbilityNum GetAbilityNum() => abilityID;
+    public int GetAbilityID() => (int) abilityBinding;
+    public Ability.Binding GetAbilityBinding() => abilityBinding;
     public ResourceCost GetResourceCost() => cost;
     protected virtual void RegisterEvents() { }
     protected virtual void UnregisterEvents() { }
@@ -36,22 +36,22 @@ public abstract class AbilityBase {
     protected virtual void RegisterAttributes() { }
 
     public virtual void Breakdown() {
-        if (abilityID != AbilityNum.NONE) {
+        if (abilityBinding != Ability.Binding.NONE) {
             UnregisterEvents();
         }
     }
 
-    public void SetAbilityID(AbilityNum abilityID) {
+    public void SetAbilityID(Ability.Binding abilityID) {
         RemoveAbility();
 
-        this.abilityID = abilityID;
+        this.abilityBinding = abilityID;
         RegisterEvents();
         RegisterAttributes();
     }
 
     public void RemoveAbility() {
         Breakdown();
-        abilityID = AbilityNum.NONE;
+        abilityBinding = Ability.Binding.NONE;
     }
 
     protected void AttemptUseAbility(int param) {

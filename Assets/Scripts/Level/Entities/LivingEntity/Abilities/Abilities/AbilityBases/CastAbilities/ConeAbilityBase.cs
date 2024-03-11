@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ConeAbilityBase : CastAbilityBase {
-    public ConeAbilityBase(Player owner, AbilityNum abilityNum)
-        : base(owner, abilityNum) {
+    public ConeAbilityBase(Player owner, Ability.Binding abilityBinding)
+        : base(owner, abilityBinding) {
     }
 
     protected abstract float GetSpellRadius();
