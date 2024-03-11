@@ -51,17 +51,17 @@ public class AbilityButton : MonoBehaviour {
         owner.GetAttributes().RegisterListener(AttributeTypes.Ability1Cooldown + (int) abilityBinding, UpdateMaxCooldown);
 
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Ability1_Cooldown + (int) abilityBinding, UpdateCooldown);
-        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityBinding, AbilityToggled);
-        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityBinding, AbilityChannelStart);
-        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Stop + (int) abilityBinding, AbilityChannelStop);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Toggle, AbilityToggled);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start, AbilityChannelStart);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Channel_Stop, AbilityChannelStop);
     }
 
     void UnregisterEvents() {
         owner.GetAttributes().UnregisterListener(AttributeTypes.Ability1Cooldown + (int) abilityBinding, UpdateMaxCooldown);
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Ability1_Cooldown + (int) abilityBinding, UpdateCooldown);
-        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Toggle + (int) abilityBinding, AbilityToggled);
-        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start + (int) abilityBinding, AbilityChannelStart);
-        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Stop + (int) abilityBinding, AbilityChannelStop);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Toggle, AbilityToggled);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Start, AbilityChannelStart);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Channel_Stop, AbilityChannelStop);
     }
 
     void UpdateAbilityKeybind() {
@@ -107,30 +107,36 @@ public class AbilityButton : MonoBehaviour {
     }
 
     void AbilityPressed(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Press + (int) abilityBinding);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Press, (int) abilityBinding);
     }
 
     void AbilityReleased(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Release + (int) abilityBinding);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Release, (int) abilityBinding);
     }
 
     void AbilityHeld(int param) {
-        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Held + (int) abilityBinding);
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Held, (int) abilityBinding);
     }
 
     void AbilityToggled(int param) {
-        auraIcon.gameObject.SetActive(!auraIcon.gameObject.activeSelf);
+        if (param == (int) abilityBinding) {
+            auraIcon.gameObject.SetActive(!auraIcon.gameObject.activeSelf);
+        }
     }
 
     void AbilityChannelStart(int param) {
-        channeling = true;
-        cooldown.fillAmount = 100;
-        cooldown.gameObject.SetActive(true);
+        if (param == (int) abilityBinding) {
+            channeling = true;
+            cooldown.fillAmount = 100;
+            cooldown.gameObject.SetActive(true);
+        }
     }
 
     void AbilityChannelStop(int param) {
-        channeling = false;
-        cooldown.gameObject.SetActive(false);
+        if (param == (int) abilityBinding) {
+            channeling = false;
+            cooldown.gameObject.SetActive(false);
+        }
     }
 
     //  TODO: [Rock]: We now have access to the ability, just get the max Cooldown from it

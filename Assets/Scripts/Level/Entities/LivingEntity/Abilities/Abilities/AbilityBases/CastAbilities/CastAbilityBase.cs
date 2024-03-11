@@ -18,13 +18,7 @@ public abstract class CastAbilityBase : AbilityBase {
         EventManager.StartListening(owner.GetEntityID(), GameEvents.Targeted_Entity, CancelAbility);
         EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
-        for (int i = 0; i < Ability.Info.NUM_ABILITIES; i++) {
-            if (i == GetAbilityID()) {
-                EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + i, AttemptUseAbility);
-            } else {
-                EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + i, OtherAbilityPressed);
-            }
-        }
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press, AbilityPressed);
     }
 
     protected override void UnregisterEvents() {
@@ -34,13 +28,7 @@ public abstract class CastAbilityBase : AbilityBase {
         EventManager.StopListening(owner.GetEntityID(), GameEvents.Targeted_Entity, CancelAbility);
         EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) KeyCode.Escape, CancelAbility);
 
-        for (int i = 0; i < Ability.Info.NUM_ABILITIES; i++) {
-            if (i == GetAbilityID()) {
-                EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press + i, AttemptUseAbility);
-            } else {
-                EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press + i, OtherAbilityPressed);
-            }
-        }
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press, AbilityPressed);
     }
 
     protected override bool CanUseAbility() {
@@ -87,6 +75,14 @@ public abstract class CastAbilityBase : AbilityBase {
         if (isCasting) {
             isCasting = false;
             owner.GetSpellIndicators().ResetIndicators();
+        }
+    }
+
+    void AbilityPressed(int param) {
+        if (param == (int) GetAbilityBinding()) {
+            AttemptUseAbility(param);
+        } else {
+            OtherAbilityPressed(param);
         }
     }
 

@@ -55,8 +55,10 @@ public abstract class AbilityBase {
     }
 
     protected void AttemptUseAbility(int param) {
-        if (CanUseAbility()) {
-            UseAbility();
+        if (param == (int) GetAbilityBinding()) {
+            if (CanUseAbility()) {
+                UseAbility();
+            }
         }
     }
 

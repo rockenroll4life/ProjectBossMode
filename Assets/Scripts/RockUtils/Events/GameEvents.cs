@@ -2,7 +2,7 @@
     namespace GameEvents {
         public enum GameEvents {
             //========================================================
-            //  Input Game Events
+            //  Input Game Events: 0 - 1899
             //========================================================
             //  We're reserving the first 512 ids for KeyCode support, probably don't really need this many but that's what we're doing...
             //  Just for safety we'll resume the values at 600
@@ -40,34 +40,30 @@
             Mouse_Scroll_Wheel = 1815,
 
             //========================================================
-            //  Entity Game Events
+            //  Entity Game Events: 1900 - 1999
             //========================================================
-            //  Ability Actions - 5 values reserved for each (QWERT)
+            //  Ability Actions
             Ability_Press = 1900,
+            Ability_Release = 1901,
+            Ability_Held = 1902,
 
-            Ability_Release = 1905,
-
-            Ability_Held = 1910,
-
-            //  NOTE: [Rock]: Currently used by the UI to set the toggle...however I don't like it...we should setup this as a generic
-            //  Ability_Use event with a separate enum list of what the param id means
-            Ability_Toggle = 1925,
-            Ability_Channel_Start = 1930,
-            Ability_Channel_Stop = 1935,
+            Ability_Toggle = 1903,
+            Ability_Channel_Start = 1904,
+            Ability_Channel_Stop = 1905,
 
             //  Entity Data Changed - 20 values reserved
-            Entity_Data_Changed = 1940,
+            Entity_Data_Changed = 1910,
 
-            Entity_Stop_Movement = 1960,
+            Entity_Stop_Movement = 1930,
 
             //  Targeting Game Events
-            Targeted_Entity = 1961,
-            Targeted_World = 1962,
+            Targeted_Entity = 1950,
+            Targeted_World = 1951,
 
-            LivingEntity_Hurt = 1963,
+            LivingEntity_Hurt = 1952,
 
             //========================================================
-            //  Global Game Events
+            //  Global Game Events: 2000 - ???
             //========================================================
             Game_Paused = 2000,
             Keybindings_Changed = 2001,

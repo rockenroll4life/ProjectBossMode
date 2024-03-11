@@ -11,13 +11,13 @@ public abstract class ToggleAbilityBase : AbilityBase {
     protected override void RegisterEvents() {
         base.RegisterEvents();
 
-        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press + GetAbilityID(), AttemptUseAbility);
+        EventManager.StartListening(owner.GetEntityID(), GameEvents.Ability_Press, AbilityPressed);
     }
 
     protected override void UnregisterEvents() {
         base.UnregisterEvents();
 
-        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press + GetAbilityID(), AttemptUseAbility);
+        EventManager.StopListening(owner.GetEntityID(), GameEvents.Ability_Press, AbilityPressed);
     }
 
     protected override bool CanUseAbility() {
@@ -27,7 +27,13 @@ public abstract class ToggleAbilityBase : AbilityBase {
     protected override void UseAbility() {
         base.UseAbility();
 
-        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Toggle + GetAbilityID());
+        EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Toggle, (int) GetAbilityBinding());
         toggled = !toggled;
+    }
+
+    void AbilityPressed(int param) {
+        if (param == (int) GetAbilityBinding()) {
+            AttemptUseAbility(param);
+        }
     }
 }
