@@ -8,10 +8,10 @@ public class AbilityButtons : MonoBehaviour {
     public void Setup(LivingEntity owner) {
         this.owner = owner;
 
-        AbilityManager abilityManager = owner.GetAbilities();
+        Abilities abilities = owner.GetAbilities();
         for (int i = 0; i < (int) AbilityNum._COUNT; i++) {
             AbilityNum abilityNum = (AbilityNum) i;
-            abilities[i].Setup(owner, abilityManager.GetAbility(abilityNum), abilityNum);
+            this.abilities[i].Setup(owner, abilities.GetAbility(abilityNum), abilityNum);
         }
     }
 
