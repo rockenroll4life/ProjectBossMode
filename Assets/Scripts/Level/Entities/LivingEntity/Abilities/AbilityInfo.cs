@@ -1,7 +1,19 @@
+using System.Collections.Generic;
+
 namespace Ability {
 
     public class Info {
         public static int NUM_ABILITIES = 5;
+
+        private static readonly Dictionary<ID, System.Type> abilities = new Dictionary<ID, System.Type>() {
+            { ID.BurningPassion,    typeof(TestNoStopAbility) },
+            { ID.FireBreath,        typeof(TestConeAbility) },
+            { ID.RingOfFire,        typeof(TestAOEAbility) },
+            { ID.BurningKnowledge,  typeof(TestChannelAbility) },
+            { ID.Meteor,            typeof(TestAreaTargetAbility) },
+        };
+
+        public static System.Type GetAbility(ID abilityID) => abilities[abilityID];
     }
 
     public enum Binding {
@@ -13,7 +25,7 @@ namespace Ability {
         Ultimate,
     }
 
-    enum ID {
+    public enum ID {
         BurningPassion,
         FireBreath,
         RingOfFire,

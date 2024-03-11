@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Abilities {
     readonly LivingEntity owner;
@@ -14,8 +15,9 @@ public class Abilities {
         }
     }
 
-    public void RegisterAbility(AbilityBase ability) {
-        abilities.Add(ability.GetAbilityBinding(), ability);
+    public void RegisterAbility(Ability.ID abilityID, Ability.Binding abilityBinding) {
+        AbilityBase newAbility = (AbilityBase) Activator.CreateInstance(Ability.Info.GetAbility(abilityID), owner, abilityBinding );
+        abilities.Add(abilityBinding, newAbility);
     }
 
     public AbilityBase GetAbility(Ability.Binding abilityBinding) => abilities.GetValueOrDefault(abilityBinding);

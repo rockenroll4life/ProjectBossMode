@@ -1,10 +1,10 @@
 public class TestCharacter1 : Player {
     protected override void RegisterAbilities() {
-        GetAbilities().RegisterAbility(new TestNoStopAbility(this, Ability.Binding.Ability1));
-        GetAbilities().RegisterAbility(new TestConeAbility(this, Ability.Binding.Ability2));
-        GetAbilities().RegisterAbility(new TestAOEAbility(this, Ability.Binding.Ability3));
-        GetAbilities().RegisterAbility(new TestChannelAbility(this, Ability.Binding.Ability4));
-        GetAbilities().RegisterAbility(new TestAreaTargetAbility(this, Ability.Binding.Ultimate));
+        GetAbilities().RegisterAbility(Ability.ID.BurningPassion, Ability.Binding.Ability1);
+        GetAbilities().RegisterAbility(Ability.ID.FireBreath, Ability.Binding.Ability2);
+        GetAbilities().RegisterAbility(Ability.ID.RingOfFire, Ability.Binding.Ability3);
+        GetAbilities().RegisterAbility(Ability.ID.BurningKnowledge, Ability.Binding.Ability4);
+        GetAbilities().RegisterAbility(Ability.ID.Meteor, Ability.Binding.Ultimate);
     }
 
     protected override void RegisterAttributes() {
