@@ -1,4 +1,4 @@
-public class ResourceCost{
+public class ResourceCost {
     private readonly ResourceCostData data;
     private float resourceCostReduction = 0;
 
