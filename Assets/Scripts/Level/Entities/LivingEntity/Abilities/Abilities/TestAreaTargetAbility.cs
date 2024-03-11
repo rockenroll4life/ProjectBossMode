@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestAreaTargetAbility : AreaTargetAbility {
+public class TestAreaTargetAbility : AreaTargetAbilityBase {
     public TestAreaTargetAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
         cost = new ResourceCost(owner, EntityDataType.Mana, 50);

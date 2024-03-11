@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TestConeAbility : ConeAbility {
+public class TestConeAbility : ConeAbilityBase {
     public TestConeAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
         cost = new ResourceCost(owner, EntityDataType.Mana, 20);

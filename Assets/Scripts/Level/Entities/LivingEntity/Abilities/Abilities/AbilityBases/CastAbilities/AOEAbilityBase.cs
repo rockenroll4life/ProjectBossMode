@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AOEAbility : CastAbilityBase {
-    public AOEAbility(LivingEntity owner, AbilityNum abilityNum)
+public abstract class AOEAbilityBase : CastAbilityBase {
+    public AOEAbilityBase(LivingEntity owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 

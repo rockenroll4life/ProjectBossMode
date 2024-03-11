@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ConeAbility : CastAbilityBase {
-    public ConeAbility(Player owner, AbilityNum abilityNum)
+public abstract class ConeAbilityBase : CastAbilityBase {
+    public ConeAbilityBase(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 

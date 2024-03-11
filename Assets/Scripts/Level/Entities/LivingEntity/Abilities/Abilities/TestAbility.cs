@@ -1,4 +1,4 @@
-﻿public class TestAbility : ConeAbility {
+﻿public class TestAbility : ConeAbilityBase {
     public TestAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
         cost = new ResourceCost(owner, EntityDataType.Mana, 10);

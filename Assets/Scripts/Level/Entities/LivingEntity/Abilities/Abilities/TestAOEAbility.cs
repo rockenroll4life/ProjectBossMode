@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestAOEAbility : AOEAbility {
+public class TestAOEAbility : AOEAbilityBase {
     public TestAOEAbility(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
         cost = new ResourceCost(owner, EntityDataType.Mana, 30);

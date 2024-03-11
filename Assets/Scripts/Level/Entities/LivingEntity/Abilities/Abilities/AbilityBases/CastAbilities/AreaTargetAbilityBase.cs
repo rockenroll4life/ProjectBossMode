@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AreaTargetAbility : CastAbilityBase {
-    protected AreaTargetAbility(Player owner, AbilityNum abilityNum)
+public abstract class AreaTargetAbilityBase : CastAbilityBase {
+    protected AreaTargetAbilityBase(Player owner, AbilityNum abilityNum)
         : base(owner, abilityNum) {
     }
 
