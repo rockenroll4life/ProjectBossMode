@@ -1,4 +1,5 @@
 using UnityEngine;
+using RockUtils.StreamingAssetsUtils;
 
 public class AbilityManager : MonoBehaviour {
     static AbilityManager instance;
@@ -27,13 +28,7 @@ public class AbilityManager : MonoBehaviour {
     public static Sprite GetAbilityIcon(Ability.ID abilityID) {
         foreach (AbilityData data in instance.abilityData) {
             if (data.id == abilityID) {
-                string filePath = Application.streamingAssetsPath + "/Abilities/" + data.iconName;
-                byte[] pngBytes = System.IO.File.ReadAllBytes(filePath);
-
-                Texture2D tex = new Texture2D(512, 512);
-                tex.LoadImage(pngBytes);
-
-                return Sprite.Create(tex, new Rect(0f, 0f, 512, 512), new Vector2(0.5f, 0.5f), 100f);
+                return StreamingAssetsUtils.LoadSprite("Abilities/" + data.iconName, 512, 512);
             }
         }
 
