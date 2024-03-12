@@ -3,6 +3,7 @@ using System.Collections.Generic;
 namespace Ability {
 
     public class Info {
+        public static readonly ResourceCost FREE_RESOURCE_COST = new ResourceCost(null, EntityDataType.Mana, 0);
         public static int NUM_ABILITIES = 5;
 
         private static readonly Dictionary<ID, System.Type> abilities = new Dictionary<ID, System.Type>() {

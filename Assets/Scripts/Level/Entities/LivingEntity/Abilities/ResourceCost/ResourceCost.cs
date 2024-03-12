@@ -3,6 +3,7 @@ public class ResourceCost {
     private float resourceCostReduction = 0;
 
     public EntityDataType GetResourceType() => data.costType;
+    public ResourceCostData GetResourceCostData() => data;
 
     public ResourceCost(LivingEntity owner, EntityDataType costType, int cost)
         : this(owner, new ResourceCostData(costType, cost)) {
