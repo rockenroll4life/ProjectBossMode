@@ -5,4 +5,5 @@ public class TestChannelAbility : ChannelAbilityBase {
     }
 
     protected override string GetName() { return "ChannelAbilityBase"; }
+    public override Ability.ID GetID() => Ability.ID.BurningKnowledge;
 }

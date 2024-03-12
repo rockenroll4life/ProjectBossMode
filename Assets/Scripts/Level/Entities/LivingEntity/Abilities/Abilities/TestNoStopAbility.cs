@@ -4,4 +4,5 @@
     }
 
     protected override string GetName() => "TestNoStopAbility";
+    public override Ability.ID GetID() => Ability.ID.BurningPassion;
 }

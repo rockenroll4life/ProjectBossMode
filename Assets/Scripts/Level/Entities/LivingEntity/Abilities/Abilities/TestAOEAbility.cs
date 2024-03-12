@@ -9,6 +9,7 @@ public class TestAOEAbility : AOEAbilityBase {
 
     protected override string GetName() => "TestAOEAbility";
     protected override float GetSpellRadius() => 6;
+    public override Ability.ID GetID() => Ability.ID.RingOfFire;
 
     protected override void CastAbility() {
         base.CastAbility();

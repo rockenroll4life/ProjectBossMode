@@ -2,7 +2,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class AbilityData {
+    public Ability.ID id;
     public string displayName;
-    public Sprite icon;
+    public string iconName;
     public ResourceCostData resourceCost;
 }

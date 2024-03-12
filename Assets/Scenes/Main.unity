@@ -168,28 +168,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityData:
-  - displayName: Burning Passion
-    icon: {fileID: 21300000, guid: ce78874187bde5645a33a9198f211e1e, type: 3}
+  - id: 0
+    displayName: Burning Passion
+    iconName: BurningPassion.png
     resourceCost:
       costType: 1
       cost: 0
-  - displayName: Fire Breath
-    icon: {fileID: 21300000, guid: ec4ddab9037306943be168b3db91c597, type: 3}
+  - id: 1
+    displayName: Fire Breath
+    iconName: FireBreath.png
     resourceCost:
       costType: 1
       cost: 20
-  - displayName: Ring of Fire
-    icon: {fileID: 21300000, guid: fd0015d52b0d28349ba423c29944142e, type: 3}
+  - id: 2
+    displayName: Ring of Fire
+    iconName: RingOfFire.png
     resourceCost:
       costType: 1
       cost: 30
-  - displayName: Meteor
-    icon: {fileID: 21300000, guid: d650bcb6204acf243978de2960caedd9, type: 3}
+  - id: 4
+    displayName: Meteor
+    iconName: Meteor.png
     resourceCost:
       costType: 1
       cost: 50
-  - displayName: Burning Knowledge
-    icon: {fileID: 21300000, guid: 9dd59c211cbc74941bf59be30ac9c36e, type: 3}
+  - id: 3
+    displayName: Burning Knowledge
+    iconName: BurningKnowledge.png
     resourceCost:
       costType: 0
       cost: 10

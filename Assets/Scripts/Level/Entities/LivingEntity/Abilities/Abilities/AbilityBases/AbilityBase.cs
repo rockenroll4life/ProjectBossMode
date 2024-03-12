@@ -26,6 +26,8 @@ public abstract class AbilityBase {
     //  NOTE: [Rock]: Do we even need this at this point? Investigate...
     protected abstract TriggerType GetTriggerType();
 
+    public abstract Ability.ID GetID();
+
     protected virtual bool InterruptsMovement() => false;
     public int GetAbilityID() => (int) abilityBinding;
     public Ability.Binding GetAbilityBinding() => abilityBinding;
