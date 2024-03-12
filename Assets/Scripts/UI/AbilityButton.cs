@@ -7,9 +7,8 @@ public class AbilityButton : MonoBehaviour {
     public KeyBindingKeys bindingKey;
     public Image icon;
     public Image cooldown;
-    public Text cooldownTimeText;
-    public Text keybindText;
-    public Text resourceCost;
+    public TMPro.TextMeshProUGUI cooldownTimeText;
+    public TMPro.TextMeshProUGUI keybindText;
     public Image auraIcon;
     public Image notEnoughResource;
 
@@ -31,9 +30,6 @@ public class AbilityButton : MonoBehaviour {
         this.owner = owner;
         this.ability = ability;
         this.abilityBinding = abilityBinding;
-
-        int cost = ability.GetResourceCost().GetCost();
-        resourceCost.text = cost > 0 ? cost.ToString() : "";
 
         maxCooldown = owner.GetAttribute(AttributeTypes.Ability1Cooldown + (int) abilityBinding).GetValue();
 
