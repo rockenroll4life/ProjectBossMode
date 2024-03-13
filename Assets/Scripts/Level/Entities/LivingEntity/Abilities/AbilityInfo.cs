@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 
 namespace Ability {
+    public enum ID {
+        BurningPassion,
+        FireBreath,
+        RingOfFire,
+        BurningKnowledge,
+        Meteor,
+    }
 
     public class Info {
         public static readonly ResourceCost FREE_RESOURCE_COST = new ResourceCost(null, EntityDataType.Mana, 0);
@@ -14,7 +21,7 @@ namespace Ability {
             { ID.Meteor,            typeof(TestAreaTargetAbility) },
         };
 
-        public static System.Type GetAbility(ID abilityID) => abilities[abilityID];
+        public static System.Type GetAbilityClass(ID abilityID) => abilities[abilityID];
     }
 
     public enum Binding {
@@ -26,11 +33,4 @@ namespace Ability {
         Ultimate,
     }
 
-    public enum ID {
-        BurningPassion,
-        FireBreath,
-        RingOfFire,
-        BurningKnowledge,
-        Meteor,
-    }
 }

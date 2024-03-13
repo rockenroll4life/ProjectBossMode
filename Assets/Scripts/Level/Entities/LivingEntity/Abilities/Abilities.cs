@@ -16,7 +16,7 @@ public class Abilities {
     }
 
     public void RegisterAbility(Ability.ID abilityID, Ability.Binding abilityBinding) {
-        AbilityBase newAbility = (AbilityBase) Activator.CreateInstance(Ability.Info.GetAbility(abilityID), owner, abilityID, abilityBinding);
+        AbilityBase newAbility = (AbilityBase) Activator.CreateInstance(Ability.Info.GetAbilityClass(abilityID), owner, abilityID, abilityBinding);
         abilities.Add(abilityBinding, newAbility);
     }
 
