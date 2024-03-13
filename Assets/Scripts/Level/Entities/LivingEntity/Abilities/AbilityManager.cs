@@ -42,7 +42,11 @@ public class AbilityManager : MonoBehaviour {
     }
 
     public static Sprite GetAbilityIcon(Ability.ID abilityID) {
-        return StreamingAssetsUtils.LoadSprite($"Abilities/Icons/{instance.abilityData[abilityID].iconName}.png", 512, 512);
+        if (instance.abilityData.TryGetValue(abilityID, out AbilityData data)) {
+            return StreamingAssetsUtils.LoadSprite($"Abilities/Icons/{data.iconName}.png", 512, 512);
+        }
+
+        return null;
     }
 
     public static ResourceCostData GetResourceCostData(Ability.ID abilityID) {
@@ -54,6 +58,10 @@ public class AbilityManager : MonoBehaviour {
     }
 
     public static AbilityData GetAbilityData(Ability.ID abilityID) {
-        return instance.abilityData[abilityID];
+        if (instance.abilityData.TryGetValue(abilityID, out AbilityData data)) {
+            return data;
+        }
+
+        return null;
     }
 }
