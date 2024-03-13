@@ -5,8 +5,8 @@ using RockUtils.GameEvents;
 
 public class ResourceBar : MonoBehaviour {
     public Image barFill;
-    public Text currentText;
-    public Text maxText;
+    public TMPro.TextMeshProUGUI currentText;
+    public TMPro.TextMeshProUGUI maxText;
     public Color barColor;
 
     //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
