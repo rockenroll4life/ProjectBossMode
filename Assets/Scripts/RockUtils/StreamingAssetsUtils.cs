@@ -22,6 +22,19 @@ namespace RockUtils {
 
                 return null;
             }
+
+            public static TextAsset LoadTextAsset(string path) {
+                if (path == "") {
+                    return null;
+                }
+
+                string filePath = $"{Application.streamingAssetsPath}/{path}";
+                if (System.IO.File.Exists(filePath)) {
+                    return new TextAsset(System.IO.File.ReadAllText(filePath));
+                }
+
+                return null;
+            }
         }
     }
 }

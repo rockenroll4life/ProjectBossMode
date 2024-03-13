@@ -1,5 +1,6 @@
 using UnityEngine;
 using RockUtils.StreamingAssetsUtils;
+using RockUtils.CSVReaderUtils;
 using System.Collections.Generic;
 
 public class AbilityManager : MonoBehaviour {
@@ -14,6 +15,9 @@ public class AbilityManager : MonoBehaviour {
         }
     }
 
+    [SerializeField]
+    private readonly Dictionary<Ability.ID, AbilityData> abilityData = new Dictionary<Ability.ID, AbilityData>();
+
     private void Awake() {
         if (instance == null) {
             instance = this;
@@ -21,38 +25,28 @@ public class AbilityManager : MonoBehaviour {
             Debug.LogWarning("Duplicate instance of AbilityManager found. Destroying this instance.");
             Destroy(gameObject);
         }
+
+        LoadCSV();
     }
 
-    [SerializeField]
-    private AbilityData[] abilityData;
-    private readonly Dictionary<Ability.ID, AbilityData> _abilityData = new Dictionary<Ability.ID, AbilityData>();
+    void LoadCSV() {
+        TextAsset abilityText = StreamingAssetsUtils.LoadTextAsset($"Abilities/Abilities.csv");
+        string[] abilities = CSVReaderUtils.ReadCSV(abilityText, 5);
+
+        int tableSize = abilities.Length / 5;
+        for (int i = 0; i < tableSize; i++) {
+            Ability.ID id = (Ability.ID) System.Enum.Parse(typeof(Ability.ID), abilities[(i * tableSize) + 0]);
+            AbilityData newData = new AbilityData(abilities[(i * tableSize) + 0], abilities[(i * tableSize) + 1], abilities[(i * tableSize) + 2], abilities[(i * tableSize) + 3], abilities[(i * tableSize) + 4]);
+            abilityData.Add(id, newData);
+        }
+    }
 
     public static Sprite GetAbilityIcon(Ability.ID abilityID) {
-        foreach (AbilityData data in instance.abilityData) {
-            if (data.id == abilityID) {
-                return StreamingAssetsUtils.LoadSprite($"Abilities/{data.iconName}.png", 512, 512);
-            }
-        }
-
-        return null;
-    }
-
-    public static Sprite _GetAbilityIcon(Ability.ID abilityID) {
-        return StreamingAssetsUtils.LoadSprite($"Abilities/{instance._abilityData[abilityID].iconName}.png", 512, 512);
+        return StreamingAssetsUtils.LoadSprite($"Abilities/Icons/{instance.abilityData[abilityID].iconName}.png", 512, 512);
     }
 
     public static ResourceCostData GetResourceCostData(Ability.ID abilityID) {
-        foreach (AbilityData data in instance.abilityData) {
-            if (data.id == abilityID) {
-                return data.resourceCost;
-            }
-        }
-
-        return Ability.Info.FREE_RESOURCE_COST.GetResourceCostData();
-    }
-
-    public static ResourceCostData _GetResourceCostData(Ability.ID abilityID) {
-        if (instance._abilityData.TryGetValue(abilityID, out AbilityData data)) {
+        if (instance.abilityData.TryGetValue(abilityID, out AbilityData data)) {
             return data.resourceCost;
         }
 
@@ -60,16 +54,6 @@ public class AbilityManager : MonoBehaviour {
     }
 
     public static AbilityData GetAbilityData(Ability.ID abilityID) {
-        foreach (AbilityData data in instance.abilityData) {
-            if (data.id == abilityID) {
-                return data;
-            }
-        }
-
-        return null;
-    }
-
-    public static AbilityData _GetAbilityData(Ability.ID abilityID) {
-        return instance._abilityData[abilityID];
+        return instance.abilityData[abilityID];
     }
 }

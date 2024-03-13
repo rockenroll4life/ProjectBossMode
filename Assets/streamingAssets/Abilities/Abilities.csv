@@ -1,0 +1,6 @@
+Ability ID,Display Name,Icon Name,Cost Type,Cost
+BurningPassion,Burning Passion,BurningPassion,Mana,0
+FireBreath,Fire Breath,FireBreath,Mana,20
+RingOfFire,Ring of Fire,RingOfFire,Mana,30
+BurningKnowledge,Burning Knowledge,BurningKnowledge,Health,10
+Meteor,Meteor,Meteor,Mana,50
