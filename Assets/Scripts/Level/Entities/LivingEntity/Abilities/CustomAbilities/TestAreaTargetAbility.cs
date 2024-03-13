@@ -2,15 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TestAreaTargetAbility : AreaTargetAbilityBase {
-    public TestAreaTargetAbility(Player owner, Ability.Binding abilityBinding)
-        : base(owner, abilityBinding) {
+    public TestAreaTargetAbility(Player owner, Ability.ID abilityID, Ability.Binding abilityBinding)
+        : base(owner, abilityID, abilityBinding) {
     }
 
-    protected override string GetName() => "TestAreaTargetAbility";
     protected override bool InterruptsMovement() => true;
     protected override float GetSpellRadius() => 2;
     protected override float GetRangeRadius() => 10;
-    public override Ability.ID GetID() => Ability.ID.Meteor;
 
     protected override void CastAbility() {
         base.CastAbility();

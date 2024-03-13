@@ -13,20 +13,24 @@ public abstract class AbilityBase {
     
     protected LivingEntity owner;
     Ability.Binding abilityBinding = Ability.Binding.NONE;
+    protected AbilityData abilityData;
     protected ResourceCost cost = Ability.Info.FREE_RESOURCE_COST;
 
-    public AbilityBase(LivingEntity owner, Ability.Binding abilityBinding) {
+    public AbilityBase(LivingEntity owner, Ability.ID abilityID, Ability.Binding abilityBinding) {
         this.owner = owner;
-        cost = new ResourceCost(owner, AbilityManager.GetResourceCostData(GetID()));
+
+        abilityData = AbilityManager.GetAbilityData(abilityID);
+        cost = new ResourceCost(owner, abilityData.resourceCost);
+
         SetAbilityID(abilityBinding);
     }
 
-    protected abstract string GetName();
+    public string GetName() => abilityData.displayName;
 
     //  NOTE: [Rock]: Do we even need this at this point? Investigate...
     protected abstract TriggerType GetTriggerType();
 
-    public abstract Ability.ID GetID();
+    public Ability.ID GetID() => abilityData.id;
 
     protected virtual bool InterruptsMovement() => false;
     public int GetAbilityID() => (int) abilityBinding;

@@ -1,8 +1,5 @@
 ﻿public class TestNoStopAbility : ToggleAbilityBase {
-    public TestNoStopAbility(Player owner, Ability.Binding abilityBinding)
-        : base(owner, abilityBinding) {
+    public TestNoStopAbility(Player owner, Ability.ID abilityID, Ability.Binding abilityBinding)
+        : base(owner, abilityID, abilityBinding) {
     }
-
-    protected override string GetName() => "TestNoStopAbility";
-    public override Ability.ID GetID() => Ability.ID.BurningPassion;
 }

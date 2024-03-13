@@ -58,4 +58,18 @@ public class AbilityManager : MonoBehaviour {
 
         return Ability.Info.FREE_RESOURCE_COST.GetResourceCostData();
     }
+
+    public static AbilityData GetAbilityData(Ability.ID abilityID) {
+        foreach (AbilityData data in instance.abilityData) {
+            if (data.id == abilityID) {
+                return data;
+            }
+        }
+
+        return null;
+    }
+
+    public static AbilityData _GetAbilityData(Ability.ID abilityID) {
+        return instance._abilityData[abilityID];
+    }
 }

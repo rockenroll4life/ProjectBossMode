@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class CastAbilityBase : AbilityBase {
     bool isCasting = false;
 
-    public CastAbilityBase(LivingEntity owner, Ability.Binding abilityBinding)
-        : base(owner, abilityBinding) {
+    public CastAbilityBase(LivingEntity owner, Ability.ID abilityID, Ability.Binding abilityBinding)
+        : base(owner, abilityID, abilityBinding) {
     }
 
     protected override TriggerType GetTriggerType() => TriggerType.Cast;

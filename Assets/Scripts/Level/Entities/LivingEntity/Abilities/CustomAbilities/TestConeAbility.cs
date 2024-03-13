@@ -2,12 +2,10 @@
 using UnityEngine;
 
 public class TestConeAbility : ConeAbilityBase {
-    public TestConeAbility(Player owner, Ability.Binding abilityBinding)
-        : base(owner, abilityBinding) {
+    public TestConeAbility(Player owner, Ability.ID abilityID, Ability.Binding abilityBinding)
+        : base(owner, abilityID, abilityBinding) {
     }
 
-    protected override string GetName() =>"TestConeAbility";
-    public override Ability.ID GetID() => Ability.ID.FireBreath;
     protected override bool InterruptsMovement() => true;
     protected override float GetSpellAngle() => 180;
     protected override float GetSpellRadius() => 5;

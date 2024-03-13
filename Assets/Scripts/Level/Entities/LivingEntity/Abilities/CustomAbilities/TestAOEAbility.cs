@@ -2,13 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TestAOEAbility : AOEAbilityBase {
-    public TestAOEAbility(Player owner, Ability.Binding abilityBinding)
-        : base(owner, abilityBinding) {
+    public TestAOEAbility(Player owner, Ability.ID abilityID, Ability.Binding abilityBinding)
+        : base(owner, abilityID, abilityBinding) {
     }
 
-    protected override string GetName() => "TestAOEAbility";
     protected override float GetSpellRadius() => 6;
-    public override Ability.ID GetID() => Ability.ID.RingOfFire;
 
     protected override void CastAbility() {
         base.CastAbility();
