@@ -29,6 +29,10 @@ public abstract class ToggleAbilityBase : AbilityBase {
 
         EventManager.TriggerEvent(owner.GetEntityID(), GameEvents.Ability_Toggle, (int) GetAbilityBinding());
         toggled = !toggled;
+
+        if (toggled) {
+            owner.UseResource(GetResourceCost());
+        }
     }
 
     void AbilityPressed(int param) {

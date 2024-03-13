@@ -17,6 +17,7 @@ public abstract class AbilityBase {
 
     public AbilityBase(LivingEntity owner, Ability.Binding abilityBinding) {
         this.owner = owner;
+        cost = new ResourceCost(owner, AbilityManager.GetResourceCostData(GetID()));
         SetAbilityID(abilityBinding);
     }
 
