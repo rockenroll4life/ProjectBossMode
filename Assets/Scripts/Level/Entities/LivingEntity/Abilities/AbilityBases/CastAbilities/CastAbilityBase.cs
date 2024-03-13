@@ -9,8 +9,6 @@ public abstract class CastAbilityBase : AbilityBase {
         : base(owner, abilityID, abilityBinding) {
     }
 
-    protected override TriggerType GetTriggerType() => TriggerType.Cast;
-
     protected override void RegisterEvents() {
         base.RegisterEvents();
 

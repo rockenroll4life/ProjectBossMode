@@ -6,8 +6,6 @@ public abstract class ToggleAbilityBase : AbilityBase {
         : base(owner, abilityID, abilityBinding) {
     }
 
-    protected override TriggerType GetTriggerType() => TriggerType.Toggle;
-
     protected override void RegisterEvents() {
         base.RegisterEvents();
 

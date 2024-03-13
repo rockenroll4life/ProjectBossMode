@@ -4,12 +4,6 @@ public abstract class AbilityBase {
     protected static readonly int LAYER_MASK_GROUND = LayerMask.GetMask("Ground");
     protected static readonly int LAYER_MASK_MOB = LayerMask.GetMask("Mob");
     protected static readonly int LAYER_MASK_PLAYER = LayerMask.GetMask("Player");
-
-    public enum TriggerType {
-        Cast,
-        Toggle,
-        Channel,
-    }
     
     protected LivingEntity owner;
     Ability.Binding abilityBinding = Ability.Binding.NONE;
@@ -26,9 +20,6 @@ public abstract class AbilityBase {
     }
 
     public string GetName() => abilityData.displayName;
-
-    //  NOTE: [Rock]: Do we even need this at this point? Investigate...
-    protected abstract TriggerType GetTriggerType();
 
     public Ability.ID GetID() => abilityData.id;
 
