@@ -1,6 +1,7 @@
 using UnityEngine;
 using RockUtils.StreamingAssetsUtils;
 using RockUtils.CSVReaderUtils;
+using RockUtils.ParseUtils;
 using System.Collections.Generic;
 
 public class AbilityManager : MonoBehaviour {
@@ -35,7 +36,7 @@ public class AbilityManager : MonoBehaviour {
 
         int tableSize = abilities.Length / 5;
         for (int i = 0; i < tableSize; i++) {
-            Ability.ID id = (Ability.ID) System.Enum.Parse(typeof(Ability.ID), abilities[(i * tableSize) + 0]);
+            Ability.ID id = ParseUtils.Parse<Ability.ID>(abilities[(i * tableSize) + 0]);
             AbilityData newData = new AbilityData(abilities[(i * tableSize) + 0], abilities[(i * tableSize) + 1], abilities[(i * tableSize) + 2], abilities[(i * tableSize) + 3], abilities[(i * tableSize) + 4]);
             abilityData.Add(id, newData);
         }

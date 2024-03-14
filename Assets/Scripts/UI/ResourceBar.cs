@@ -9,7 +9,6 @@ public class ResourceBar : MonoBehaviour {
     public TMPro.TextMeshProUGUI maxText;
     public Color barColor;
 
-    //  TODO: [Rock]: Make the owner a LivingEntity instead of a player
     LivingEntity owner;
     EntityDataType entityDataType;
     Action<EntityDataType, float> currentValueChangedDelegate;

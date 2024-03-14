@@ -1,3 +1,5 @@
+using RockUtils.ParseUtils;
+
 [System.Serializable]
 public class AbilityData {
     public Ability.ID id;
@@ -6,9 +8,9 @@ public class AbilityData {
     public ResourceCostData resourceCost;
 
     public AbilityData(string id, string displayName, string iconName, string costType, string cost) {
-        this.id = (Ability.ID) System.Enum.Parse(typeof(Ability.ID), id);
+        this.id = ParseUtils.Parse<Ability.ID>(id);
         this.displayName = displayName;
         this.iconName = iconName;
-        resourceCost = new ResourceCostData((EntityDataType) System.Enum.Parse(typeof(EntityDataType), costType), int.Parse(cost));
+        resourceCost = new ResourceCostData(ParseUtils.Parse<EntityDataType>(costType), ParseUtils.Parse<int>(cost));
     }
 }
