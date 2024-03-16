@@ -10,6 +10,10 @@ namespace RockUtils {
                     return (T) System.Enum.Parse(typeof(T), value);
                 } else if (typeof(T) == typeof(int)) {
                     return (T)(object)int.Parse(value);
+                } else if (typeof(T) == typeof(float)) {
+                    return (T) (object) float.Parse(value);
+                } else {
+                    Debug.LogError("ParseUtils.Parse was passed a T type that isn't setup to be parsed!");
                 }
 
                 return (T)(object)null;
