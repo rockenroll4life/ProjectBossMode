@@ -5,6 +5,7 @@ using RockUtils.ParseUtils;
 using System.Collections.Generic;
 
 public class AbilityManager : MonoBehaviour {
+    private static readonly int SAVE_TABLE_SIZE = 5;
     static AbilityManager instance;
 
     public static AbilityManager Instance {
@@ -16,7 +17,6 @@ public class AbilityManager : MonoBehaviour {
         }
     }
 
-    [SerializeField]
     private readonly Dictionary<Ability.ID, AbilityData> abilityData = new Dictionary<Ability.ID, AbilityData>();
 
     private void Awake() {
@@ -32,12 +32,13 @@ public class AbilityManager : MonoBehaviour {
 
     void LoadCSV() {
         TextAsset abilityText = StreamingAssetsUtils.LoadTextAsset($"Abilities/Abilities.csv");
-        string[] abilities = CSVReaderUtils.ReadCSV(abilityText, 5);
+        string[] abilities = CSVReaderUtils.ReadCSV(abilityText, SAVE_TABLE_SIZE);
 
-        int tableSize = abilities.Length / 5;
+        int tableSize = abilities.Length / SAVE_TABLE_SIZE;
         for (int i = 0; i < tableSize; i++) {
-            Ability.ID id = ParseUtils.Parse<Ability.ID>(abilities[(i * tableSize) + 0]);
-            AbilityData newData = new AbilityData(abilities[(i * tableSize) + 0], abilities[(i * tableSize) + 1], abilities[(i * tableSize) + 2], abilities[(i * tableSize) + 3], abilities[(i * tableSize) + 4]);
+            int offset = (i * SAVE_TABLE_SIZE);
+            Ability.ID id = ParseUtils.Parse<Ability.ID>(abilities[offset + 0]);
+            AbilityData newData = new AbilityData(abilities[offset + 0], abilities[offset + 1], abilities[offset + 2], abilities[offset + 3], abilities[offset + 4]);
             abilityData.Add(id, newData);
         }
     }
