@@ -1,0 +1,10 @@
+KeyBindingKey,KeyCode Keyboard,KeyCode Controller
+MoveUp,W,UpArrow
+MoveDown,S,DownArrow
+MoveLeft,A,LeftArrow
+MoveRight,D,RightArrow
+Ability1,Alpha1,Y
+Ability2,Alpha2,U
+Ability3,Alpha3,I
+Ability4,Alpha4,O
+Ultimate,Alpha5,P

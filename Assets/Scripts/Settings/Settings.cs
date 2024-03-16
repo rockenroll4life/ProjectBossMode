@@ -20,7 +20,7 @@ public class Settings : MonoBehaviour {
         }
     }
 
-    public static KeyCode GetKeyBinding(KeyBindingKeys key) => Instance.keyBindings.GetKeyBinding(key);
+    public static KeyBinding GetKeyBinding(KeyBindingKeys key) => Instance.keyBindings.GetKeyBinding(key);
     public static int GetGameplaySetting(GameplayOptions option) => Instance.gameplaySettings.GetGameplaySetting(option);
 
     private void Awake() {

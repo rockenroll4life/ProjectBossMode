@@ -15,7 +15,7 @@ public class AbilityButton : MonoBehaviour {
     LivingEntity owner;
     AbilityBase ability;
     Ability.Binding abilityBinding = Ability.Binding.NONE;
-    KeyCode keybind = KeyCode.None;
+    KeyBinding keybind = null;
     float maxCooldown;
 
     bool channeling = false;
@@ -64,22 +64,32 @@ public class AbilityButton : MonoBehaviour {
 
     void UpdateAbilityKeybind() {
         //  If we have a previous Keybind, stop listening for it
-        if (keybind != KeyCode.None) {
-            EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
-            EventManager.StopListening(GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
-            EventManager.StopListening(GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
-            keybind = KeyCode.None;
+        if (keybind != null) {
+            ButtonStopListening(keybind.keyboard);
+            ButtonStopListening(keybind.controller);
+            keybind = null;
             keybindText.text = "";
         }
 
         //  Then, if we have a new keybind, update our kind and then start listening for it
         keybind = Settings.GetKeyBinding(bindingKey);
-        if (keybind != KeyCode.None && !destroying) {
-            keybindText.text = KeyCodeUtils.ToCharacter(keybind);
-            EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) keybind, AbilityPressed);
-            EventManager.StartListening(GameEvents.KeyboardButton_Released + (int) keybind, AbilityReleased);
-            EventManager.StartListening(GameEvents.KeyboardButton_Held + (int) keybind, AbilityHeld);
+        if (keybind != null && !destroying) {
+            keybindText.text = KeyCodeUtils.ToCharacter(keybind.keyboard);
+            ButtonStartListening(keybind.keyboard);
+            ButtonStartListening(keybind.controller);
         }
+    }
+
+    void ButtonStopListening(KeyCode key) {
+        EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) key, AbilityPressed);
+        EventManager.StopListening(GameEvents.KeyboardButton_Released + (int) key, AbilityReleased);
+        EventManager.StopListening(GameEvents.KeyboardButton_Held + (int) key, AbilityHeld);
+    }
+
+    void ButtonStartListening(KeyCode key) {
+        EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) key, AbilityPressed);
+        EventManager.StartListening(GameEvents.KeyboardButton_Released + (int) key, AbilityReleased);
+        EventManager.StartListening(GameEvents.KeyboardButton_Held + (int) key, AbilityHeld);
     }
 
     void UpdateCooldown(int param) {

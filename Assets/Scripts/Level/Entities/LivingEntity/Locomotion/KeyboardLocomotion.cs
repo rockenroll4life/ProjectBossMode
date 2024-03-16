@@ -5,7 +5,9 @@ public class KeyboardLocomotion : Locomotion {
     private Vector2 horizontalInput;
     private Vector2 verticalInput;
 
-    readonly KeyCode[] keyBindings = new KeyCode[4];
+    //  TODO: [Rock]: This should really be a dictionary instead of an array as we access it via the KeyBindingKeys and if they're values change
+    //  it'll cause out of bounds errors
+    readonly KeyBinding[] keyBindings = new KeyBinding[4];
     bool rotateTowardsMouse;
     float speed;
 
@@ -26,14 +28,16 @@ public class KeyboardLocomotion : Locomotion {
 
         rotateTowardsMouse = Settings.GetGameplaySetting(GameplayOptions.RotateTowardsMouse) > 0;
 
-        foreach (KeyCode key in keyBindings) {
-            ButtonStartListening(key);
+        foreach (KeyBinding binding in keyBindings) {
+            ButtonStartListening(binding.keyboard);
+            ButtonStartListening(binding.controller);
         }
     }
 
     ~KeyboardLocomotion() {
-        foreach (KeyCode key in keyBindings) {
-            ButtonStopListening(key);
+        foreach (KeyBinding binding in keyBindings) {
+            ButtonStopListening(binding.keyboard);
+            ButtonStopListening(binding.controller);
         }
     }
 
@@ -58,17 +62,17 @@ public class KeyboardLocomotion : Locomotion {
     void InputPressed(int param) {
         KeyCode key = (KeyCode) param;
 
-        if (key == keyBindings[(int) KeyBindingKeys.MoveUp]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveUp].IsBinding(key)) {
             verticalInput.x = 1;
         }
-        if (key == keyBindings[(int) KeyBindingKeys.MoveDown]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveDown].IsBinding(key)) {
             verticalInput.y = -1;
         }
 
-        if (key == keyBindings[(int) KeyBindingKeys.MoveLeft]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveLeft].IsBinding(key)) {
             horizontalInput.x = -1;
         }
-        if (key == keyBindings[(int) KeyBindingKeys.MoveRight]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveRight].IsBinding(key)) {
             horizontalInput.y = 1;
         }
     }
@@ -76,17 +80,17 @@ public class KeyboardLocomotion : Locomotion {
     void InputReleased(int param) {
         KeyCode key = (KeyCode) param;
 
-        if (key == keyBindings[(int) KeyBindingKeys.MoveUp]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveUp].IsBinding(key)) {
             verticalInput.x = 0;
         }
-        if (key == keyBindings[(int) KeyBindingKeys.MoveDown]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveDown].IsBinding(key)) {
             verticalInput.y = 0;
         }
 
-        if (key == keyBindings[(int) KeyBindingKeys.MoveLeft]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveLeft].IsBinding(key)) {
             horizontalInput.x = 0;
         }
-        if (key == keyBindings[(int) KeyBindingKeys.MoveRight]) {
+        if (keyBindings[(int) KeyBindingKeys.MoveRight].IsBinding(key)) {
             horizontalInput.y = 0;
         }
     }
@@ -138,8 +142,9 @@ public class KeyboardLocomotion : Locomotion {
     }
 
     void KeyBindingsChanged(int param) {
-        foreach (KeyCode key in keyBindings) {
-            ButtonStopListening(key);
+        foreach (KeyBinding binding in keyBindings) {
+            ButtonStopListening(binding.keyboard);
+            ButtonStopListening(binding.controller);
         }
 
         keyBindings[(int) KeyBindingKeys.MoveUp] = Settings.GetKeyBinding(KeyBindingKeys.MoveUp);
@@ -147,8 +152,9 @@ public class KeyboardLocomotion : Locomotion {
         keyBindings[(int) KeyBindingKeys.MoveLeft] = Settings.GetKeyBinding(KeyBindingKeys.MoveLeft);
         keyBindings[(int) KeyBindingKeys.MoveRight] = Settings.GetKeyBinding(KeyBindingKeys.MoveRight);
 
-        foreach (KeyCode key in keyBindings) {
-            ButtonStartListening(key);
+        foreach (KeyBinding binding in keyBindings) {
+            ButtonStartListening(binding.keyboard);
+            ButtonStartListening(binding.controller);
         }
     }
 
