@@ -8,31 +8,35 @@ AI
 	- Implement Pet AI (Totems, Golems, etc)
 Animation
 	- Make the animation system + locomotion not feel so jerky when having to stutter step to get just a little bit closer to attack
+	- Add in animation support for movement while looking in different directions (Back peddling, side stepping, etc)
 Entity Interactions
 	- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
 Gamemodes
-	- Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
+	- Boss Rush Gamemode
 Gameplay
 	- We should pass damage around as a struct so we can specify the types of damage it is
 	- Leveling
 		- Player Level System for stats and abilities
+	- Multiplayer difficulty scaling
 Input
 	- Controller Support via ControllerLocomotion class
 	- Add Support for Input Chords (A use case will be for Smart Casting)
 Network
 	- Multiplayer Integration
-	- Multiplayer difficulty scaling
 Rendering
 	- Fog of war
 	- Update the outline shader to be a toon shader, hopefully this will make the outline better
 Settings
-	- Settings Menu (Audio/Video/Gameplay/etc)
+	- Audio Settings Data
+	- Video Settings Data
+	- Gameplay Settings Data
+	- Settings Menu (To support the data)
 Status Effects
 	- Implement Status Effect system
-	- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
 UI
 	- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
 	- Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
+	- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
 VFX Graph
 	- Investigate the VFX Graph as the solution we use for our ability effects
 
