@@ -1,13 +1,42 @@
 TODO:
-- Input
-	- Controller Support via ControllerLocomotion class
-- Settings
-	- Settings Menu (Audio/Video/Gameplay/etc)
-- AI
+AI
 	- AI Behaviors
 	- AI Movement
 	- AI Using Abilities
 	- AI Ability indicators in the world for where attacks are going to be (Maybe?)
 		- This will typically be shown X amount of time prior to using the ability
-- VFX Graph
+	- Implement Pet AI (Totems, Golems, etc)
+Animation
+	- Make the animation system + locomotion not feel so jerky when having to stutter step to get just a little bit closer to attack
+Entity Interactions
+	- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
+Gamemodes
+	- Additional GameModes (Such as Boss Rush where you face of against some number of bosses one after another and attempt to defeat them all)
+Gameplay
+	- We should pass damage around as a struct so we can specify the types of damage it is
+	- Leveling
+		- Player Level System for stats and abilities
+Input
+	- Controller Support via ControllerLocomotion class
+	- Add Support for Input Chords (A use case will be for Smart Casting)
+Network
+	- Multiplayer Integration
+	- Multiplayer difficulty scaling
+Rendering
+	- Fog of war
+	- Update the outline shader to be a toon shader, hopefully this will make the outline better
+Settings
+	- Settings Menu (Audio/Video/Gameplay/etc)
+Status Effects
+	- Implement Status Effect system
+	- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
+UI
+	- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
+	- Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
+VFX Graph
 	- Investigate the VFX Graph as the solution we use for our ability effects
+
+
+BUGS
+- Spell Indicators won't disappear for an ability if we go to press another ability that we don't have enough mana to cast
+- Spell Indicators won't disappear when Channel or Toggle abilities are pressed
