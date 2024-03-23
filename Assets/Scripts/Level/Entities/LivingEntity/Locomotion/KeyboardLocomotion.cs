@@ -13,6 +13,8 @@ public class KeyboardLocomotion : Locomotion {
 
     public override MovementType GetMovementType() => MovementType.Keyboard;
 
+    public override Vector3 GetMovementDirection() => IsMoving() ? new Vector3(horizontalInput.x + horizontalInput.y, 0, verticalInput.x + verticalInput.y) : Vector3.zero;
+
     public KeyboardLocomotion(LivingEntity owner)
         : base (owner) {
 

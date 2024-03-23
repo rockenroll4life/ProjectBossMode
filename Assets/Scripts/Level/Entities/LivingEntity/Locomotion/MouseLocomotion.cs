@@ -11,6 +11,8 @@ public class MouseLocomotion : Locomotion {
 
     public override MovementType GetMovementType() => MovementType.Mouse;
 
+    public override Vector3 GetMovementDirection() => IsMoving() ? agent.velocity.normalized : Vector3.zero;
+
     public MouseLocomotion(LivingEntity owner)
         : base(owner) {
         attackRange = owner.GetAttribute(AttributeTypes.AttackRange).GetValue();

@@ -19,6 +19,8 @@ public abstract class Locomotion {
         owner.GetAttributes().RegisterListener(AttributeTypes.MovementSpeed, SpeedChanged);
     }
 
+    public abstract Vector3 GetMovementDirection();
+
     public abstract MovementType GetMovementType();
 
     public abstract bool IsMoving();

@@ -8,7 +8,15 @@ public class LivingEntityAnimator : EntityAnimator {
     public override void Update() {
         //  Update the players movement animation
         animator.SetBool("isMoving", owner.GetLocomotion().IsMoving());
-        //animator.SetFloat("moveSpeedMultiplier", (owner.GetAttribute(LivingEntitySharedAttributes.MOVEMENT_SPEED).GetValue() / Locomotion.FIXED_MOVEMENT_SPEED), 0.1f, Time.deltaTime);
+        //animator.SetFloat("moveSpeedMultiplier", (owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue() / Locomotion.FIXED_MOVEMENT_SPEED), 0.1f, Time.deltaTime);
+
+        //  Update the movement direction for the animation
+        Vector3 lookingDirection = owner.GetLocomotion().GetMovementDirection();
+        float velocityZ = Vector3.Dot(lookingDirection, owner.transform.forward);
+        float velocityX = Vector3.Dot(lookingDirection, owner.transform.right);
+
+        animator.SetFloat("velocityZ", velocityZ, 0.1f, Time.deltaTime);
+        animator.SetFloat("velocityX", velocityX, 0.1f, Time.deltaTime);
     }
 
     void TEST_ATTACHWEAPONS() {
