@@ -8,7 +8,6 @@ public abstract class Locomotion {
         Controller,
     }
 
-    public static readonly float FIXED_MOVEMENT_SPEED = 1.414f;
     protected static readonly float ROTATION_SPEED = 720f;
 
     protected LivingEntity owner;

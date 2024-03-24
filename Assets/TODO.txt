@@ -6,9 +6,6 @@ AI
 	- AI Ability indicators in the world for where attacks are going to be (Maybe?)
 		- This will typically be shown X amount of time prior to using the ability
 	- Implement Pet AI (Totems, Golems, etc)
-Animation
-	- Make the animation system + locomotion not feel so jerky when having to stutter step to get just a little bit closer to attack
-	- Add in animation support for movement while looking in different directions (Back peddling, side stepping, etc)
 Entity Interactions
 	- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
 Gamemodes
