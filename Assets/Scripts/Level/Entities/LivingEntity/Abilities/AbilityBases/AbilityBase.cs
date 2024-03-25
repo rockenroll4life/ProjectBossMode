@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
 public abstract class AbilityBase {
+    protected static readonly string ABILITY_RESOURCE_LOCATION = "Abilities";
+
     protected static readonly int LAYER_MASK_GROUND = LayerMask.GetMask("Ground");
     protected static readonly int LAYER_MASK_MOB = LayerMask.GetMask("Mob");
     protected static readonly int LAYER_MASK_PLAYER = LayerMask.GetMask("Player");
-    
+
     protected LivingEntity owner;
     Ability.Binding abilityBinding = Ability.Binding.NONE;
     protected AbilityData abilityData;
@@ -79,5 +81,10 @@ public abstract class AbilityBase {
 
     AttributeTypes GetCooldownAttribute() {
         return AttributeTypes.Ability1Cooldown + GetAbilityID();
+    }
+
+    protected void PlayEffect(GameObject effectPrefab, Vector3 offset) {
+        Vector3 position = owner.transform.position + offset;
+        GameObject.Instantiate(effectPrefab, position, owner.transform.rotation);
     }
 }
