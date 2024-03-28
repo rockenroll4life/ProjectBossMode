@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using RockUtils.GameEvents;
 
 public abstract class Locomotion {
     public enum MovementType {

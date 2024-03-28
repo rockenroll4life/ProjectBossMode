@@ -4,6 +4,11 @@ using UnityEngine;
 public class ControllerLocomotion : Locomotion {
     public override MovementType GetMovementType() => MovementType.Controller;
 
+    protected override Vector3 GetLookingDirection() => InputManager.getStick(InputManager.ControllerStick.Right);
+    public override Vector3 GetMovementDirection() => InputManager.getStick(InputManager.ControllerStick.Left);
+    
+    public override bool IsMoving() => GetMovementDirection() != Vector3.zero;
+
     public ControllerLocomotion(LivingEntity owner)
         : base(owner) {
         InputManager.instance.SetControllerEnabled(true);
@@ -13,19 +18,7 @@ public class ControllerLocomotion : Locomotion {
         InputManager.instance.SetControllerEnabled(false);
     }
 
-    public override Vector3 GetMovementDirection() {
-        return InputManager.getStick(InputManager.ControllerStick.Left);
-    }
-
-    public override bool IsMoving() {
-        return GetMovementDirection() != Vector3.zero;
-    }
-
     public override void StopMovement() {
         
-    }
-
-    protected override Vector3 GetLookingDirection() {
-        return InputManager.getStick(InputManager.ControllerStick.Right);
     }
 }
