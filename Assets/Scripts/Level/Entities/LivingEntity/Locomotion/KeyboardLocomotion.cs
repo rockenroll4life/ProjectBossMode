@@ -9,7 +9,6 @@ public class KeyboardLocomotion : Locomotion {
     //  it'll cause out of bounds errors
     readonly KeyBinding[] keyBindings = new KeyBinding[4];
     bool rotateTowardsMouse;
-    float speed;
 
     public override MovementType GetMovementType() => MovementType.Keyboard;
 
@@ -20,8 +19,6 @@ public class KeyboardLocomotion : Locomotion {
 
         EventManager.StartListening(GameEvents.Keybindings_Changed, KeyBindingsChanged);
         EventManager.StartListening(GameEvents.GameplaySettings_Changed, GameplaySettingsChanged);
-
-        speed = owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue();
 
         keyBindings[(int) KeyBindingKeys.MoveUp] = Settings.GetKeyBinding(KeyBindingKeys.MoveUp);
         keyBindings[(int) KeyBindingKeys.MoveDown] = Settings.GetKeyBinding(KeyBindingKeys.MoveDown);
@@ -97,22 +94,6 @@ public class KeyboardLocomotion : Locomotion {
         }
     }
 
-    protected override void UpdateRotation() {
-        base.UpdateRotation();
-
-        Vector3 lookDir = GetLookingDirection();
-        if (lookDir != Vector3.zero) {
-            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(lookDir), ROTATION_SPEED * Time.deltaTime);
-        }
-    }
-
-    protected override void UpdateMovement() {
-        base.UpdateMovement();
-
-        Vector3 direction = new Vector3(horizontalInput.x + horizontalInput.y, 0, verticalInput.x + verticalInput.y).normalized;
-        owner.transform.position += direction * speed * Time.deltaTime;
-    }
-
     protected override Vector3 GetLookingDirection() {
         if (rotateTowardsMouse) {
             Vector3 mousePos = Input.mousePosition;
@@ -137,10 +118,6 @@ public class KeyboardLocomotion : Locomotion {
             }
         }
 
-    }
-
-    protected override void SpeedChanged(int param) {
-        speed = param / 1000f;
     }
 
     void KeyBindingsChanged(int param) {

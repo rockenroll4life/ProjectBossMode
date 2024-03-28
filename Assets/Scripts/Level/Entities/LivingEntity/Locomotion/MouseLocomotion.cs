@@ -52,15 +52,7 @@ public class MouseLocomotion : Locomotion {
         return IsMoving() ? agent.velocity.normalized : owner.transform.forward;
     }
 
-    protected override void UpdateRotation() {
-        base.UpdateRotation();
-
-        owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(GetLookingDirection()), ROTATION_SPEED * Time.deltaTime);
-    }
-
     protected override void UpdateMovement() {
-        base.UpdateMovement();
-
         if (targetedEntity) {
             if ((targetedEntity.transform.position - owner.transform.position).sqrMagnitude > (attackRange * attackRange)) {
                 MoveToLocation(targetedEntity.transform.position);

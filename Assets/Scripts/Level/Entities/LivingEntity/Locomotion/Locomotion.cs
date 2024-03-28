@@ -11,10 +11,12 @@ public abstract class Locomotion {
     protected static readonly float ROTATION_SPEED = 720f;
 
     protected LivingEntity owner;
+    protected float speed;
 
     public Locomotion(LivingEntity owner) {
         this.owner = owner;
 
+        speed = owner.GetAttribute(AttributeTypes.MovementSpeed).GetValue();
         owner.GetAttributes().RegisterListener(AttributeTypes.MovementSpeed, SpeedChanged);
     }
 
@@ -34,9 +36,18 @@ public abstract class Locomotion {
         UpdateMovement();
     }
 
-    protected virtual void UpdateRotation() { }
+    void UpdateRotation() {
+        Vector3 lookDir = GetLookingDirection();
+        if (lookDir != Vector3.zero) {
+            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(lookDir), ROTATION_SPEED * Time.deltaTime);
+        }
+    }
 
-    protected virtual void UpdateMovement() { }
+    protected virtual void UpdateMovement() {
+        owner.transform.position += GetMovementDirection() * speed * Time.deltaTime;
+    }
 
-    protected abstract void SpeedChanged(int param);
+    protected virtual void SpeedChanged(int param) {
+        speed = param / 1000f;
+    }
 }
