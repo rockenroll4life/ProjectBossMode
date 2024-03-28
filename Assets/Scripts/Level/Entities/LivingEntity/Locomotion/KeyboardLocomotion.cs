@@ -102,7 +102,7 @@ public class KeyboardLocomotion : Locomotion {
 
         Vector3 lookDir = GetLookingDirection();
         if (lookDir != Vector3.zero) {
-            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(GetLookingDirection()), ROTATION_SPEED * Time.deltaTime);
+            owner.transform.rotation = Quaternion.RotateTowards(owner.transform.rotation, Quaternion.LookRotation(lookDir), ROTATION_SPEED * Time.deltaTime);
         }
     }
 
