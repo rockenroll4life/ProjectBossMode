@@ -21,4 +21,10 @@ public class Abilities {
     }
 
     public AbilityBase GetAbility(Ability.Binding abilityBinding) => abilities.GetValueOrDefault(abilityBinding);
+
+    public void Update() {
+        foreach (AbilityBase ability in abilities.Values) {
+            ability.Update();
+        }
+    }
 }

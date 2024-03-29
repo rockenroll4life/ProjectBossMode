@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class CastAbilityBase : AbilityBase {
     bool isCasting = false;
 
+    protected virtual bool BypassSpellIndicators() => false;
+
     public CastAbilityBase(LivingEntity owner, Ability.ID abilityID, Ability.Binding abilityBinding)
         : base(owner, abilityID, abilityBinding) {
     }
@@ -42,10 +44,11 @@ public abstract class CastAbilityBase : AbilityBase {
 
         return false;
     }
+
     protected override void UseAbility() {
         base.UseAbility();
 
-        if (!isCasting) {
+        if (!isCasting && !BypassSpellIndicators()) {
             isCasting = true;
             ShowSpellIndicator();
         } else {

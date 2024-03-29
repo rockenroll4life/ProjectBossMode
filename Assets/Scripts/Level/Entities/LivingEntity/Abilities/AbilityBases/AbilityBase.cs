@@ -34,6 +34,9 @@ public abstract class AbilityBase {
 
     protected virtual void RegisterAttributes() { }
 
+    public virtual void Update() { }
+    public virtual void LateUpdate() { }
+
     public virtual void Breakdown() {
         if (abilityBinding != Ability.Binding.NONE) {
             UnregisterEvents();

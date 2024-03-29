@@ -39,6 +39,25 @@
 
             Mouse_Scroll_Wheel = 1815,
 
+            //  Controller Actions
+            Controller_Stick_Left_X = 1820,
+            Controller_Stick_Left_Y = 1821,
+
+            Controller_Stick_Right_X = 1822,
+            Controller_Stick_Right_Y = 1823,
+
+            Controller_Trigger_Left = 1824,
+            Controller_Trigger_Right = 1825,
+
+            //  12 controller buttons reserved
+            Controller_Button_Press = 1826,
+
+            //  12 controller buttons reserved
+            Controller_Button_Release = 1838,
+
+            //  12 controller buttons reserved
+            Controller_Button_Held = 1850,
+
             //========================================================
             //  Entity Game Events: 1900 - 1999
             //========================================================

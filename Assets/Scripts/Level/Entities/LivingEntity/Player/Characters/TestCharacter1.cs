@@ -4,7 +4,7 @@ public class TestCharacter1 : Player {
         GetAbilities().RegisterAbility(Ability.ID.FireBreath, Ability.Binding.Ability2);
         GetAbilities().RegisterAbility(Ability.ID.RingOfFire, Ability.Binding.Ability3);
         GetAbilities().RegisterAbility(Ability.ID.BurningKnowledge, Ability.Binding.Ability4);
-        GetAbilities().RegisterAbility(Ability.ID.Meteor, Ability.Binding.Ultimate);
+        GetAbilities().RegisterAbility(Ability.ID.Dash, Ability.Binding.Movement);
     }
 
     protected override void RegisterAttributes() {

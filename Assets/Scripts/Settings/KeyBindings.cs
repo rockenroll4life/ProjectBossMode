@@ -36,6 +36,7 @@ public class KeyBinding {
 }
 
 public class KeyBindings {
+    static readonly string DIRECTORY_NAME =  "Settings";
     static readonly string KEYBINDING_DEFAULT_LOCATION = "Settings/Default_KeyBindings.csv";
     static readonly string KEYBINDING_SAVE = "Settings/KeyBindings.json";
     static readonly int SAVE_TABLE_SIZE = 3;
@@ -43,11 +44,14 @@ public class KeyBindings {
     readonly Dictionary<KeyBindingKeys, KeyBinding> DEFAULT_BINDINGS = new Dictionary<KeyBindingKeys, KeyBinding>();
     Dictionary<KeyBindingKeys, KeyBinding> bindings = new Dictionary<KeyBindingKeys, KeyBinding>();
 
+    string GetDirectoryPath() => Application.persistentDataPath + Path.DirectorySeparatorChar + DIRECTORY_NAME;
     string GetFilePath() => Application.persistentDataPath + Path.DirectorySeparatorChar + KEYBINDING_SAVE;
 
     public KeyBinding GetKeyBinding(KeyBindingKeys keyBindingKey) => bindings[keyBindingKey];
 
     public void Setup() {
+        CheckForSettingsFolder();
+
         LoadDefaultCSV();
 
         //  Check to see if we have an existing key bindings settings file on file..
@@ -61,6 +65,12 @@ public class KeyBindings {
         }
 
         EventManager.TriggerEvent(GameEvents.Keybindings_Changed);
+    }
+
+    void CheckForSettingsFolder() {
+        if (!Directory.Exists(GetDirectoryPath())) {
+            Directory.CreateDirectory(GetDirectoryPath());
+        }
     }
 
     bool SavedSettingsExist() {

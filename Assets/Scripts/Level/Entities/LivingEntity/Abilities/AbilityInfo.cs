@@ -7,6 +7,10 @@ namespace Ability {
         RingOfFire,
         BurningKnowledge,
         Meteor,
+        
+        //  Movement Abilities
+        Dash,
+        Roll,
     }
 
     public class Info {
@@ -19,6 +23,8 @@ namespace Ability {
             { ID.RingOfFire,        typeof(TestAOEAbility) },
             { ID.BurningKnowledge,  typeof(TestChannelAbility) },
             { ID.Meteor,            typeof(TestAreaTargetAbility) },
+            { ID.Dash,              typeof(TestMovementAbility) },
+            { ID.Roll,              typeof(TestMovementAbility) }
         };
 
         public static System.Type GetAbilityClass(ID abilityID) => abilities[abilityID];
@@ -30,7 +36,6 @@ namespace Ability {
         Ability2,
         Ability3,
         Ability4,
-        Ultimate,
+        Movement,
     }
-
 }

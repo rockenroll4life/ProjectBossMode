@@ -127,6 +127,10 @@ public abstract class LivingEntity : Entity, IDamageable {
         }
     }
 
+    private void Update() {
+        abilities.Update();
+    }
+
     //  TODO: [Rock]: Remove this scaler and have the ResourceCost know it should scale it's value
     public void UseResource(ResourceCost cost, float scaler = 1f) {
         EntityDataType resourceType = cost.GetResourceType();
