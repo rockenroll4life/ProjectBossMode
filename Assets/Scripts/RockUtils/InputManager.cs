@@ -213,6 +213,7 @@ namespace RockUtils {
                     //  Controller Buttons
                     for (int i = 0; i < (int) ControllerButtons.__COUNT; i++) {
                         ControllerButtons button = (ControllerButtons) i;
+
                         if (WasPressed(button)) {
                             EventManager.TriggerEvent(GameEvents.Controller_Button_Press + i);
                         }
@@ -264,6 +265,11 @@ namespace RockUtils {
                         case ControllerButtons.Down:
                             return isReleased(instance.state.DPad.Down);
 
+                        case ControllerButtons.Left_Trigger:
+                            return isReleased(instance.state.Triggers.Left);
+                        case ControllerButtons.Right_Trigger:
+                            return isReleased(instance.state.Triggers.Right);
+
                         case ControllerButtons.Left_Bumper:
                             return isReleased(instance.state.Buttons.LeftShoulder);
                         case ControllerButtons.Right_Bumper:
@@ -302,6 +308,11 @@ namespace RockUtils {
                             return isPressed(instance.state.DPad.Up);
                         case ControllerButtons.Down:
                             return isPressed(instance.state.DPad.Down);
+
+                        case ControllerButtons.Left_Trigger:
+                            return isPressed(instance.state.Triggers.Left);
+                        case ControllerButtons.Right_Trigger:
+                            return isPressed(instance.state.Triggers.Right);
 
                         case ControllerButtons.Left_Bumper:
                             return isPressed(instance.state.Buttons.LeftShoulder);
@@ -342,6 +353,11 @@ namespace RockUtils {
                         case ControllerButtons.Down:
                             return isReleased(instance.prevState.DPad.Down) && isPressed(instance.state.DPad.Down);
 
+                        case ControllerButtons.Left_Trigger:
+                            return isReleased(instance.prevState.Triggers.Left) && isPressed(instance.state.Triggers.Left);
+                        case ControllerButtons.Right_Trigger:
+                            return isReleased(instance.prevState.Triggers.Right) && isPressed(instance.state.Triggers.Right);
+
                         case ControllerButtons.Left_Bumper:
                             return isReleased(instance.prevState.Buttons.LeftShoulder) && isPressed(instance.state.Buttons.LeftShoulder);
                         case ControllerButtons.Right_Bumper:
@@ -356,51 +372,64 @@ namespace RockUtils {
                 return false;
             }
 
-                    public static bool WasReleased(ControllerButtons button) {
-                        if (!instance.controllerEnabled) {
-                            return false;
-                        }
+            public static bool WasReleased(ControllerButtons button) {
+                if (!instance.controllerEnabled) {
+                    return false;
+                }
 
-                        if (instance.state.IsConnected) {
-                            switch (button) {
-                                case ControllerButtons.A:
-                                    return isPressed(instance.prevState.Buttons.A) && isReleased(instance.state.Buttons.A);
-                                case ControllerButtons.B:
-                                    return isPressed(instance.prevState.Buttons.B) && isReleased(instance.state.Buttons.B);
-                                case ControllerButtons.X:
-                                    return isPressed(instance.prevState.Buttons.X) && isReleased(instance.state.Buttons.X);
-                                case ControllerButtons.Y:
-                                    return isPressed(instance.prevState.Buttons.Y) && isReleased(instance.state.Buttons.Y);
+                if (instance.state.IsConnected) {
+                    switch (button) {
+                        case ControllerButtons.A:
+                            return isPressed(instance.prevState.Buttons.A) && isReleased(instance.state.Buttons.A);
+                        case ControllerButtons.B:
+                            return isPressed(instance.prevState.Buttons.B) && isReleased(instance.state.Buttons.B);
+                        case ControllerButtons.X:
+                            return isPressed(instance.prevState.Buttons.X) && isReleased(instance.state.Buttons.X);
+                        case ControllerButtons.Y:
+                            return isPressed(instance.prevState.Buttons.Y) && isReleased(instance.state.Buttons.Y);
 
-                                case ControllerButtons.Left:
-                                    return isPressed(instance.prevState.DPad.Left) && isReleased(instance.state.DPad.Left);
-                                case ControllerButtons.Right:
-                                    return isPressed(instance.prevState.DPad.Right) && isReleased(instance.state.DPad.Right);
-                                case ControllerButtons.Up:
-                                    return isPressed(instance.prevState.DPad.Up) && isReleased(instance.state.DPad.Up);
-                                case ControllerButtons.Down:
-                                    return isPressed(instance.prevState.DPad.Down) && isReleased(instance.state.DPad.Down);
+                        case ControllerButtons.Left:
+                            return isPressed(instance.prevState.DPad.Left) && isReleased(instance.state.DPad.Left);
+                        case ControllerButtons.Right:
+                            return isPressed(instance.prevState.DPad.Right) && isReleased(instance.state.DPad.Right);
+                        case ControllerButtons.Up:
+                            return isPressed(instance.prevState.DPad.Up) && isReleased(instance.state.DPad.Up);
+                        case ControllerButtons.Down:
+                            return isPressed(instance.prevState.DPad.Down) && isReleased(instance.state.DPad.Down);
 
-                                case ControllerButtons.Left_Bumper:
-                                    return isPressed(instance.prevState.Buttons.LeftShoulder) && isReleased(instance.state.Buttons.LeftShoulder);
-                                case ControllerButtons.Right_Bumper:
-                                    return isPressed(instance.prevState.Buttons.RightShoulder) && isReleased(instance.state.Buttons.RightShoulder);
+                        case ControllerButtons.Left_Trigger:
+                            return isPressed(instance.prevState.Triggers.Left) && isReleased(instance.state.Triggers.Left);
+                        case ControllerButtons.Right_Trigger:
+                            return isPressed(instance.prevState.Triggers.Right) && isReleased(instance.state.Triggers.Right);
 
-                                case ControllerButtons.Reset:
-                                    return isPressed(instance.prevState.Buttons.Back) && isReleased(instance.state.Buttons.Back);
-                                case ControllerButtons.Select:
-                                    return isPressed(instance.prevState.Buttons.Start) && isReleased(instance.state.Buttons.Start);
-                            }
-                        }
-                        return false;
+                        case ControllerButtons.Left_Bumper:
+                            return isPressed(instance.prevState.Buttons.LeftShoulder) && isReleased(instance.state.Buttons.LeftShoulder);
+                        case ControllerButtons.Right_Bumper:
+                            return isPressed(instance.prevState.Buttons.RightShoulder) && isReleased(instance.state.Buttons.RightShoulder);
+
+                        case ControllerButtons.Reset:
+                            return isPressed(instance.prevState.Buttons.Back) && isReleased(instance.state.Buttons.Back);
+                        case ControllerButtons.Select:
+                            return isPressed(instance.prevState.Buttons.Start) && isReleased(instance.state.Buttons.Start);
                     }
+                }
+                return false;
+            }
 
-                    private static bool isPressed(ButtonState state) {
+            private static bool isPressed(ButtonState state) {
                 return instance.controllerEnabled && state == ButtonState.Pressed;
+            }
+
+            private static bool isPressed(float buttonValue) {
+                return instance.controllerEnabled && buttonValue > 0;
             }
 
             private static bool isReleased(ButtonState state) {
                 return instance.controllerEnabled && state == ButtonState.Released;
+            }
+
+            private static bool isReleased(float buttonValue) {
+                return instance.controllerEnabled && buttonValue <= Mathf.Epsilon;
             }
         }
     }
