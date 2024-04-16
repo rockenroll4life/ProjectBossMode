@@ -31,6 +31,7 @@ Settings
 Status Effects
 	- Implement Status Effect system
 UI
+	- Implement Controller UI (Ability buttons are moved to the right button of the screen and are in the diamond shape)
 	- Render Health Bars above (Non-Local Player) Entities Heads, small if they've not been hurt before, and larger if they've been hurt or had status effects applied to
 	- Implement UI Interaction with Mouse (Ability clicking, tooltip hovering, etc) We'll need to have the InputManager decide what we're suppose to be interacting with first before it sends GameEvents
 	- Render Status Effects on the players UI and below (Non-Local Player) Enties health bar
