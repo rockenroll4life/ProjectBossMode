@@ -6,6 +6,7 @@ using RockUtils.CSVReaderUtils;
 using RockUtils.ParseUtils;
 using RockUtils.JsonUtils;
 using System.IO;
+using static RockUtils.GameEvents.InputManager;
 
 public enum KeyBindingKeys {
     MoveUp,
@@ -25,14 +26,15 @@ public enum KeyBindingKeys {
 [System.Serializable]
 public class KeyBinding {
     public readonly KeyCode keyboard;
-    public readonly KeyCode controller;
+    public readonly ControllerButtons controller;
 
-    public KeyBinding(KeyCode keyboard, KeyCode controller) {
+    public KeyBinding(KeyCode keyboard, ControllerButtons controller) {
         this.keyboard = keyboard;
         this.controller = controller;
     }
 
-    public bool IsBinding(KeyCode code) => code == keyboard || code == controller;
+    public bool IsBinding(KeyCode code) => code == keyboard;
+    public bool IsBinding(ControllerButtons button) => button == controller;
 }
 
 public class KeyBindings {
@@ -94,7 +96,7 @@ public class KeyBindings {
             int offset = (i * SAVE_TABLE_SIZE);
             KeyBindingKeys keyBindingsKey = ParseUtils.Parse<KeyBindingKeys>(keyBindings[offset + 0]);
             KeyCode keyboard = ParseUtils.Parse<KeyCode>(keyBindings[offset + 1]);
-            KeyCode controller = ParseUtils.Parse<KeyCode>(keyBindings[offset + 2]);
+            ControllerButtons controller = ParseUtils.Parse<ControllerButtons>(keyBindings[offset + 2]);
             DEFAULT_BINDINGS.Add(keyBindingsKey, new KeyBinding(keyboard, controller));
         }
     }

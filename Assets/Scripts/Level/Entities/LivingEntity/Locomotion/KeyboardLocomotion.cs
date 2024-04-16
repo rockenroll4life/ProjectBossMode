@@ -1,5 +1,6 @@
 using UnityEngine;
 using RockUtils.GameEvents;
+using static RockUtils.GameEvents.InputManager;
 
 public class KeyboardLocomotion : Locomotion {
     private Vector2 horizontalInput;
@@ -29,14 +30,14 @@ public class KeyboardLocomotion : Locomotion {
 
         foreach (KeyBinding binding in keyBindings) {
             ButtonStartListening(binding.keyboard);
-            ButtonStartListening(binding.controller);
+            ControllerStartListening(binding.controller);
         }
     }
 
     ~KeyboardLocomotion() {
         foreach (KeyBinding binding in keyBindings) {
             ButtonStopListening(binding.keyboard);
-            ButtonStopListening(binding.controller);
+            ControllerStopListening(binding.controller);
         }
     }
 
@@ -48,6 +49,16 @@ public class KeyboardLocomotion : Locomotion {
     void ButtonStopListening(KeyCode key) {
         EventManager.StopListening(GameEvents.KeyboardButton_Pressed + (int) key, InputPressed);
         EventManager.StopListening(GameEvents.KeyboardButton_Released + (int) key, InputReleased);
+    }
+
+    void ControllerStopListening(ControllerButtons button) {
+        EventManager.StopListening(GameEvents.Controller_Button_Press + (int) button, InputPressed);
+        EventManager.StopListening(GameEvents.Controller_Button_Release + (int) button, InputReleased);
+    }
+
+    void ControllerStartListening(ControllerButtons button) {
+        EventManager.StartListening(GameEvents.Controller_Button_Press + (int) button, InputPressed);
+        EventManager.StartListening(GameEvents.Controller_Button_Release + (int) button, InputReleased);
     }
 
     public override bool IsMoving() {
@@ -123,7 +134,7 @@ public class KeyboardLocomotion : Locomotion {
     void KeyBindingsChanged(int param) {
         foreach (KeyBinding binding in keyBindings) {
             ButtonStopListening(binding.keyboard);
-            ButtonStopListening(binding.controller);
+            ControllerStopListening(binding.controller);
         }
 
         keyBindings[(int) KeyBindingKeys.MoveUp] = Settings.GetKeyBinding(KeyBindingKeys.MoveUp);
@@ -133,7 +144,7 @@ public class KeyboardLocomotion : Locomotion {
 
         foreach (KeyBinding binding in keyBindings) {
             ButtonStartListening(binding.keyboard);
-            ButtonStartListening(binding.controller);
+            ControllerStartListening(binding.controller);
         }
     }
 

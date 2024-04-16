@@ -18,6 +18,10 @@ namespace RockUtils {
                 Up,
                 Down,
 
+                //  TODO: [Rock]: Implement trigger events.
+                Left_Trigger,
+                Right_Trigger,
+
                 Left_Bumper,
                 Right_Bumper,
 

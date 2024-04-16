@@ -2,6 +2,55 @@
 using UnityEngine.UI;
 using RockUtils.GameEvents;
 using RockUtils.KeyCodeUtils;
+using System;
+using static RockUtils.GameEvents.InputManager;
+
+[Serializable]
+public struct ControllerIcons {
+    public Sprite A;
+    public Sprite B;
+    public Sprite X;
+    public Sprite Y;
+
+    public Sprite Left;
+    public Sprite Right;
+    public Sprite Up;
+    public Sprite Down;
+
+    public Sprite Left_Trigger;
+    public Sprite Right_Trigger;
+
+    public Sprite Left_Bumper;
+    public Sprite Right_Bumper;
+
+    public Sprite Reset;
+    public Sprite Select;
+
+    public Sprite ControllerButtonToSprite(ControllerButtons button) {
+        switch (button) {
+            case ControllerButtons.A:               return A;
+            case ControllerButtons.B:               return B;
+            case ControllerButtons.X:               return X;
+            case ControllerButtons.Y:               return Y;
+
+            case ControllerButtons.Left:            return Left; 
+            case ControllerButtons.Right:           return Right;
+            case ControllerButtons.Up:              return Up;
+            case ControllerButtons.Down:            return Down;
+
+            case ControllerButtons.Left_Trigger:    return Left_Trigger;
+            case ControllerButtons.Right_Trigger:   return Right_Trigger;
+
+            case ControllerButtons.Left_Bumper:     return Left_Bumper;
+            case ControllerButtons.Right_Bumper:    return Right_Bumper;
+
+            case ControllerButtons.Reset:           return Reset;
+            case ControllerButtons.Select:          return Select;
+
+            default:                                return A;
+        }
+    }
+}
 
 public class AbilityButton : MonoBehaviour {
     public KeyBindingKeys bindingKey;
@@ -9,8 +58,10 @@ public class AbilityButton : MonoBehaviour {
     public Image cooldown;
     public TMPro.TextMeshProUGUI cooldownTimeText;
     public TMPro.TextMeshProUGUI keybindText;
+    public Image keybindControllerIcon;
     public Image auraIcon;
     public Image notEnoughResource;
+    public ControllerIcons controllerIcons;
 
     LivingEntity owner;
     AbilityBase ability;
@@ -34,6 +85,12 @@ public class AbilityButton : MonoBehaviour {
         maxCooldown = owner.GetAttribute(AttributeTypes.Ability1Cooldown + (int) abilityBinding).GetValue();
 
         icon.sprite = AbilityManager.GetAbilityIcon(ability.GetID());
+
+        if (owner.GetLocomotion().GetMovementType() != Locomotion.MovementType.Controller) {
+            keybindText.gameObject.SetActive(true);
+        } else {
+            keybindControllerIcon.gameObject.SetActive(true);
+        }
 
         RegisterEvents();
         UpdateAbilityKeybind();
@@ -66,7 +123,7 @@ public class AbilityButton : MonoBehaviour {
         //  If we have a previous Keybind, stop listening for it
         if (keybind != null) {
             ButtonStopListening(keybind.keyboard);
-            ButtonStopListening(keybind.controller);
+            ControllerStopListening(keybind.controller);
             keybind = null;
             keybindText.text = "";
         }
@@ -75,8 +132,9 @@ public class AbilityButton : MonoBehaviour {
         keybind = Settings.GetKeyBinding(bindingKey);
         if (keybind != null && !destroying) {
             keybindText.text = KeyCodeUtils.ToCharacter(keybind.keyboard);
+            keybindControllerIcon.sprite = controllerIcons.ControllerButtonToSprite(keybind.controller);
             ButtonStartListening(keybind.keyboard);
-            ButtonStartListening(keybind.controller);
+            ControllerStartListening(keybind.controller);
         }
     }
 
@@ -90,6 +148,18 @@ public class AbilityButton : MonoBehaviour {
         EventManager.StartListening(GameEvents.KeyboardButton_Pressed + (int) key, AbilityPressed);
         EventManager.StartListening(GameEvents.KeyboardButton_Released + (int) key, AbilityReleased);
         EventManager.StartListening(GameEvents.KeyboardButton_Held + (int) key, AbilityHeld);
+    }
+
+    void ControllerStopListening(ControllerButtons button) {
+        EventManager.StopListening(GameEvents.Controller_Button_Press + (int) button, AbilityPressed);
+        EventManager.StopListening(GameEvents.Controller_Button_Release + (int) button, AbilityReleased);
+        EventManager.StopListening(GameEvents.Controller_Button_Held + (int) button, AbilityHeld);
+    }
+
+    void ControllerStartListening(ControllerButtons button) {
+        EventManager.StartListening(GameEvents.Controller_Button_Press + (int) button, AbilityPressed);
+        EventManager.StartListening(GameEvents.Controller_Button_Release + (int) button, AbilityReleased);
+        EventManager.StartListening(GameEvents.Controller_Button_Held + (int) button, AbilityHeld);
     }
 
     void UpdateCooldown(int param) {

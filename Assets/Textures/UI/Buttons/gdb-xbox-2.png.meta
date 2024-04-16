@@ -1,0 +1,566 @@
+fileFormatVersion: 2
+guid: 5b19e0688d29feb44b9fee425bcab2f6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 0.75
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: 0
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Controller_X
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 593
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4798fed2ad029d44f84286baa81f8391
+      internalID: -1363872865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_A
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 577
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be7e1faf0a4cd3445b7d45938ed813fd
+      internalID: -646864682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Y
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 561
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee9dca346f0777a4f88fbf20d824cc82
+      internalID: 101829934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_B
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 545
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf58c9850e3ed8d41a616eac35e3380a
+      internalID: -1022209383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Select
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 530
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec8facf02acd9984bb58608de53a99f2
+      internalID: 1058655661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Start
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 514
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a69faf179fd58bb45b78f4324b2d2f3b
+      internalID: 1192334166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_LStick
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 552
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9558a0f2a03e8b646b12322120b48d90
+      internalID: 1092283123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_RStick
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 552
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1c109289999a074f9c7e73d1ff0b866
+      internalID: -707333630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_LTrigger
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 577
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3c2a14a62a26944fac78e57e98f0416
+      internalID: 605607479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_RTrigger
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 561
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53f9a9fd45457344e8fb9e1b38306469
+      internalID: -1973242528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_LBumper
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 547
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e2f3167ec932384f9eaa9159cf9146b
+      internalID: -187880394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_RBumper
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 531
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca2928e4183ab7e4d82b15b53be1a2e6
+      internalID: 1999290551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Home
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 513
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3255a96437187ad40bde04086cbcf8a7
+      internalID: 401489346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Up
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 546
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00223b976bc5fab40a4bcf8e277f4aea
+      internalID: -492390796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Down
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 546
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ac9b7f0b5bc59648831d484b04c4570
+      internalID: -40955410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Left
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 533
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f6a41c3edd19b54184dea7d6c6104ae
+      internalID: 1410861575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Controller_Right
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 533
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ad5c955e0d1722428e3ae49ff268d3c
+      internalID: 575351750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -263, y: 273}
+      - {x: -263, y: 287}
+      - {x: -249, y: 287}
+      - {x: -249, y: 273}
+    - - {x: -263, y: 257}
+      - {x: -263, y: 271}
+      - {x: -249, y: 271}
+      - {x: -249, y: 257}
+    - - {x: -263, y: 241}
+      - {x: -263, y: 255}
+      - {x: -249, y: 255}
+      - {x: -249, y: 241}
+    - - {x: -263, y: 225}
+      - {x: -263, y: 239}
+      - {x: -249, y: 239}
+      - {x: -249, y: 225}
+    - - {x: -262, y: 210}
+      - {x: -262, y: 222}
+      - {x: -250, y: 222}
+      - {x: -250, y: 210}
+    - - {x: -262, y: 194}
+      - {x: -262, y: 206}
+      - {x: -250, y: 206}
+      - {x: -250, y: 194}
+    - - {x: 56, y: 257}
+      - {x: 56, y: 271}
+      - {x: 72, y: 271}
+      - {x: 72, y: 257}
+    - - {x: 56, y: 241}
+      - {x: 56, y: 255}
+      - {x: 72, y: 255}
+      - {x: 72, y: 241}
+    - - {x: 56, y: 227}
+      - {x: 56, y: 236}
+      - {x: 72, y: 236}
+      - {x: 72, y: 227}
+    - - {x: 56, y: 211}
+      - {x: 56, y: 219}
+      - {x: 72, y: 219}
+      - {x: 72, y: 211}
+    - - {x: 57, y: 194}
+      - {x: 57, y: 207}
+      - {x: 71, y: 207}
+      - {x: 71, y: 194}
+    - - {x: -64, y: 232}
+      - {x: -64, y: 248}
+      - {x: -48, y: 248}
+      - {x: -48, y: 232}
+    - - {x: 0, y: 232}
+      - {x: 0, y: 248}
+      - {x: 16, y: 248}
+      - {x: 16, y: 232}
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Controller_A: -1363872865
+      Controller_B: 101829934
+      Controller_Down: -40955410
+      Controller_Home: 401489346
+      Controller_LBumper: -1973242528
+      Controller_LStick: 1192334166
+      Controller_LTrigger: -707333630
+      Controller_Left: 1410861575
+      Controller_RBumper: -187880394
+      Controller_RStick: 1092283123
+      Controller_RTrigger: 605607479
+      Controller_Right: 575351750
+      Controller_Select: -1022209383
+      Controller_Start: 1058655661
+      Controller_Up: -492390796
+      Controller_X: 401489346
+      Controller_Y: -646864682
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

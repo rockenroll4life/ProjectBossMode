@@ -101,7 +101,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Angle: 45
+    - _Angle: 360
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
