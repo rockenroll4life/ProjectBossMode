@@ -26,8 +26,8 @@ public abstract class Player : LivingEntity {
         base.RegisterComponents();
 
         //locomotion = new MouseLocomotion(this);
-        //locomotion = new KeyboardLocomotion(this);
-        locomotion = new ControllerLocomotion(this);
+        locomotion = new KeyboardLocomotion(this);
+        //locomotion = new ControllerLocomotion(this);
 
         targeter = new PlayerMouseTargeter(this);
         spellIndicators = new SpellIndicators(this);
