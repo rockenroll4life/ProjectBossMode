@@ -98,6 +98,8 @@ public class KeyBindings {
             KeyCode keyboard = ParseUtils.Parse<KeyCode>(keyBindings[offset + 1]);
             ControllerButtons controller = ParseUtils.Parse<ControllerButtons>(keyBindings[offset + 2]);
             
+            //  NOTE: [Rock] We'll probably run into issues within the CSV when we define this, it already throws an
+            //  angry message
             if (!DEFAULT_BINDINGS.ContainsKey(keyBindingsKey)) {
                 DEFAULT_BINDINGS.Add(keyBindingsKey, new KeyBinding(keyboard, controller));
             }

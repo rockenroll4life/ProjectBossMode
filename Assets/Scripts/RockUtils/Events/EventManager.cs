@@ -30,6 +30,10 @@ namespace RockUtils {
             }
 
             public static void StartListening(Guid? owner, GameEvents eventID, Action<int> listener) {
+                if (instance == null) {
+                    return;
+                }
+
                 //  Owned Dictionary
                 if (owner.HasValue) {
                     if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
@@ -107,6 +111,10 @@ namespace RockUtils {
             }
 
             public static void TriggerEvent(Guid? owner, GameEvents eventID, int param) {
+                if (instance == null) {
+                    return;
+                }
+
                 //  Owned Dictionary
                 if (owner.HasValue) {
                     if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
