@@ -97,7 +97,10 @@ public class KeyBindings {
             KeyBindingKeys keyBindingsKey = ParseUtils.Parse<KeyBindingKeys>(keyBindings[offset + 0]);
             KeyCode keyboard = ParseUtils.Parse<KeyCode>(keyBindings[offset + 1]);
             ControllerButtons controller = ParseUtils.Parse<ControllerButtons>(keyBindings[offset + 2]);
-            DEFAULT_BINDINGS.Add(keyBindingsKey, new KeyBinding(keyboard, controller));
+            
+            if (!DEFAULT_BINDINGS.ContainsKey(keyBindingsKey)) {
+                DEFAULT_BINDINGS.Add(keyBindingsKey, new KeyBinding(keyboard, controller));
+            }
         }
     }
 

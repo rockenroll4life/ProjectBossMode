@@ -91,11 +91,17 @@ namespace RockUtils {
             //  Controller
             bool controllerEnabled = false;
 
-            public void SetControllerEnabled(bool enabled) {
-                controllerEnabled = enabled;
+            public static void SetControllerEnabled(bool enabled) {
+                if (instance != null) {
+                    instance.controllerEnabled = enabled;
+                }
             }
 
             public static void AddInputListener(KeyCode key, Action<int> listener) {
+                if (instance == null) {
+                    return;
+                }
+
                 if (instance.inputDictionary.TryGetValue(key, out int numListeners)) {
                     numListeners++;
                     instance.inputDictionary[key] = numListeners;
@@ -106,6 +112,10 @@ namespace RockUtils {
             }
 
             public static void RemoveInputListener(KeyCode key, Action<int> listener) {
+                if (instance == null) {
+                    return;
+                }
+
                 if (instance.inputDictionary.TryGetValue(key, out int numListeners)) {
                     if (numListeners-- == 0) {
                         instance.inputDictionary.Remove(key);
@@ -228,7 +238,7 @@ namespace RockUtils {
 
             //  Returns a Vector3 for ease of use
             public static Vector3 getStick(ControllerStick stick) {
-                if (!instance.controllerEnabled) {
+                if (instance == null && !instance.controllerEnabled) {
                     return Vector3.zero;
                 }
 
@@ -240,7 +250,7 @@ namespace RockUtils {
             }
 
             public static bool isUp(ControllerButtons button) {
-                if (!instance.controllerEnabled) {
+                if (instance == null || !instance.controllerEnabled) {
                     return false;
                 }
 
@@ -284,7 +294,7 @@ namespace RockUtils {
             }
 
             public static bool IsHeld(ControllerButtons button) {
-                if (!instance.controllerEnabled) {
+                if (instance == null || !instance.controllerEnabled) {
                     return false;
                 }
 
@@ -328,7 +338,7 @@ namespace RockUtils {
             }
 
             public static bool WasPressed(ControllerButtons button) {
-                if (!instance.controllerEnabled) {
+                if (instance == null || !instance.controllerEnabled) {
                     return false;
                 }
 
@@ -372,7 +382,7 @@ namespace RockUtils {
             }
 
             public static bool WasReleased(ControllerButtons button) {
-                if (!instance.controllerEnabled) {
+                if (instance == null || !instance.controllerEnabled) {
                     return false;
                 }
 
@@ -416,18 +426,34 @@ namespace RockUtils {
             }
 
             private static bool isPressed(ButtonState state) {
+                if (instance == null) {
+                    return false;
+                }
+
                 return instance.controllerEnabled && state == ButtonState.Pressed;
             }
 
             private static bool isPressed(float buttonValue) {
+                if (instance == null) {
+                    return false;
+                }
+
                 return instance.controllerEnabled && buttonValue > 0;
             }
 
             private static bool isReleased(ButtonState state) {
+                if (instance == null) {
+                    return false;
+                }
+
                 return instance.controllerEnabled && state == ButtonState.Released;
             }
 
             private static bool isReleased(float buttonValue) {
+                if (instance == null) {
+                    return false;
+                }
+
                 return instance.controllerEnabled && buttonValue <= Mathf.Epsilon;
             }
         }

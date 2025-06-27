@@ -72,6 +72,10 @@ namespace RockUtils {
             }
 
             public static void StopListening(Guid? owner, GameEvents eventID, Action<int> listener) {
+                if (instance == null) {
+                    return;
+                }
+
                 //  Owned Dictionary
                 if (owner.HasValue) {
                     if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {

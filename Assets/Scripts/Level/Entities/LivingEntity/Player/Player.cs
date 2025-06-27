@@ -25,10 +25,13 @@ public abstract class Player : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
+        //  TODO: [Rock]: We should have a general locamotion manger that we can use to get input and it changes
+        //  based on the active input type.
         //locomotion = new MouseLocomotion(this);
         locomotion = new KeyboardLocomotion(this);
         //locomotion = new ControllerLocomotion(this);
 
+        //  TODO: [Rock]: The same as above but for targetting
         targeter = new PlayerMouseTargeter(this);
         spellIndicators = new SpellIndicators(this);
 

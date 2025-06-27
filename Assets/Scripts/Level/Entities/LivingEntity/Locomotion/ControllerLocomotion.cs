@@ -17,7 +17,7 @@ public class ControllerLocomotion : Locomotion {
 
     public ControllerLocomotion(LivingEntity owner)
         : base(owner) {
-        InputManager.instance.SetControllerEnabled(true);
+        InputManager.SetControllerEnabled(true);
 
         EventManager.StartListening(GameEvents.Controller_Stick_Left_X, LeftStickMovementX);
         EventManager.StartListening(GameEvents.Controller_Stick_Left_Y, LeftStickMovementY);
@@ -26,7 +26,7 @@ public class ControllerLocomotion : Locomotion {
     }
 
     ~ControllerLocomotion() {
-        InputManager.instance.SetControllerEnabled(false);
+        InputManager.SetControllerEnabled(false);
     }
 
     void LeftStickMovementX(int param) {
