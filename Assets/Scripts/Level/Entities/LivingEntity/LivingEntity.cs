@@ -173,7 +173,7 @@ public abstract class LivingEntity : Entity, IDamageable {
         proj.Setup(this, targeter.GetTargetedEntity(), GetAttribute(AttributeTypes.AttackDamage).GetValue());
     }
 
-    public void DealDamage(Entity damager, float damage) {
+    public void Hurt(Entity damager, float damage) {
         SetEntityData(EntityDataType.Health, GetEntityData(EntityDataType.Health) - damage);
 
         if (damager is LivingEntity livingEntity) {

@@ -12,7 +12,7 @@ public class Tower : Entity, IDamageable {
     protected override Color? GetHighlightColor() => Color.yellow;
     protected override Color? GetHighlightOutlineColor() => Color.yellow;
 
-    public void DealDamage(Entity damager, float damage) {
+    public void Hurt(Entity damager, float damage) {
         health -= damage;
 
         Debug.Log(name + " Health: " + health);

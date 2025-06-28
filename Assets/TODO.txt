@@ -10,14 +10,18 @@ Entity Interactions
 	- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
 Gamemodes
 	- Boss Rush Gamemode
+	- Hero Defense Gamemode
 Gameplay
 	- We should pass damage around as a struct so we can specify the types of damage it is
 	- Leveling
 		- Player Level System for stats and abilities
 	- Multiplayer difficulty scaling
 Input
-	- Controller Support via ControllerLocomotion class
-	- Add Support for Input Chords (A use case will be for Smart Casting)
+	- Controller
+		- Controller Support via ControllerLocomotion class
+		- Controller Support via PlayerControllerTargeter class
+	- Keyboard
+		- Add Support for Input Chords (Ctrl + ???, Alt + ???, etc) (A use case will be for Smart Casting)
 Network
 	- Multiplayer Integration
 Rendering
@@ -28,6 +32,7 @@ Settings
 	- Video Settings Data
 	- Gameplay Settings Data
 	- Settings Menu (To support the data)
+		- This should ideally be scriptable/data driven for easy modification
 Status Effects
 	- Implement Status Effect system
 UI

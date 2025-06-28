@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using RockUtils.GameEvents;
 
 public class ResourceBars : MonoBehaviour {
     public ResourceBar[] bars = new ResourceBar[(int) EntityDataType._COUNT];

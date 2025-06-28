@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour {
     IGamemode gamemode;
-    EntityManager entities;
+    EntityManager entityManager;
     GameplayNodeManager gameplayNodes;
 
     //  TODO: [Rock]: We should make some type of data struct for holding important game objects for a given gamemode, probably a Scriptable Object
@@ -10,13 +10,13 @@ public class Level : MonoBehaviour {
     public GameObject towerPrefab;
     public GameObject mobSpawnerPrefab;
 
-    public EntityManager GetEntityManager() => entities;
+    public EntityManager GetEntityManager() => entityManager;
     public IGamemode GetGamemode() => gamemode;
     public WorldEventSystem GetWorldEvents() => gamemode.GetWorldEvents();
     public GameplayNodeManager GetGameplayNodes() => gameplayNodes;
 
     private void Start() {
-        entities = new EntityManager();
+        entityManager = new EntityManager();
 
         gameplayNodes = new GameplayNodeManager();
         gameplayNodes.Setup();
@@ -44,10 +44,10 @@ public class Level : MonoBehaviour {
 
     //  This is only called for Entities that aren't created via the SpawnEntity
     public void RegisterEntity(Entity entity) {
-        entities.RegisterEntity(entity);
+        entityManager.RegisterEntity(entity);
     }
 
     private void Update() {
-        entities.Update();
+        entityManager.Update();
     }
 }

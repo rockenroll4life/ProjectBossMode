@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour {
 
         float distance = Vector3.Distance(transform.position, target.GetEntity().transform.position);
         if (distance <= collisionDistance) {
-            target.DealDamage(owner, damage);
+            target.Hurt(owner, damage);
             
             Destroy(gameObject);
         }

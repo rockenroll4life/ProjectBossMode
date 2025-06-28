@@ -33,7 +33,7 @@ public class MobSpawner : Entity, IDamageable {
         }
     }
 
-    public void DealDamage(Entity damager, float damage) {
+    public void Hurt(Entity damager, float damage) {
         health -= damage;
 
         Debug.Log(name + " Health: " + health);
