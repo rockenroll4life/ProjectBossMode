@@ -33,6 +33,11 @@ public class Level : MonoBehaviour {
 
     //  Creates an Entity GameObject prefab, calls setup, and registers it
     public void SpawnEntity(GameObject prefab, Vector3 position, Quaternion rotation) {
+        if (prefab == null) {
+            Debug.LogError("FAILED TO SPAWN ENTITY DUE TO NULL PREFAB!");
+            return;
+        }
+
         GameObject obj = Instantiate(prefab, position, rotation);
         Entity entity = obj.GetComponent<Entity>();
 

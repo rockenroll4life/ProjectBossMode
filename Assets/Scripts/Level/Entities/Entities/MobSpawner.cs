@@ -7,7 +7,7 @@ public class MobSpawner : Entity, IDamageable {
     float health = 25;
 
     //  TEMP test variable
-    bool hasSpawner = false;
+    bool hasSpawned = false;
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
@@ -27,8 +27,8 @@ public class MobSpawner : Entity, IDamageable {
     protected override void UpdateStep() {
         base.UpdateStep();
 
-        if (!hasSpawner) {
-            hasSpawner = true;
+        if (!hasSpawned) {
+            hasSpawned = true;
             GetLevel().SpawnEntity(MobPrefab, transform.position, transform.rotation);
         }
     }

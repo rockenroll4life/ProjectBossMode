@@ -5,6 +5,7 @@ public abstract class Locomotion {
         Mouse,
         Keyboard,
         Controller,
+        AI,
     }
 
     protected static readonly float ROTATION_SPEED = 720f;

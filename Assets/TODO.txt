@@ -12,6 +12,8 @@ Gamemodes
 	- Boss Rush Gamemode
 	- Hero Defense Gamemode
 Gameplay
+	- Projectile
+		- Make the projectile use collision instead of distance checks
 	- We should pass damage around as a struct so we can specify the types of damage it is
 	- Leveling
 		- Player Level System for stats and abilities

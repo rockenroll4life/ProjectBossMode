@@ -20,6 +20,7 @@ public abstract class Mob : LivingEntity {
     protected override void RegisterComponents() {
         base.RegisterComponents();
 
+        locomotion = new AILocmotion(this);
         animator = new LivingEntityAnimator(this);
         targeter = new TargeterBase(this);
         goalSelector = new GoalSelector();
