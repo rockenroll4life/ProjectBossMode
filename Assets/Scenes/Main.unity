@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 1382960712}
   - component: {fileID: 1382960711}
   m_Layer: 0
-  m_Name: Level
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1140,7 +1140,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1867957255}
+  m_Father: {fileID: 1911391093}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1722454845
 GameObject:
@@ -1401,7 +1401,6 @@ Transform:
   m_Children:
   - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 1382960712}
   - {fileID: 600069444}
   - {fileID: 1748585129}
   - {fileID: 877589763}
@@ -1437,6 +1436,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 129984566}
+  - {fileID: 1382960712}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5042250716343376558
