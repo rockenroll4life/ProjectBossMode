@@ -36,7 +36,7 @@ public class TestMovementAbility : InstantCastAbility {
 
             if (t >= 1.0f) {
                 isDashing = false;
-                rb.velocity = Vector3.zero; // Reset velocity after dashing
+                rb.linearVelocity = Vector3.zero; // Reset velocity after dashing
                 owner.transform.position = dashEndPosition; // Ensure the player reaches the end position
                 dashStartTime = Time.time + dashCooldown; // Set cooldown start time
             }
