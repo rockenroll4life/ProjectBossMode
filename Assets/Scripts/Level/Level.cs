@@ -10,6 +10,7 @@ public class Level : MonoBehaviour {
     public GameObject towerPrefab;
     public GameObject mobSpawnerPrefab;
 
+    //  NOTE: [Rock]: We can probably change these getters into properties
     public EntityManager GetEntityManager() => entityManager;
     public IGamemode GetGamemode() => gamemode;
     public WorldEventSystem GetWorldEvents() => gamemode.GetWorldEvents();

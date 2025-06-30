@@ -5,8 +5,8 @@ using UnityEngine;
 namespace RockUtils {
     namespace GameEvents {
         public class EventManager : Singleton<EventManager> {
-            readonly Dictionary<GameEvents, Action<int>> globalDictionary = new Dictionary<GameEvents, Action<int>>();
-            readonly Dictionary<Guid, Dictionary<GameEvents, Action<int>>> ownedDictionary = new Dictionary<Guid, Dictionary<GameEvents, Action<int>>>();
+            private readonly Dictionary<GameEvents, Action<int>> globalDictionary = new Dictionary<GameEvents, Action<int>>();
+            private readonly Dictionary<Guid, Dictionary<GameEvents, Action<int>>> ownedDictionary = new Dictionary<Guid, Dictionary<GameEvents, Action<int>>>();
 
             public static void StartListening(Guid? owner, GameEvents eventID, Action<int> listener) {
                 if (Instance == null) {

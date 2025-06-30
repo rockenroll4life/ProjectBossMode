@@ -25,6 +25,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public override bool IsDead() => GetEntityData(EntityDataType.Health) <= 0;
     public LivingEntity GetLastDamager() => lastDamager;
 
+    //  NOTE: [Rock]: We can probably change these getters to properties
     public ITargeter GetTargeter() => targeter;
     public Locomotion GetLocomotion() => locomotion;
     public Abilities GetAbilities() => abilities;

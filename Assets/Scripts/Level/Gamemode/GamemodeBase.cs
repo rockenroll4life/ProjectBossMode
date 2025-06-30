@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public abstract class GamemodeBase : IGamemode {
-    readonly Level level;
-    readonly WorldEventSystem worldEvents;
+    private readonly Level level;
+    private readonly WorldEventSystem worldEvents;
 
     protected Level GetLevel() => level;
     public WorldEventSystem GetWorldEvents() => worldEvents;
