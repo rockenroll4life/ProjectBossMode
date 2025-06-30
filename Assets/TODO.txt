@@ -6,6 +6,8 @@ AI
 	- AI Ability indicators in the world for where attacks are going to be (Maybe?)
 		- This will typically be shown X amount of time prior to using the ability
 	- Implement Pet AI (Totems, Golems, etc)
+Player
+	- Make attacks make the player navigate to the entity they are attacking
 Entity Interactions
 	- Implement different types of interactions with Entities. For example, some entities we might attack, some we might interact with (NPC), some we might harvest resources from, etc
 Gamemodes
