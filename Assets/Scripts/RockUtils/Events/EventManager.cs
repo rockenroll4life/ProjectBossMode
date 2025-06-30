@@ -4,61 +4,40 @@ using UnityEngine;
 
 namespace RockUtils {
     namespace GameEvents {
-        public class EventManager {
-            Dictionary<GameEvents, Action<int>> globalDictionary;
-            Dictionary<Guid, Dictionary<GameEvents, Action<int>>> ownedDictionary;
-            static EventManager eventManager;
-
-            public static EventManager instance {
-                get {
-                    if (eventManager == null) {
-                        eventManager = new EventManager();
-                        eventManager.Init();
-                    }
-
-                    return eventManager;
-                }
-            }
-
-            void Init() {
-                if (globalDictionary == null) {
-                    globalDictionary = new Dictionary<GameEvents, Action<int>>();
-                }
-                if (ownedDictionary == null) {
-                    ownedDictionary = new Dictionary<Guid, Dictionary<GameEvents, Action<int>>>();
-                }
-            }
+        public class EventManager : Singleton<EventManager> {
+            readonly Dictionary<GameEvents, Action<int>> globalDictionary = new Dictionary<GameEvents, Action<int>>();
+            readonly Dictionary<Guid, Dictionary<GameEvents, Action<int>>> ownedDictionary = new Dictionary<Guid, Dictionary<GameEvents, Action<int>>>();
 
             public static void StartListening(Guid? owner, GameEvents eventID, Action<int> listener) {
-                if (instance == null) {
+                if (Instance == null) {
                     return;
                 }
 
                 //  Owned Dictionary
                 if (owner.HasValue) {
-                    if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
+                    if (Instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
                         if (thisDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                             thisEvent += listener;
-                            instance.ownedDictionary[owner.Value][eventID] = thisEvent;
+                            Instance.ownedDictionary[owner.Value][eventID] = thisEvent;
                         } else {
                             thisEvent += listener;
                             thisDictionary.Add(eventID, thisEvent);
-                            instance.ownedDictionary[owner.Value] = thisDictionary;
+                            Instance.ownedDictionary[owner.Value] = thisDictionary;
                         }
                     } else {
                         Dictionary<GameEvents, Action<int>> newDictionary = new Dictionary<GameEvents, Action<int>>();
                         newDictionary.Add(eventID, listener);
-                        instance.ownedDictionary.Add(owner.Value, newDictionary);
+                        Instance.ownedDictionary.Add(owner.Value, newDictionary);
                     }
                 }
                 //  Global Dictionary
                 else {
-                    if (instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
+                    if (Instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                         thisEvent += listener;
-                        instance.globalDictionary[eventID] = thisEvent;
+                        Instance.globalDictionary[eventID] = thisEvent;
                     } else {
                         thisEvent += listener;
-                        instance.globalDictionary.Add(eventID, thisEvent);
+                        Instance.globalDictionary.Add(eventID, thisEvent);
                     }
                 }
                 
@@ -76,24 +55,24 @@ namespace RockUtils {
             }
 
             public static void StopListening(Guid? owner, GameEvents eventID, Action<int> listener) {
-                if (instance == null) {
+                if (Instance == null) {
                     return;
                 }
 
                 //  Owned Dictionary
                 if (owner.HasValue) {
-                    if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
+                    if (Instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
                         if (thisDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                             thisEvent -= listener;
-                            instance.ownedDictionary[owner.Value][eventID] = thisEvent;
+                            Instance.ownedDictionary[owner.Value][eventID] = thisEvent;
                         }
                     }
                 }
                 //  Global Dictionary
                 else {
-                    if (instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
+                    if (Instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                         thisEvent -= listener;
-                        instance.globalDictionary[eventID] = thisEvent;
+                        Instance.globalDictionary[eventID] = thisEvent;
                     }
                 }
 
@@ -111,13 +90,13 @@ namespace RockUtils {
             }
 
             public static void TriggerEvent(Guid? owner, GameEvents eventID, int param) {
-                if (instance == null) {
+                if (Instance == null) {
                     return;
                 }
 
                 //  Owned Dictionary
                 if (owner.HasValue) {
-                    if (instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
+                    if (Instance.ownedDictionary.TryGetValue(owner.Value, out Dictionary<GameEvents, Action<int>> thisDictionary)) {
                         if (thisDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                             thisEvent.Invoke(param);
                         }
@@ -125,7 +104,7 @@ namespace RockUtils {
                 }
                 //  Global Dictionary
                 else {
-                    if (instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
+                    if (Instance.globalDictionary.TryGetValue(eventID, out Action<int> thisEvent)) {
                         thisEvent.Invoke(param);
                     }
                 }
