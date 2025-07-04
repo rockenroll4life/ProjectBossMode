@@ -10,14 +10,13 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected Locomotion locomotion;
     protected EntityAnimator animator;
     protected ITargeter targeter;
-    AttributeDictionary attributes;
-
-    float attackTimer = 0;
-
-    EntityData entityData;
+    
+    private AttributeDictionary attributes;
+    private float attackTimer = 0;
+    private EntityData entityData;
 
     //  NOTE: [Rock]: This is LivingEntity for now...but not sure if we need to change this to Entity instead...
-    LivingEntity lastDamager = null;
+    private LivingEntity lastDamager = null;
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.LivingEntity;
