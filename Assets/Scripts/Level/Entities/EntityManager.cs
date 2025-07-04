@@ -81,4 +81,12 @@ public class EntityManager {
 
         return NO_ENTITIES;
     }
+
+    public T GetFirstEntityOfType<T>() where T : Entity {
+        if (entityDictionary.ContainsKey(typeof(T)) && entityDictionary[typeof(T)].Count > 0) {
+            return (T) entityDictionary[typeof(T)][0];
+        }
+
+        return null;
+    }
 }

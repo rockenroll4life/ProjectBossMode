@@ -24,7 +24,7 @@ public abstract class Entity : MonoBehaviour {
     public abstract bool IsDead();
 
     public Guid GetEntityID() { return entityID; }
-    protected Level GetLevel() => level;
+    public Level GetLevel() => level;
 
     protected virtual Color? GetHighlightColor() { return null; }
     protected virtual Color? GetHighlightOutlineColor() { return null; }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class AttackTower : Goal {
     readonly LivingEntity owner;
@@ -8,7 +7,7 @@ public class AttackTower : Goal {
     public AttackTower(LivingEntity owner) {
         this.owner = owner;
 
-        tower = Object.FindObjectOfType<Tower>();
+        tower = owner.GetLevel().GetEntityManager().GetFirstEntityOfType<Tower>();
 
         SetFlags(new HashSet<Flag>() { Flag.MOVE });
     }
