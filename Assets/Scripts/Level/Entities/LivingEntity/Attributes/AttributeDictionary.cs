@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttributeDictionary {
-    readonly LivingEntity owner;
-    readonly Dictionary<IAttribute, IAttributeInstance> attributeDictionary = new Dictionary<IAttribute, IAttributeInstance>();
-    readonly Dictionary<IAttribute, Action<int>> attributeListeners = new Dictionary<IAttribute, Action<int>>();
+    private readonly LivingEntity owner;
+    private readonly Dictionary<IAttribute, IAttributeInstance> attributeDictionary = new Dictionary<IAttribute, IAttributeInstance>();
+    private readonly Dictionary<IAttribute, Action<int>> attributeListeners = new Dictionary<IAttribute, Action<int>>();
 
     public AttributeDictionary(LivingEntity owner) {
         this.owner = owner;
