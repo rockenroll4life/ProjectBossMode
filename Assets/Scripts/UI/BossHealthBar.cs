@@ -10,7 +10,7 @@ public class BossHealthBar : MonoBehaviour {
 
     float currentHealth, maxHealth;
 
-    public void Setup(LivingEntity target) {
+    public void Setup(Entity target) {
         EventManager.StartListening(target.GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Health, HealthChanged);
 
         entityID = target.GetEntityID();

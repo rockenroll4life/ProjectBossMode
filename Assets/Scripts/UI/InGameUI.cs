@@ -29,7 +29,7 @@ public class InGameUI : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public static void EnableBossHealthBar(LivingEntity target) {
+    public static void EnableBossHealthBar(Entity target) {
         GameObject obj = Instantiate(Instance.bossHealthBarCanvasPrefab, Instance.transform);
         Instance.bossHealthBar = obj.GetComponent<BossHealthBar>();
         Instance.bossHealthBar.Setup(target);

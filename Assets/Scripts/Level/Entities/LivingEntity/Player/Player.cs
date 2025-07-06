@@ -37,7 +37,6 @@ public abstract class Player : LivingEntity {
         animator = new LivingEntityAnimator(this);
 
         InGameUI.EnablePlayerUI(UIPrefab, this);
-        InGameUI.EnableBossHealthBar(this);
     }
 
     protected override void UnregisterComponents() {

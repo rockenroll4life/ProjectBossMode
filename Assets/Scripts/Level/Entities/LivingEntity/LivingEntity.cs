@@ -32,24 +32,22 @@ public abstract class LivingEntity : Entity, IDamageable {
         base.Setup(level);
 
         RegisterEvents();
-        RegisterComponents();
     }
 
     public override void Breakdown() {
         base.Breakdown();
 
         UnregisterEvents();
-        UnregisterComponents();
     }
 
-    protected virtual void RegisterComponents() {
+    protected override void RegisterComponents() {
+        base.RegisterComponents();
+
         statusEffects = new StatusEffectManager(this);
 
         abilities = new Abilities(this);
         RegisterAbilities();
     }
-
-    protected virtual void UnregisterComponents() { }
 
     protected override void RegisterAttributes() {
         base.RegisterAttributes();

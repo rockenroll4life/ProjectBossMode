@@ -16,6 +16,12 @@ public class Tower : Entity, IDamageable {
         SetEntityData(EntityDataType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
     }
 
+    protected override void RegisterComponents() {
+        base.RegisterComponents();
+
+        InGameUI.EnableBossHealthBar(this);
+    }
+
     public void Hurt(Entity damager, float damage) {
         SetEntityData(EntityDataType.Health, GetEntityData(EntityDataType.Health) - damage);
 

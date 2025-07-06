@@ -43,10 +43,13 @@ public abstract class Entity : MonoBehaviour {
         highlightShader = Shader.Find("Custom/Entity_Outline");
 
         RegisterAttributes();
-        
+        RegisterComponents();
+
         level.GetWorldEvents().onEntitySpawned?.Invoke(this);
     }
     public virtual void Breakdown() {
+        UnregisterComponents();
+
         level.GetWorldEvents().onEntityKilled?.Invoke(this);
     }
 
@@ -79,6 +82,9 @@ public abstract class Entity : MonoBehaviour {
 
         entityData = new EntityData(this);
     }
+
+    protected virtual void RegisterComponents() { }
+    protected virtual void UnregisterComponents() { }
 
     protected void AddGlobalEvent(GameEvents eventID, Action<int> listener) { AddEvent(null, eventID, listener); }
     protected void AddOwnedEvent(GameEvents eventID, Action<int> listener) { AddEvent(entityID, eventID, listener); }
