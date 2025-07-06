@@ -32,9 +32,9 @@ public abstract class Entity : MonoBehaviour {
     public float GetEntityData(EntityDataType type) => entityData.Get(type);
     public void SetEntityData(EntityDataType type, float value) => entityData.Set(type, value);
 
-    protected virtual Color? GetHighlightColor() { return null; }
-    protected virtual Color? GetHighlightOutlineColor() { return null; }
-    protected bool HasHighlightColor() { return GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue; }
+    protected virtual Color? GetHighlightColor() => null;
+    protected virtual Color? GetHighlightOutlineColor() => null;
+    protected bool HasHighlightColor() => GetHighlightColor().HasValue || GetHighlightOutlineColor().HasValue;
 
     public virtual void Setup(Level level) {
         this.level = level;
@@ -111,9 +111,7 @@ public abstract class Entity : MonoBehaviour {
     protected virtual void PreUpdateStep() { }
 
     //  Update - This is where a brunt of the logic for entities will be handled from
-    protected virtual void UpdateStep() {
-        entityData.Update();
-    }
+    protected virtual void UpdateStep() { entityData.Update(); }
 
     //  Post-Update - This is where we can handle any last minute things before we're done for this tick with the entity
     protected virtual void PostUpdateStep() { }
