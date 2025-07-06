@@ -14,6 +14,8 @@ public class Tower : Entity, IDamageable {
 
         GetAttribute(AttributeTypes.HealthMax).SetBaseValue(1000);
         SetEntityData(EntityDataType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
+
+        GetAttribute(AttributeTypes.HealthRegenRate).SetBaseValue(0.25f);
     }
 
     protected override void RegisterComponents() {

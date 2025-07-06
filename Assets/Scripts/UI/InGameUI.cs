@@ -1,29 +1,10 @@
 using UnityEngine;
 
-public class InGameUI : MonoBehaviour {
-    static InGameUI instance;
-    public static InGameUI Instance {
-        get {
-            if (instance == null) {
-                instance = FindAnyObjectByType<InGameUI>();
-            }
-            return instance;
-        }
-    }
-
+public class InGameUI : Singleton<InGameUI> {
     public GameObject bossHealthBarCanvasPrefab;
 
     GameplayUI ui = null;
     BossHealthBar bossHealthBar = null;
-
-    private void Awake() {
-        if (instance == null) {
-            instance = this;
-        } else if (instance != this) {
-            Debug.LogWarning("Duplicate instance of InGameUI found. Destroying this instance.");
-            Destroy(gameObject);
-        }
-    }
 
     private void OnDestroy() {
         Destroy(gameObject);

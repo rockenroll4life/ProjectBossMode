@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using RockUtils.GameEvents;
+using TMPro;
 
 public class BossHealthBar : MonoBehaviour {
-    public TMPro.TextMeshProUGUI entityName;
+    public TextMeshProUGUI entityName;
     public Image barFill;
+    public TextMeshProUGUI currentHealthText;
+    public TextMeshProUGUI maxHealthText;
     
     System.Guid entityID;
 
@@ -19,6 +22,9 @@ public class BossHealthBar : MonoBehaviour {
         currentHealth = target.GetEntityData(EntityDataType.Health);
         maxHealth = target.GetAttribute(AttributeTypes.HealthMax).GetValue();
         barFill.fillAmount = (currentHealth / maxHealth);
+
+        currentHealthText.text = currentHealth.ToString();
+        maxHealthText.text = maxHealth.ToString();
     }
 
     private void OnDestroy() {
@@ -28,5 +34,7 @@ public class BossHealthBar : MonoBehaviour {
     void HealthChanged(int param) {
         currentHealth = (param / 1000f);
         barFill.fillAmount = (currentHealth / maxHealth);
+
+        currentHealthText.text = Mathf.Floor(currentHealth).ToString();
     }
 }
