@@ -5,7 +5,7 @@ public class InGameUI : MonoBehaviour {
     public static InGameUI Instance {
         get {
             if (instance == null) {
-                instance = FindObjectOfType<InGameUI>();
+                instance = FindAnyObjectByType<InGameUI>();
             }
             return instance;
         }
