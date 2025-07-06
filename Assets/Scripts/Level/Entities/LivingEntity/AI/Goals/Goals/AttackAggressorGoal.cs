@@ -9,14 +9,14 @@ public class AttackAggressorGoal : Goal {
         SetFlags(new HashSet<Flag>() { Flag.MOVE });
     }
 
-    public override bool CanUse() {
-        return owner.GetLastDamager() != null;
-    }
+    public override bool CanUse() => owner.GetLastDamager() != null;
 
     public override void Start() {
         base.Start();
 
-        owner.GetTargeter().SetTargetedEntity(owner.GetLastDamager());
+        if (owner.GetLastDamager() is IDamageable damagable) {
+            owner.GetTargeter().SetTargetedEntity(damagable);
+        }
     }
 
     public override void Stop() {

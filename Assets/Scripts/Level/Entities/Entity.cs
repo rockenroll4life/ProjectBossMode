@@ -16,13 +16,14 @@ public abstract class Entity : MonoBehaviour {
     public Renderer rendererToOutline;
 
     protected Guid entityID;
+    protected Entity lastDamager = null;
 
     private Level level;
     private Shader previousShader;
     private Shader highlightShader;
     private EntityData entityData;
     private AttributeDictionary attributes;
-
+    
     public abstract EntityType GetEntityType();
     public abstract Type GetSystemType();
     public virtual bool IsDead() => GetEntityData(EntityDataType.Health) <= 0;
@@ -31,6 +32,7 @@ public abstract class Entity : MonoBehaviour {
     public Level GetLevel() => level;
     public float GetEntityData(EntityDataType type) => entityData.Get(type);
     public void SetEntityData(EntityDataType type, float value) => entityData.Set(type, value);
+    public Entity GetLastDamager() => lastDamager;
 
     protected virtual Color? GetHighlightColor() => null;
     protected virtual Color? GetHighlightOutlineColor() => null;

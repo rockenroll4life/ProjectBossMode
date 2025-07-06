@@ -12,15 +12,10 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected ITargeter targeter;
     
     private float attackTimer = 0;
-    
-
-    //  NOTE: [Rock]: This is LivingEntity for now...but not sure if we need to change this to Entity instead...
-    private LivingEntity lastDamager = null;
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.LivingEntity;
     public override System.Type GetSystemType() => typeof(LivingEntity);
-    public LivingEntity GetLastDamager() => lastDamager;
 
     //  NOTE: [Rock]: We can probably change these getters to properties
     public ITargeter GetTargeter() => targeter;
@@ -131,9 +126,7 @@ public abstract class LivingEntity : Entity, IDamageable {
     public void Hurt(Entity damager, float damage) {
         SetEntityData(EntityDataType.Health, GetEntityData(EntityDataType.Health) - damage);
 
-        if (damager is LivingEntity livingEntity) {
-            lastDamager = livingEntity;
-        }
+        lastDamager = damager;
 
         EventManager.TriggerEvent(GetEntityID(), GameEvents.LivingEntity_Hurt, (int) (damage * 1000));
         EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) EntityDataType.Health, (int) (GetEntityData(EntityDataType.Health) * 1000));
