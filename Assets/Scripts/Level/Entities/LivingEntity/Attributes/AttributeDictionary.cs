@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AttributeDictionary {
-    private readonly LivingEntity owner;
+    private readonly Entity owner;
     private readonly Dictionary<IAttribute, IAttributeInstance> attributeDictionary = new Dictionary<IAttribute, IAttributeInstance>();
     private readonly Dictionary<IAttribute, Action<int>> attributeListeners = new Dictionary<IAttribute, Action<int>>();
 
-    public AttributeDictionary(LivingEntity owner) {
+    public AttributeDictionary(Entity owner) {
         this.owner = owner;
     }
 

@@ -11,9 +11,8 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected EntityAnimator animator;
     protected ITargeter targeter;
     
-    private AttributeDictionary attributes;
     private float attackTimer = 0;
-    private EntityData entityData;
+    
 
     //  NOTE: [Rock]: This is LivingEntity for now...but not sure if we need to change this to Entity instead...
     private LivingEntity lastDamager = null;
@@ -21,7 +20,6 @@ public abstract class LivingEntity : Entity, IDamageable {
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.LivingEntity;
     public override System.Type GetSystemType() => typeof(LivingEntity);
-    public override bool IsDead() => GetEntityData(EntityDataType.Health) <= 0;
     public LivingEntity GetLastDamager() => lastDamager;
 
     //  NOTE: [Rock]: We can probably change these getters to properties
@@ -30,14 +28,10 @@ public abstract class LivingEntity : Entity, IDamageable {
     public Abilities GetAbilities() => abilities;
     public SpellIndicators GetSpellIndicators() => spellIndicators;
 
-    public float GetEntityData(EntityDataType type) => entityData.Get(type);
-    public void SetEntityData(EntityDataType type, float value) => entityData.Set(type, value);
-
     public override void Setup(Level level) {
         base.Setup(level);
 
         RegisterEvents();
-        RegisterAttributes();
         RegisterComponents();
     }
 
@@ -57,31 +51,8 @@ public abstract class LivingEntity : Entity, IDamageable {
 
     protected virtual void UnregisterComponents() { }
 
-    protected virtual void RegisterAttributes() {
-        //  These are the base attributes that every entity has, only register attributes here that everyone will have (Even if we set them to a value
-        //  of 0 in the actual entity themselves.
-        GetAttributes().RegisterAttribute(AttributeTypes.HealthMax);
-        GetAttributes().RegisterAttribute(AttributeTypes.HealthRegenRate);
-
-        GetAttributes().RegisterAttribute(AttributeTypes.ManaMax);
-        GetAttributes().RegisterAttribute(AttributeTypes.ManaRegenRate);
-
-        GetAttributes().RegisterAttribute(AttributeTypes.MovementSpeed);
-
-        GetAttributes().RegisterAttribute(AttributeTypes.AttackDamage);
-        GetAttributes().RegisterAttribute(AttributeTypes.AttackSpeed);
-        GetAttributes().RegisterAttribute(AttributeTypes.AttackRange);
-
-        GetAttributes().RegisterAttribute(AttributeTypes.Ability1Cooldown);
-        GetAttributes().RegisterAttribute(AttributeTypes.Ability2Cooldown);
-        GetAttributes().RegisterAttribute(AttributeTypes.Ability3Cooldown);
-        GetAttributes().RegisterAttribute(AttributeTypes.Ability4Cooldown);
-        GetAttributes().RegisterAttribute(AttributeTypes.UltimateCooldown);
-
-        GetAttributes().RegisterAttribute(AttributeTypes.CooldownReduction);
-        GetAttributes().RegisterAttribute(AttributeTypes.ResourceCostReduction);
-
-        entityData = new EntityData(this);
+    protected override void RegisterAttributes() {
+        base.RegisterAttributes();
 
         SetEntityData(EntityDataType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
     }
@@ -116,8 +87,6 @@ public abstract class LivingEntity : Entity, IDamageable {
     protected override void UpdateStep() {
         base.UpdateStep();
 
-        entityData.Update();
-
         if (attackTimer > 0) {
             attackTimer -= Time.deltaTime;
         } else {
@@ -139,18 +108,6 @@ public abstract class LivingEntity : Entity, IDamageable {
         SetEntityData(resourceType, value);
 
         EventManager.TriggerEvent(GetEntityID(), GameEvents.Entity_Data_Changed + (int) resourceType, (int) (value * 1000));
-    }
-
-    public AttributeDictionary GetAttributes() {
-        if (attributes == null) {
-            attributes = new AttributeDictionary(this);
-        }
-
-        return attributes;
-    }
-
-    public IAttributeInstance GetAttribute(AttributeTypes attribute) {
-        return GetAttributes().GetInstance(Attributes.Get(attribute));
     }
 
     protected virtual bool CanAttack() {

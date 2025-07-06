@@ -2,12 +2,12 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public class UpdatingEntityData : IEntityData {
-    LivingEntity owner;
+    Entity owner;
     EntityDataType type;
     float value, maxValue;
     float updateValue = -1;
 
-    public UpdatingEntityData(LivingEntity owner, EntityDataType type, float startingValue, AttributeTypes maxAttributeValue, AttributeTypes updatingAttribute = AttributeTypes.None) {
+    public UpdatingEntityData(Entity owner, EntityDataType type, float startingValue, AttributeTypes maxAttributeValue, AttributeTypes updatingAttribute = AttributeTypes.None) {
         this.owner = owner;
         this.type = type;
 

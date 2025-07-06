@@ -18,7 +18,7 @@ public class EntityData {
     System.Guid entityID;
     readonly IEntityData[] data;
 
-    public EntityData(LivingEntity owner) {
+    public EntityData(Entity owner) {
         entityID = owner.GetEntityID();
 
         data = new IEntityData[] {
