@@ -16,13 +16,14 @@ public class Level : MonoBehaviour {
     public WorldEventSystem GetWorldEvents() => gamemode.GetWorldEvents();
     public GameplayNodeManager GetGameplayNodes() => gameplayNodes;
 
-    private void Start() {
-        entityManager = new EntityManager();
-
+    private void Awake() {
+        entityManager = new EntityManager(this);
         gameplayNodes = new GameplayNodeManager();
-        gameplayNodes.Setup();
-
         gamemode = new HeroDefenseGamemode(this);
+    }
+
+    private void Start() {
+        gameplayNodes.Setup();
         gamemode.Setup();
     }
 
@@ -30,30 +31,11 @@ public class Level : MonoBehaviour {
         gamemode.Breakdown();
     }
 
-    //  NOTE: [Rock]: We may want to move the spawning of entities into the EntityManager...hmmmm
-
     //  Creates an Entity GameObject prefab, calls setup, and registers it
-    public void SpawnEntity(GameObject prefab, Vector3 position, Quaternion rotation) {
-        if (prefab == null) {
-            Debug.LogError("FAILED TO SPAWN ENTITY DUE TO NULL PREFAB!");
-            return;
-        }
-
-        GameObject obj = Instantiate(prefab, position, rotation);
-        Entity entity = obj.GetComponent<Entity>();
-
-        Debug.Assert(entity, "INVALID SPAWN ENTITY PREFAB");
-
-        entity.Setup(this);
-        RegisterEntity(entity);
-    }
+    public void SpawnEntity(GameObject prefab, Vector3 position, Quaternion rotation) => entityManager.SpawnEntity(prefab, position, rotation);
 
     //  This is only called for Entities that aren't created via the SpawnEntity
-    public void RegisterEntity(Entity entity) {
-        entityManager.RegisterEntity(entity);
-    }
+    public void RegisterEntity(Entity entity) => entityManager.RegisterEntity(entity);
 
-    private void Update() {
-        entityManager.Update();
-    }
+    private void Update() => entityManager.Update();
 }

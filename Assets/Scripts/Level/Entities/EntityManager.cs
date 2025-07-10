@@ -2,14 +2,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityManager {
-    static readonly List<Entity> NO_ENTITIES = new();
+    private static readonly List<Entity> NO_ENTITIES = new();
 
-    readonly List<Entity> entities = new();
+    private readonly List<Entity> entities = new();
     //  NOTE: [Rock]: We may want to support storing an entity in multiple types in the future
-    readonly Dictionary<System.Type, List<Entity>> entityDictionary = new();
-    
-    readonly List<Entity> toRemove = new();
-    readonly List<Entity> toAdd = new();
+    private readonly Dictionary<System.Type, List<Entity>> entityDictionary = new();
+
+    private readonly List<Entity> toRemove = new();
+    private readonly List<Entity> toAdd = new();
+
+    private readonly Level level;
+
+    public EntityManager(Level level) {
+        this.level = level;
+    }
 
     public void Update() {
         //  Add any new entities
@@ -56,6 +62,21 @@ public class EntityManager {
         });
 
         toRemove.Clear();
+    }
+
+    public void SpawnEntity(GameObject prefab, Vector3 position, Quaternion rotation) {
+        if (prefab == null) {
+            Debug.LogError("FAILED TO SPAWN ENTITY DUE TO NULL PREFAB!");
+            return;
+        }
+
+        GameObject obj = Object.Instantiate(prefab, position, rotation);
+        Entity entity = obj.GetComponent<Entity>();
+
+        Debug.Assert(entity, "INVALID SPAWN ENTITY PREFAB");
+
+        entity.Setup(level);
+        RegisterEntity(entity);
     }
 
     public void RegisterEntity(Entity entity) {

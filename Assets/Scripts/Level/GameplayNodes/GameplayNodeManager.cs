@@ -9,7 +9,7 @@ public class GameplayNodeManager {
     readonly Dictionary<GameplayNode.Type, List<GameplayNode>> gameplayNodes = new();
 
     public void Setup() {
-        Object.FindObjectsOfType<GameplayNode>()
+        Object.FindObjectsByType<GameplayNode>(FindObjectsSortMode.None)
             .ToList()
             .ForEach(node => {
                 AddNode(node);
