@@ -20,6 +20,8 @@ Gameplay
 	- Leveling
 		- Player Level System for stats and abilities
 	- Multiplayer difficulty scaling
+	- Abilities
+		- Setup a means for abilities to hurt non-living entities
 Input
 	- Controller
 		- Controller Support via ControllerLocomotion class

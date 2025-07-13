@@ -31,10 +31,15 @@ public class Level : MonoBehaviour {
         gamemode.Breakdown();
     }
 
+    //  TODO: [Rock]: We needs to pass 2 different points of data
+    //  1. EntityData (This contains what entity it is, and any important info about it)
+    //  2. PositionalData (This contains position and rotation)
     //  Creates an Entity GameObject prefab, calls setup, and registers it
     public void SpawnEntity(GameObject prefab, Vector3 position, Quaternion rotation) => entityManager.SpawnEntity(prefab, position, rotation);
 
+    //  NOTE: [Rock]: Good chance we don't need this
     //  This is only called for Entities that aren't created via the SpawnEntity
+    //  but I think we should be creating all entities via the SpawnEntity
     public void RegisterEntity(Entity entity) => entityManager.RegisterEntity(entity);
 
     private void Update() {
