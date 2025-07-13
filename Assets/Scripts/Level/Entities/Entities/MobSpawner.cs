@@ -4,16 +4,12 @@ using UnityEngine;
 public class MobSpawner : Entity, IDamageable {
     public GameObject MobPrefab;
 
-    float health = 25;
-
     //  TEMP test variable
     bool hasSpawned = false;
 
     public Entity GetEntity() => this;
     public override EntityType GetEntityType() => EntityType.Destructable;
     public override Type GetSystemType() => typeof(MobSpawner);
-
-    public override bool IsDead() => health <= 0;
 
     protected override Color? GetHighlightColor() => Color.black;
     protected override Color? GetHighlightOutlineColor() => Color.black;
@@ -22,6 +18,13 @@ public class MobSpawner : Entity, IDamageable {
         base.Setup(level);
 
         Debug.Assert(MobPrefab, "NO MOB SET ON MOB SPAWNER!");
+    }
+
+    protected override void RegisterAttributes() {
+        base.RegisterAttributes();
+
+        GetAttribute(AttributeTypes.HealthMax).SetBaseValue(1000);
+        SetEntityData(EntityDataType.Health, GetAttribute(AttributeTypes.HealthMax).GetValue());
     }
 
     protected override void UpdateStep() {
@@ -34,9 +37,9 @@ public class MobSpawner : Entity, IDamageable {
     }
 
     public void Hurt(Entity damager, float damage) {
-        health -= damage;
+        SetEntityData(EntityDataType.Health, GetEntityData(EntityDataType.Health) - damage);
 
-        Debug.Log(name + " Health: " + health);
+        Debug.Log($"{name} Health: {GetEntityData(EntityDataType.Health)}");
     }
 
     private void OnDrawGizmos() {

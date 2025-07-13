@@ -48,7 +48,6 @@ public class EntityManager {
             }
         });
 
-
         toAdd.Clear();
     }
 
