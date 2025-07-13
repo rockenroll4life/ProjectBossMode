@@ -3,4 +3,6 @@ public interface IGamemode {
 
     public void Setup();
     public void Breakdown();
+
+    public void Update();
 }

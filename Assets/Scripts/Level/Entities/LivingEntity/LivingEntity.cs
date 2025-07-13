@@ -23,18 +23,6 @@ public abstract class LivingEntity : Entity, IDamageable {
     public Abilities GetAbilities() => abilities;
     public SpellIndicators GetSpellIndicators() => spellIndicators;
 
-    public override void Setup(Level level) {
-        base.Setup(level);
-
-        RegisterEvents();
-    }
-
-    public override void Breakdown() {
-        base.Breakdown();
-
-        UnregisterEvents();
-    }
-
     protected override void RegisterComponents() {
         base.RegisterComponents();
 

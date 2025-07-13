@@ -1,7 +1,11 @@
+using RockUtils.GameEvents;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HeroDefenseGamemode : GamemodeBase {
+    //  TEMP
+    private bool hasSpawned = false;
+
     public HeroDefenseGamemode(Level level)
         : base(level) {
     }
@@ -20,6 +24,13 @@ public class HeroDefenseGamemode : GamemodeBase {
 
     public override void Breakdown() {
         GetWorldEvents().onEntityKilled -= EntityDestroyed;
+    }
+
+    public override void Update() {
+        if (!hasSpawned) {
+            hasSpawned = true;
+            EventManager.TriggerEvent(GameEvents.MobSpawner_SpawnEntities);
+        }
     }
 
     void EntityDestroyed(Entity entity) {

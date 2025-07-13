@@ -14,6 +14,7 @@ public abstract class GamemodeBase : IGamemode {
 
     public abstract void Setup();
     public abstract void Breakdown();
+    public abstract void Update();
 
     protected virtual void RegisterWorldEvents() { }
 

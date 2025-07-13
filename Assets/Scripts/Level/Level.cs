@@ -37,5 +37,8 @@ public class Level : MonoBehaviour {
     //  This is only called for Entities that aren't created via the SpawnEntity
     public void RegisterEntity(Entity entity) => entityManager.RegisterEntity(entity);
 
-    private void Update() => entityManager.Update();
+    private void Update() {
+        gamemode.Update();
+        entityManager.Update();
+    }
 }

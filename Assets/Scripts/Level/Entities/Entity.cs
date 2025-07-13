@@ -44,12 +44,16 @@ public abstract class Entity : MonoBehaviour {
 
         highlightShader = Shader.Find("Custom/Entity_Outline");
 
+        RegisterEvents();
         RegisterAttributes();
         RegisterComponents();
 
         level.GetWorldEvents().onEntitySpawned?.Invoke(this);
     }
+
+    //  NOTE: [Rock]: Do we need a Breakdown function? I think we can probably just do this in OnDestroy instead
     public virtual void Breakdown() {
+        UnregisterEvents();
         UnregisterComponents();
 
         level.GetWorldEvents().onEntityKilled?.Invoke(this);
