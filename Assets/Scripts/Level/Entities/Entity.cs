@@ -14,6 +14,7 @@ public abstract class Entity : MonoBehaviour {
     }
 
     public Renderer rendererToOutline;
+    public Vector3 Position { get { return transform.position; } }
 
     protected Guid entityID;
     protected Entity lastDamager = null;

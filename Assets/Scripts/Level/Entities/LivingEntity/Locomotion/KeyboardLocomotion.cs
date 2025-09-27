@@ -8,8 +8,9 @@ public class KeyboardLocomotion : Locomotion {
 
     //  TODO: [Rock]: This should really be a dictionary instead of an array as we access it via the KeyBindingKeys and if they're values change
     //  it'll cause out of bounds errors
-    readonly KeyBinding[] keyBindings = new KeyBinding[4];
-    bool rotateTowardsMouse;
+    private readonly KeyBinding[] keyBindings = new KeyBinding[4];
+    private bool rotateTowardsMouse;
+    private readonly Camera camera;
 
     public override MovementType GetMovementType() => MovementType.Keyboard;
 
@@ -17,6 +18,8 @@ public class KeyboardLocomotion : Locomotion {
 
     public KeyboardLocomotion(LivingEntity owner)
         : base (owner) {
+
+        camera = Camera.main;
 
         EventManager.StartListening(GameEvents.Keybindings_Changed, KeyBindingsChanged);
         EventManager.StartListening(GameEvents.GameplaySettings_Changed, GameplaySettingsChanged);
@@ -108,8 +111,8 @@ public class KeyboardLocomotion : Locomotion {
     protected override Vector3 GetLookingDirection() {
         if (rotateTowardsMouse) {
             Vector3 mousePos = Input.mousePosition;
-            Plane plane = new Plane(Camera.main.transform.forward, owner.transform.position);
-            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            Plane plane = new Plane(camera.transform.forward, owner.transform.position);
+            Ray ray = camera.ScreenPointToRay(mousePos);
             Vector3 direction = Vector3.forward;
 
             float distance;

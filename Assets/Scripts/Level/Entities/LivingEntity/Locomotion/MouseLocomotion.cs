@@ -46,7 +46,7 @@ public class MouseLocomotion : Locomotion {
 
     protected override Vector3 GetLookingDirection() {
         if (!IsMoving() && targetedEntity) {
-            return (targetedEntity.transform.position - owner.transform.position).normalized;
+            return (targetedEntity.Position - owner.Position).normalized;
         }
 
         return IsMoving() ? agent.velocity.normalized : owner.transform.forward;
@@ -54,7 +54,7 @@ public class MouseLocomotion : Locomotion {
 
     protected override void UpdateMovement() {
         if (targetedEntity) {
-            if ((targetedEntity.transform.position - owner.transform.position).sqrMagnitude > (attackRange * attackRange)) {
+            if ((targetedEntity.Position - owner.Position).sqrMagnitude > (attackRange * attackRange)) {
                 MoveToLocation(targetedEntity.transform.position);
             }
         }

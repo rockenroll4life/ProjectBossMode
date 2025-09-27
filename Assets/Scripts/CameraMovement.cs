@@ -4,7 +4,7 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public class CameraMovement : MonoBehaviour {
-    static CameraMovement instance;
+    private static CameraMovement instance;
     public static CameraMovement Instance {
         get {
             if (instance == null) {
@@ -14,17 +14,17 @@ public class CameraMovement : MonoBehaviour {
         }
     }
 
-    readonly bool supportZoom = false;
-    readonly Vector3 DEFAULT_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
-    readonly Vector3 MIN_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
-    readonly Vector3 MAX_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
+    private readonly bool supportZoom = false;
+    private readonly Vector3 DEFAULT_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
+    private readonly Vector3 MIN_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
+    private readonly Vector3 MAX_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
 
-    readonly float CAMERA_SPEED = 125f;
-    readonly float MAX_CAMERA_SPEED = 500;
-    readonly float ZOOM_SPEED = 50f;
+    private readonly float CAMERA_SPEED = 125f;
+    private readonly float MAX_CAMERA_SPEED = 500;
+    private readonly float ZOOM_SPEED = 50f;
 
-    LivingEntity cameraTarget;
-    float zoomAmount = 0f;
+    private LivingEntity cameraTarget;
+    private float zoomAmount = 0f;
 
     private void Awake() {
         if (instance == null) {
@@ -56,6 +56,7 @@ public class CameraMovement : MonoBehaviour {
 
     public static void SetCameraTarget(LivingEntity cameraTarget) {
         Instance.cameraTarget = cameraTarget;
+        Instance.FocusOnTarget(0);
     }
 
     private void Update() {

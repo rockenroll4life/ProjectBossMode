@@ -2,13 +2,15 @@ using UnityEngine;
 using RockUtils.GameEvents;
 
 public class PlayerMouseTargeter : TargeterBase {
-    RaycastHit hit;
-    TargetType hitType = TargetType.None;
+    private RaycastHit hit;
+    private TargetType hitType = TargetType.None;
+    private readonly Camera camera;
 
     public PlayerMouseTargeter(LivingEntity owner)
         : base(owner) {
         EventManager.StartListening(GameEvents.Mouse_Left_Press, SelectTarget);
         EventManager.StartListening(GameEvents.Mouse_Left_Held, UpdateMoveLocation);
+        camera = Camera.main;
     }
 
     ~PlayerMouseTargeter() {
@@ -19,7 +21,7 @@ public class PlayerMouseTargeter : TargeterBase {
     void SelectTarget(int param) {
         IDamageable prevTargetedEntity = targetedEntity;
         IDamageable hitEntity = null;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
             hitEntity = hit.collider.gameObject.GetComponentInParent<IDamageable>();
             targetedLocation = null;
@@ -65,7 +67,7 @@ public class PlayerMouseTargeter : TargeterBase {
 
     void UpdateMoveLocation(int param) {
         if (hitType == TargetType.World) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             //  NOTE: [Rock]: In the future we'll probably want to have an ignore mask here...
             if (Physics.Raycast(ray, out hit, RAYCAST_DISTANCE)) {
                 targetedLocation = hit.point;
