@@ -35,7 +35,7 @@ public class HeroDefenseGamemode : GamemodeBase {
 
     void EntityDestroyed(Entity entity) {
         if (entity is MobSpawner) {
-            IReadOnlyList<Entity> spawners = GetLevel().GetEntityManager().GetEntities(typeof(MobSpawner));
+            IReadOnlyList<Entity> spawners = GetLevel().EntityManager.GetEntities(typeof(MobSpawner));
             if (spawners.Count == 0) {
                 Debug.Log("All spawners destroyed!");
             }

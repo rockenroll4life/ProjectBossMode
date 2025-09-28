@@ -20,7 +20,7 @@ public abstract class GamemodeBase : IGamemode {
 
     //  TODO: [Rock]: Remove the offset once we fix up the Tower prefab
     protected void PopulateNodes(GameplayNode.Type type, GameObject prefab, Vector3 offset) {
-        level.GetGameplayNodes().GetAllGameplayNodes(type)
+        level.GameplayNodes.GetAllGameplayNodes(type)
             .ForEach(node => {
                 level.SpawnEntity(prefab, node.transform.position + offset, Quaternion.identity);
         });

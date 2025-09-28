@@ -12,7 +12,7 @@ public class AttackTower : Goal {
 
     public override bool CanUse() {
         if (tower == null) {
-            tower = owner.GetLevel().GetEntityManager().GetFirstEntityOfType<Tower>();
+            tower = owner.GetLevel().EntityManager.GetFirstEntityOfType<Tower>();
         }
         
         return tower != null;

@@ -49,7 +49,7 @@ public abstract class Entity : MonoBehaviour {
         RegisterAttributes();
         RegisterComponents();
 
-        level.GetWorldEvents().onEntitySpawned?.Invoke(this);
+        level.WorldEvents.onEntitySpawned?.Invoke(this);
     }
 
     //  NOTE: [Rock]: Do we need a Breakdown function? I think we can probably just do this in OnDestroy instead
@@ -57,7 +57,7 @@ public abstract class Entity : MonoBehaviour {
         UnregisterEvents();
         UnregisterComponents();
 
-        level.GetWorldEvents().onEntityKilled?.Invoke(this);
+        level.WorldEvents.onEntityKilled?.Invoke(this);
     }
 
     protected virtual void RegisterEvents() { }
