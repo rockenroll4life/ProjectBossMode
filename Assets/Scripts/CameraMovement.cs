@@ -1,5 +1,5 @@
-using UnityEngine;
 using RockUtils.GameEvents;
+using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
     private static CameraMovement instance;
@@ -12,18 +12,21 @@ public class CameraMovement : MonoBehaviour {
         }
     }
 
-    private readonly bool supportZoom = false;
-    private readonly Vector3 DEFAULT_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
-    private readonly Vector3 MIN_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
-    private readonly Vector3 MAX_ZOOM_OFFSET = new Vector3(0f, 20f, -9f);
+    public const float MIN_ZOOM_DISTANCE = 10f;
+    public const float MAX_ZOOM_DISTANCE = 40f;
+    public const float ZOOM_SPEED = 5f;
 
-    private readonly float ZOOM_SPEED = 50f;
+    public const float DEFAULT_ZOOM_DISTANCE = 20f;
+    public const float CAMERA_HEIGHT = 20f;
+    public const float CAMERA_TILT = 65f;
 
     private LivingEntity cameraTarget;
-    private float zoomAmount = 0f;
 
+    private Locomotion.MovementType movementType;
     private Vector3 dragOrigin;
     private bool isDragging = false;
+
+    private float currentDistance;
 
     private void Awake() {
         if (instance == null) {
@@ -37,26 +40,26 @@ public class CameraMovement : MonoBehaviour {
     void Start() {
         EventManager.StartListening(GameEvents.Mouse_Right_Press, MouseRightPress);
         EventManager.StartListening(GameEvents.Mouse_Right_Release, MouseRightRelease);
+        EventManager.StartListening(GameEvents.Mouse_Middle_Press, ResetZoom);
+        EventManager.StartListening(GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
+        EventManager.StartListening(GameEvents.KeyboardButton_Held + (int) KeyCode.Space, FocusOnTarget);
 
-        if (supportZoom) {
-            EventManager.StartListening(GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
-            InputManager.AddInputListener(KeyCode.Space, FocusOnTarget);
-        }
+        currentDistance = DEFAULT_ZOOM_DISTANCE;
     }
 
     void OnDisable() {
         EventManager.StopListening(GameEvents.Mouse_Right_Press, MouseRightPress);
         EventManager.StopListening(GameEvents.Mouse_Right_Release, MouseRightRelease);
-
-        if (supportZoom) {
-            EventManager.StopListening(GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
-            InputManager.RemoveInputListener(KeyCode.Space, FocusOnTarget);
-        }
+        EventManager.StopListening(GameEvents.Mouse_Middle_Press, ResetZoom);
+        EventManager.StopListening(GameEvents.Mouse_Scroll_Wheel, ZoomInOut);
+        EventManager.StopListening(GameEvents.KeyboardButton_Held + (int) KeyCode.Space, FocusOnTarget);
     }
 
     public static void SetCameraTarget(LivingEntity cameraTarget) {
+        Instance.movementType = cameraTarget.GetLocomotion().GetMovementType();
         Instance.cameraTarget = cameraTarget;
-        Instance.transform.position = cameraTarget.transform.position + Instance.GetZoomOffset();
+
+        Instance.UpdateZoomOffset(cameraTarget.transform.position);
     }
 
     private void Update() {
@@ -64,7 +67,7 @@ public class CameraMovement : MonoBehaviour {
             return;
         }
 
-        if (cameraTarget.GetLocomotion().GetMovementType() != Locomotion.MovementType.Mouse) {
+        if (movementType != Locomotion.MovementType.Mouse) {
             FocusOnTarget(0);
         } else {
             if (isDragging) {
@@ -85,28 +88,30 @@ public class CameraMovement : MonoBehaviour {
         isDragging = false;
     }
 
+    private void ResetZoom(int param) {
+        currentDistance = DEFAULT_ZOOM_DISTANCE;
+        UpdateZoomOffset(GetGroundPositionFromCamera());
+    }
+
     private void ZoomInOut(int param) {
-        //  Find out the position we're looking at in the world
-        Vector3 offsetPos = transform.position - GetZoomOffset();
+        float scroll = (param / 1000f);
 
-        //  Calculate the new zoom value
-        float value = -Mathf.Sign(param) * ZOOM_SPEED * Time.deltaTime;
-        zoomAmount = Mathf.Clamp01(zoomAmount + value);
+        currentDistance -= scroll * ZOOM_SPEED;
+        currentDistance = Mathf.Clamp(currentDistance, MIN_ZOOM_DISTANCE, MAX_ZOOM_DISTANCE);
 
-        //  Reposition the camera based off that position we're looking at in the world
-        transform.position = offsetPos + GetZoomOffset();
+        UpdateZoomOffset(GetGroundPositionFromCamera());
     }
 
     private void FocusOnTarget(int param) {
-        transform.position = cameraTarget.transform.position + GetZoomOffset();
+        UpdateZoomOffset(cameraTarget.transform.position);
     }
 
-    private Vector3 GetZoomOffset() {
-        if (supportZoom) {
-            return Vector3.Lerp(MIN_ZOOM_OFFSET, MAX_ZOOM_OFFSET, zoomAmount);
-        } else {
-            return DEFAULT_ZOOM_OFFSET;
-        }
+    private void UpdateZoomOffset(Vector3 target) {
+        Quaternion rotation = Quaternion.Euler(CAMERA_TILT, 0f, 0f);
+        Vector3 offset = rotation * new Vector3(0f, 0f, -currentDistance);
+
+        transform.position = target + offset;
+        transform.LookAt(target);
     }
 
     private Vector3 GetWorldPositionAtMouse() {
@@ -116,6 +121,17 @@ public class CameraMovement : MonoBehaviour {
 
         if (groundPlane.Raycast(ray, out float enter)) {
             return ray.GetPoint(enter);
+        }
+
+        return Vector3.zero;
+    }
+
+    private Vector3 GetGroundPositionFromCamera() {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        int layerMask = 1 << LayerMask.NameToLayer("Ground");
+
+        if (Physics.Raycast(ray, out RaycastHit hit, MAX_ZOOM_DISTANCE, layerMask)) {
+            return hit.point;
         }
 
         return Vector3.zero;
